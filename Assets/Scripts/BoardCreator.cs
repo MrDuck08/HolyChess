@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoardCreator : MonoBehaviour
 {
+
+    #region PlaceBoardTiles
+
     int gridX;
     int gridY;
 
-    int maxXPosetive = 8;
-    int maxYPosetive = 4;
-    int maxXNegative;
-    int maxYNegative;
+    int maxXRight;
+    int maxYUp;
+    int maxXLeft;
+    int maxYDown;
 
     int howManyUppPosetiveX = 1;
     int howManyDownPosetiveX = 0;
@@ -18,25 +22,95 @@ public class BoardCreator : MonoBehaviour
     int howManyUppNegativeX = 1;
     int howManyDownNegativeX = 0;
 
-    int test = 0;
+    int whiteOrBlackToSPawn = 1;
 
-    [SerializeField] GridPiece gridPieceObject;
+    [SerializeField] int maxRandomRange = 11;
+    [SerializeField] int minRandomRange = 5;
+
+    bool firstDone = false;
+    bool secondDone = false;
+    bool thirdDone = false;
+    bool fourthDone = false;
+
+    #endregion
+
+    int boardHeight;
+    int boardWidth;
+
+    [SerializeField] GridPiece[] gridPieceObject;
 
     void Start()
     {
-        //maxXPosetive = Random.Range(1, 4);
-        //maxYPosetive = Random.Range(1, 4);
-        maxXNegative = Random.Range(1, 8);
-        maxYNegative = Random.Range(-1, -8);
+        //maxXRight = Random.Range(minRandomRange, maxRandomRange);
+        //maxXLeft = Random.Range(-minRandomRange, -maxRandomRange);
+
+        //boardWidth = maxXRight + -1 * maxXLeft + 1;
+        //Debug.Log(boardWidth + " Width");
+
+        //maxYUp = Random.Range(minRandomRange, maxRandomRange);
+        //maxYDown = Random.Range(-minRandomRange, -maxRandomRange);
+
+        //boardHeight = maxYUp + -1 * maxYDown - 1;
+        //Debug.Log(boardHeight + " Height");
+
+        maxXRight = 8;
+        maxXLeft = -8;
+
+        maxYDown = -8;
+        maxYUp = 8;
+
+        #region PlaceBoard
 
         while (true)
         {
-            gridX = maxXPosetive;
+            if (whiteOrBlackToSPawn == 0)
+            {
+
+                whiteOrBlackToSPawn++;
+
+            }
+            else
+            {
+                if (whiteOrBlackToSPawn == 1)
+                {
+
+                    whiteOrBlackToSPawn--;
+
+                }
+            }
+
+            gridX = maxXRight;
             while (true)
             {
-                GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                spawnedObject.SpawnLocation(gridX, howManyUppPosetiveX);
+                if (howManyUppPosetiveX >= maxYUp)
+                {
+                    firstDone = true;
+
+                    break;
+                }
+
+                if(whiteOrBlackToSPawn == 0)
+                {
+                    GridPiece spawnedObject = Instantiate(gridPieceObject[0]);
+
+                    spawnedObject.SpawnLocation(gridX, howManyUppPosetiveX);
+
+
+                    whiteOrBlackToSPawn++;
+                }
+                else
+                {
+                    if(whiteOrBlackToSPawn == 1)
+                    {
+                        GridPiece spawnedObject = Instantiate(gridPieceObject[1]);
+
+                        spawnedObject.SpawnLocation(gridX, howManyUppPosetiveX);
+
+
+                        whiteOrBlackToSPawn--;
+                    }
+                }
 
                 gridX--;
 
@@ -47,13 +121,38 @@ public class BoardCreator : MonoBehaviour
                 }
             }
 
-            gridX = maxXPosetive;
+            gridX = maxXRight;
 
             while (true)
             {
-                GridPiece spawnedObject = Instantiate(gridPieceObject);
+                if (howManyDownPosetiveX <= maxYDown)
+                {
+                    secondDone = true;
 
-                spawnedObject.SpawnLocation(gridX, howManyDownPosetiveX);
+                    break;
+                }
+
+                if (whiteOrBlackToSPawn == 0)
+                {
+                    GridPiece spawnedObject = Instantiate(gridPieceObject[0]);
+
+                    spawnedObject.SpawnLocation(gridX, howManyDownPosetiveX);
+
+
+                    whiteOrBlackToSPawn++;
+                }
+                else
+                {
+                    if (whiteOrBlackToSPawn == 1)
+                    {
+                        GridPiece spawnedObject = Instantiate(gridPieceObject[1]);
+
+                        spawnedObject.SpawnLocation(gridX, howManyDownPosetiveX);
+
+
+                        whiteOrBlackToSPawn--;
+                    }
+                }
 
                 gridX--;
 
@@ -64,18 +163,39 @@ public class BoardCreator : MonoBehaviour
                 }
             }
 
-            gridX = -maxXPosetive;
+            gridX = maxXLeft;
 
             while (true)
             {
-                if (howManyUppNegativeX >= maxXNegative)
+                if (howManyUppNegativeX >= maxYUp)
                 {
+                    thirdDone = true;
+
                     break;
                 }
 
-                GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                spawnedObject.SpawnLocation(gridX, howManyUppNegativeX);
+                if (whiteOrBlackToSPawn == 0)
+                {
+                    GridPiece spawnedObject = Instantiate(gridPieceObject[0]);
+
+                    spawnedObject.SpawnLocation(gridX, howManyUppNegativeX);
+
+
+                    whiteOrBlackToSPawn++;
+                }
+                else
+                {
+                    if (whiteOrBlackToSPawn == 1)
+                    {
+                        GridPiece spawnedObject = Instantiate(gridPieceObject[1]);
+
+                        spawnedObject.SpawnLocation(gridX, howManyUppNegativeX);
+
+
+                        whiteOrBlackToSPawn--;
+                    }
+                }
 
                 gridX++;
 
@@ -86,17 +206,39 @@ public class BoardCreator : MonoBehaviour
                 }
             }
 
-            gridX = -maxXPosetive;
+            gridX = maxXLeft;
 
             while (true)
             {
-                if(howManyDownNegativeX <= maxYNegative)
+                if(howManyDownNegativeX <= maxYDown)
                 {
+                    fourthDone = true;
+
                     break;
                 }
-                GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                spawnedObject.SpawnLocation(gridX, howManyDownNegativeX);
+
+                if (whiteOrBlackToSPawn == 0)
+                {
+                    GridPiece spawnedObject = Instantiate(gridPieceObject[0]);
+
+                    spawnedObject.SpawnLocation(gridX, howManyDownNegativeX);
+
+
+                    whiteOrBlackToSPawn++;
+                }
+                else
+                {
+                    if (whiteOrBlackToSPawn == 1)
+                    {
+                        GridPiece spawnedObject = Instantiate(gridPieceObject[1]);
+
+                        spawnedObject.SpawnLocation(gridX, howManyDownNegativeX);
+
+
+                        whiteOrBlackToSPawn--;
+                    }
+                }
 
                 gridX++;
 
@@ -107,13 +249,14 @@ public class BoardCreator : MonoBehaviour
                 }
             }
 
-            test++;
-
-            if (howManyUppPosetiveX >= maxYPosetive)
+            if (firstDone && secondDone && thirdDone && fourthDone)
             {
                 break;
             }
         }
+
+        #endregion
+
     }
 
 }
