@@ -28,7 +28,7 @@ public class BoardCreator : MonoBehaviour
     #endregion
 
 
-    [SerializeField] GridPiece[] gridPieceObject;
+    [SerializeField] GridPiece gridPieceObject;
 
     bool IsThisInteger(float myFloat)
     {
@@ -97,7 +97,7 @@ public class BoardCreator : MonoBehaviour
 
                 if(whiteOrBlackToSPawn == 0)
                 {
-                    GridPiece spawnedObject = Instantiate(gridPieceObject[0]);
+                    GridPiece spawnedObject = Instantiate(gridPieceObject);
 
                     spawnedObject.SpawnLocation(gridX, maxYDown);
 
@@ -108,7 +108,9 @@ public class BoardCreator : MonoBehaviour
                 {
                     if(whiteOrBlackToSPawn == 1)
                     {
-                        GridPiece spawnedObject = Instantiate(gridPieceObject[1]);
+                        GridPiece spawnedObject = Instantiate(gridPieceObject);
+
+                        spawnedObject.GetComponent<SpriteRenderer>().color = new Color32(0, 142, 99, 255);
 
                         spawnedObject.SpawnLocation(gridX, maxYDown);
 
