@@ -7,28 +7,55 @@ public class GridPiece : MonoBehaviour
     int xPos;
     int yPos;
 
-    #region Start position
+    bool playerSpawnGrid = false;
+    bool enemySpawnGrid = false;
 
-    public void SpawnLocation(int x, int y)
+    #region Spawn info
+
+    public void SpawnLocation(int x, int y, int spawnWho)
     {
         xPos = x;
         yPos = y;
+
+        if(spawnWho == 0)
+        {
+            playerSpawnGrid = true;
+        }
+        if(spawnWho == 1)
+        {
+            enemySpawnGrid = true;
+        }
 
         transform.position = new Vector2 (xPos, yPos);
     }
 
     #endregion
 
+    private void Update()
+    {
+        if (enemySpawnGrid)
+        {
+            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        }    
+    }
+
 
     private void OnMouseOver()
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        if(playerSpawnGrid)
+        {
+            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        }
+
 
     }
 
     private void OnMouseExit()
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        if (playerSpawnGrid)
+        {
+            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
 
     }
 }

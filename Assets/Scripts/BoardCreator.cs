@@ -25,6 +25,10 @@ public class BoardCreator : MonoBehaviour
     int boardHeight;
     float boardWidth;
 
+    int playerSpawnLocation;
+    int enemySpawnLocation;
+    int playerOrEnemySpawnPiece;
+
     #endregion
 
 
@@ -48,7 +52,7 @@ public class BoardCreator : MonoBehaviour
 
         Debug.Log(boardWidth + " Width");
 
-        boardWidth /= 2;
+
 
 
 
@@ -58,13 +62,19 @@ public class BoardCreator : MonoBehaviour
         boardHeight = maxYUp + -1 * maxYDown - 1;
         Debug.Log(boardHeight + " Height");
 
+        playerSpawnLocation = boardHeight/3;
+        enemySpawnLocation = boardHeight - playerSpawnLocation;
+
+
+        Debug.Log(playerSpawnLocation);
+
         #endregion
 
         #region PlaceBoard
 
         while (true)
         {
-            if (IsThisInteger(boardWidth))
+            if (IsThisInteger(boardWidth/2))
             {
 
                 if (whiteOrBlackToSPawn == 0)
@@ -97,9 +107,23 @@ public class BoardCreator : MonoBehaviour
 
                 if(whiteOrBlackToSPawn == 0)
                 {
+                    if(playerSpawnLocation > 0)
+                    {
+                        playerOrEnemySpawnPiece = 0;
+                    }
+                    else
+                    {
+                        playerOrEnemySpawnPiece = 1337;
+                    }
+                    if(enemySpawnLocation < 0)
+                    {
+                        playerOrEnemySpawnPiece = 1;
+                    }
+
+
                     GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                    spawnedObject.SpawnLocation(gridX, maxYDown);
+                    spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece);
 
 
                     whiteOrBlackToSPawn++;
@@ -108,11 +132,25 @@ public class BoardCreator : MonoBehaviour
                 {
                     if(whiteOrBlackToSPawn == 1)
                     {
+                        if (playerSpawnLocation > 0)
+                        {
+                            playerOrEnemySpawnPiece = 0;
+                        }
+                        else
+                        {
+                            playerOrEnemySpawnPiece = 1337;
+                        }
+                        if (enemySpawnLocation < 0)
+                        {
+                            playerOrEnemySpawnPiece = 1;
+                        }
+
+
                         GridPiece spawnedObject = Instantiate(gridPieceObject);
 
                         spawnedObject.GetComponent<SpriteRenderer>().color = new Color32(0, 142, 99, 255);
 
-                        spawnedObject.SpawnLocation(gridX, maxYDown);
+                        spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece);
 
 
                         whiteOrBlackToSPawn--;
@@ -121,12 +159,17 @@ public class BoardCreator : MonoBehaviour
 
                 gridX--;
 
+
                 if (gridX < maxXLeft)
                 {
                     maxYDown++;
                     break;
                 }
             }
+
+
+            playerSpawnLocation--;
+            enemySpawnLocation--;
 
             if (firstDone)
             {
