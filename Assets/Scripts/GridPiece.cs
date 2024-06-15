@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class GridPiece : MonoBehaviour
 {
-    int xPos;
-    int yPos;
+    public int xPos;
+    public int yPos;
 
     bool playerSpawnGrid = false;
     bool enemySpawnGrid = false;
+    bool mouseOver = false;
+    bool pawnOnThisPiece = false;
+
+    GridController controller;
 
     #region Spawn info
 
@@ -31,31 +35,51 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
+    private void Start()
+    {
+        controller = FindObjectOfType<GridController>();
+    }
+
     private void Update()
     {
         if (enemySpawnGrid)
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }    
+
+        if(Input.GetMouseButton(0))
+        {
+            if(mouseOver)
+            {
+                if (pawnOnThisPiece)
+                {
+                    controller.MovePawn(xPos, yPos);
+                }
+
+                pawnOnThisPiece = true;
+            }
+        }
     }
 
 
     private void OnMouseOver()
     {
-        if(playerSpawnGrid)
+        if(playerSpawnGrid && !pawnOnThisPiece)
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }
 
-
+        mouseOver = true;
     }
 
     private void OnMouseExit()
     {
-        if (playerSpawnGrid)
+        if (playerSpawnGrid && !pawnOnThisPiece)
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
+        
 
+        mouseOver = false;
     }
 }
