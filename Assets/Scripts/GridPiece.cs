@@ -7,19 +7,34 @@ public class GridPiece : MonoBehaviour
     public int xPos;
     public int yPos;
 
+    #region bools
+
     bool playerSpawnGrid = false;
     bool enemySpawnGrid = false;
     bool mouseOver = false;
-    bool pawnOnThisPiece = false;
+    bool pawnHere = false;
+
+    public bool anticipateMovment;
+    public bool anticipatePlayerAttack;
+
+    public bool gameHasStarted = false;
+    public bool spawningPawnNow = false;
+
+    #endregion
+
+    Color32 visualls;
 
     GridController controller;
 
+    GridPiece[] gridPieces;
+
     #region Spawn info
 
-    public void SpawnLocation(int x, int y, int spawnWho)
+    public void SpawnLocation(int x, int y, int spawnWho, Color32 whatVisualls)
     {
         xPos = x;
         yPos = y;
+        visualls = whatVisualls;
 
         if(spawnWho == 0)
         {
@@ -29,6 +44,8 @@ public class GridPiece : MonoBehaviour
         {
             enemySpawnGrid = true;
         }
+
+        gameObject.GetComponent<SpriteRenderer>().color = visualls;
 
         transform.position = new Vector2 (xPos, yPos);
     }
@@ -45,28 +62,83 @@ public class GridPiece : MonoBehaviour
         if (enemySpawnGrid)
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        }    
+        }
 
-        if(Input.GetMouseButton(0))
+        #region Anticipate Movment
+
+        if (anticipateMovment)
+        {
+            visualls.a = 144;
+            gameObject.GetComponent<SpriteRenderer>().color = visualls;
+        }
+        else
+        {
+            visualls.a = 255;
+            gameObject.GetComponent<SpriteRenderer>().color = visualls;
+        }
+
+        #endregion
+
+        if (Input.GetMouseButton(0))
         {
             if(mouseOver)
             {
-                if (pawnOnThisPiece)
+                if (pawnHere && gameHasStarted)
                 {
-                    controller.MovePawn(xPos, yPos);
+                    controller.AnticipatePawnMovment(xPos, yPos, gameObject);
                 }
 
-                pawnOnThisPiece = true;
+                if (!pawnHere)
+                {
+
+                    #region Start Spawn
+
+                    if (playerSpawnGrid && spawningPawnNow)
+                    {
+                        pawnHere = true;
+
+                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.spawningPawnNow = false;
+                        }
+                    }
+
+                    #endregion
+
+                    if (anticipateMovment)
+                    {
+                        controller.movePiece(0);
+
+                        pawnHere = true;
+
+                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.anticipateMovment = false;
+                        }
+                    }
+                }
             }
         }
     }
 
+    #region Mouse Over & Exit
 
     private void OnMouseOver()
     {
-        if(playerSpawnGrid && !pawnOnThisPiece)
+        if(playerSpawnGrid && !pawnHere && spawningPawnNow)
         {
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "Pawn")
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+            }
         }
 
         mouseOver = true;
@@ -74,12 +146,22 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (playerSpawnGrid && !pawnOnThisPiece)
+        if (playerSpawnGrid && !pawnHere)
         {
-            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "Pawn")
+                {
+                    child.gameObject.SetActive(false);
+                }
+
+            }
         }
         
 
         mouseOver = false;
     }
+
+    #endregion
+
 }

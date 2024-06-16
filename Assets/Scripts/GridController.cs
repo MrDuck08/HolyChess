@@ -7,22 +7,51 @@ public class GridController : MonoBehaviour
 {
     GridPiece[] gridPieces;
 
+    GameObject moveFromTile;
+    GameObject moveToTile;
 
-    public void MovePawn(int currentX, int currentY)
+    public void AnticipatePawnMovment(int currentX, int currentY, GameObject callerGameObject)
     {
+        moveFromTile = callerGameObject;
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
         foreach (GridPiece allPieces in gridPieces)
         {
-            //https://discussions.unity.com/t/how-to-find-a-certain-gameobject-using-a-variable-in-a-common-script-from-an-array-of-gameobjects/132458/2
-
             int xPos = allPieces.xPos;
             int yPos = allPieces.yPos;
 
             if (xPos == currentX && yPos == currentY + 1)
             {
-                allPieces.gameObject.SetActive(false);
+                allPieces.anticipateMovment = true;
+
+                moveToTile = allPieces.gameObject;
+            }
+        }
+    }
+
+    public void movePiece(int whatToMove)
+    {
+        if(whatToMove == 0)
+        {
+            foreach (Transform child in moveFromTile.transform)
+            {
+                if (child.tag == "Pawn")
+                {
+                    child.gameObject.SetActive(false);
+
+
+                }
+
+            }
+
+            foreach (Transform child in moveToTile.transform)
+            {
+                if (child.tag == "Pawn")
+                {
+                    child.gameObject.SetActive(true);
+                }
+
             }
         }
     }

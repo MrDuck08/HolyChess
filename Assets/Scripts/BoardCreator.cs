@@ -123,7 +123,7 @@ public class BoardCreator : MonoBehaviour
 
                     GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                    spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece);
+                    spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(255, 255, 255, 255));
 
 
                     whiteOrBlackToSPawn++;
@@ -132,6 +132,9 @@ public class BoardCreator : MonoBehaviour
                 {
                     if(whiteOrBlackToSPawn == 1)
                     {
+
+                        #region Enemy or player spawntile
+
                         if (playerSpawnLocation > 0)
                         {
                             playerOrEnemySpawnPiece = 0;
@@ -145,12 +148,12 @@ public class BoardCreator : MonoBehaviour
                             playerOrEnemySpawnPiece = 1;
                         }
 
+                        #endregion
+
 
                         GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                        spawnedObject.GetComponent<SpriteRenderer>().color = new Color32(0, 142, 99, 255);
-
-                        spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece);
+                        spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(0, 142, 99, 255));
 
 
                         whiteOrBlackToSPawn--;
