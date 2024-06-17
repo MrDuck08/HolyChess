@@ -7,12 +7,14 @@ public class GridController : MonoBehaviour
 {
     GridPiece[] gridPieces;
 
-    GameObject moveFromTile;
+    GameObject moveFromTileObject;
     GameObject moveToTile;
+
+    #region Pawn Movment
 
     public void AnticipatePawnMovment(int currentX, int currentY, GameObject callerGameObject)
     {
-        moveFromTile = callerGameObject;
+        moveFromTileObject = callerGameObject;
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -34,13 +36,12 @@ public class GridController : MonoBehaviour
     {
         if(whatToMove == 0)
         {
-            foreach (Transform child in moveFromTile.transform)
+            moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+            foreach (Transform child in moveFromTileObject.transform)
             {
                 if (child.tag == "Pawn")
                 {
                     child.gameObject.SetActive(false);
-
-
                 }
 
             }
@@ -54,5 +55,176 @@ public class GridController : MonoBehaviour
 
             }
         }
+    }
+
+    #endregion
+
+
+    public void EnemyHorseMovment(int currentX, int currentY)
+    {
+
+        
+            #region Down Movment
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - 1 && yPos == currentY - 2)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX - 1, currentY - 2);
+                    }
+                }
+            }
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + 1 && yPos == currentY - 2)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX + 1, currentY - 2);
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Right Movment
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + 2 && yPos == currentY - 1)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX + 2, currentY -1);
+                    }
+                }
+            }
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + 2 && yPos == currentY + 1)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX + 2, currentY + 1);
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Left Movment
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - 2 && yPos == currentY - 1)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX - 2, currentY - 1);
+                    }
+                }
+            }
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - 2 && yPos == currentY + 1)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX - 2, currentY + 1);
+                    }
+                }
+            }
+
+            #endregion
+
+            #region Up Movment
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - 1 && yPos == currentY + 2)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX - 1, currentY + 2);
+                    }
+                }
+            }
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + 1 && yPos == currentY + 2)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+                        Debug.Log("Found Player");
+                    }
+                    else
+                    {
+                        EnemyHorseMovment(currentX + 1, currentY + 2);
+                    }
+                }
+            }
+
+            #endregion
+
+        
+
     }
 }

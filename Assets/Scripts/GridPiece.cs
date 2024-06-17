@@ -12,8 +12,9 @@ public class GridPiece : MonoBehaviour
     bool playerSpawnGrid = false;
     bool enemySpawnGrid = false;
     bool mouseOver = false;
-    bool pawnHere = false;
+    bool playerPawnHere = false;
 
+    public bool playerPieceHere = false;
     public bool anticipateMovment;
     public bool anticipatePlayerAttack;
 
@@ -64,6 +65,11 @@ public class GridPiece : MonoBehaviour
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }
 
+        if (!playerPieceHere)
+        {
+            playerPawnHere = false;
+        }
+
         #region Anticipate Movment
 
         if (anticipateMovment)
@@ -83,19 +89,20 @@ public class GridPiece : MonoBehaviour
         {
             if(mouseOver)
             {
-                if (pawnHere && gameHasStarted)
+                if (playerPawnHere && gameHasStarted)
                 {
                     controller.AnticipatePawnMovment(xPos, yPos, gameObject);
                 }
 
-                if (!pawnHere)
+                if (!playerPawnHere)
                 {
 
                     #region Start Spawn
 
                     if (playerSpawnGrid && spawningPawnNow)
                     {
-                        pawnHere = true;
+                        playerPawnHere = true;
+                        playerPieceHere = true;
 
                         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -111,8 +118,18 @@ public class GridPiece : MonoBehaviour
                     {
                         controller.movePiece(0);
 
-                        pawnHere = true;
+                        playerPieceHere = true;
+                        playerPawnHere = true;
 
+                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.anticipateMovment = false;
+                        }
+                    }
+                    else
+                    {
                         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
                         foreach (GridPiece allPiece in gridPieces)
@@ -129,7 +146,7 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if(playerSpawnGrid && !pawnHere && spawningPawnNow)
+        if(playerSpawnGrid && !playerPawnHere && spawningPawnNow && !gameHasStarted)
         {
             foreach (Transform child in gameObject.transform)
             {
@@ -146,7 +163,7 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (playerSpawnGrid && !pawnHere)
+        if (playerSpawnGrid && !playerPawnHere && !gameHasStarted)
         {
             foreach (Transform child in gameObject.transform)
             {
