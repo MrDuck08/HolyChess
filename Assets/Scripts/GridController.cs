@@ -10,6 +10,14 @@ public class GridController : MonoBehaviour
     GameObject moveFromTileObject;
     GameObject moveToTile;
 
+    #region Horse movemnt 
+
+    int numberOfTimesLookingForPlayer;
+
+    bool horseFoundPlayer = false;
+
+    #endregion
+
     #region Pawn Movment
 
     public void AnticipatePawnMovment(int currentX, int currentY, GameObject callerGameObject)
@@ -63,7 +71,10 @@ public class GridController : MonoBehaviour
     public void EnemyHorseMovment(int currentX, int currentY)
     {
 
-        
+        if (!horseFoundPlayer)
+        {
+            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
             #region Down Movment
 
             foreach (GridPiece allPieces in gridPieces)
@@ -76,6 +87,7 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
@@ -94,6 +106,7 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
@@ -116,10 +129,11 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
-                        EnemyHorseMovment(currentX + 2, currentY -1);
+                        EnemyHorseMovment(currentX + 2, currentY - 1);
                     }
                 }
             }
@@ -134,6 +148,7 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
@@ -156,6 +171,7 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
@@ -174,6 +190,7 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
@@ -196,6 +213,7 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
@@ -214,6 +232,7 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere)
                     {
                         Debug.Log("Found Player");
+                        horseFoundPlayer = true;
                     }
                     else
                     {
@@ -224,7 +243,9 @@ public class GridController : MonoBehaviour
 
             #endregion
 
-        
+        }
+
+
 
     }
 }

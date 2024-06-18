@@ -11,15 +11,18 @@ public class GridPiece : MonoBehaviour
 
     bool playerSpawnGrid = false;
     bool enemySpawnGrid = false;
+
     bool mouseOver = false;
     bool playerPawnHere = false;
 
     public bool playerPieceHere = false;
+    public bool enemyPieceHere = false;
     public bool anticipateMovment;
     public bool anticipatePlayerAttack;
 
     public bool gameHasStarted = false;
     public bool spawningPawnNow = false;
+    public bool yourTurn = true;
 
     #endregion
 
@@ -44,6 +47,7 @@ public class GridPiece : MonoBehaviour
         if(spawnWho == 1)
         {
             enemySpawnGrid = true;
+            enemyPieceHere = true;
         }
 
         gameObject.GetComponent<SpriteRenderer>().color = visualls;
@@ -62,7 +66,14 @@ public class GridPiece : MonoBehaviour
     {
         if (enemySpawnGrid)
         {
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyHorse")
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+            }
         }
 
         if (!playerPieceHere)
@@ -87,12 +98,17 @@ public class GridPiece : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if(mouseOver)
+            if(mouseOver && yourTurn)
             {
+
+                #region Anticipate Movment
+
                 if (playerPawnHere && gameHasStarted)
                 {
                     controller.AnticipatePawnMovment(xPos, yPos, gameObject);
                 }
+
+                #endregion
 
                 if (!playerPawnHere)
                 {
@@ -113,6 +129,8 @@ public class GridPiece : MonoBehaviour
                     }
 
                     #endregion
+
+                    #region Movment
 
                     if (anticipateMovment)
                     {
@@ -137,8 +155,15 @@ public class GridPiece : MonoBehaviour
                             allPiece.anticipateMovment = false;
                         }
                     }
+                    #endregion
+
                 }
             }
+        }
+
+        if (!yourTurn && enemyPieceHere)
+        {
+            controller.EnemyHorseMovment(xPos, yPos);
         }
     }
 
