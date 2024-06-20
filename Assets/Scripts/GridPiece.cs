@@ -164,6 +164,8 @@ public class GridPiece : MonoBehaviour
         if (!yourTurn && enemyPieceHere)
         {
             controller.EnemyHorseMovment(xPos, yPos);
+
+            yourTurn = true;
         }
     }
 
