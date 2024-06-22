@@ -12,7 +12,11 @@ public class GridController : MonoBehaviour
 
     #region Horse movemnt 
 
-    int numberOfTimesLookingForPlayer;
+    int numberOfTimesLookingForPlayer = 0;
+    int numberOfTimesLookingForPlayerLeft = 0;
+
+    int currentXOfPiece;
+    int currentYOfPiece;
 
     bool horseFoundPlayer = false;
 
@@ -20,7 +24,22 @@ public class GridController : MonoBehaviour
 
     #region Pawn Movment
 
-    int ss = 0;
+    private void Start()
+    {
+        //gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        //foreach (GridPiece piece in gridPieces)
+        //{
+        //    if (piece.enemyPieceHere)
+        //    {
+        //        numberOfTimesLookingForPlayer++;
+        //    }
+        //}
+        //Debug.Log(numberOfTimesLookingForPlayer);
+        //numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+        StartCoroutine(DelayStart());
+    }
 
     public void AnticipatePawnMovment(int currentX, int currentY, GameObject callerGameObject)
     {
@@ -72,26 +91,23 @@ public class GridController : MonoBehaviour
 
     public void EnemyHorseMovment(int currentX, int currentY)
     {
-
-         ss++;
-         Debug.Log(currentX + " X " + currentY + " Y ");
-
-
-         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+        currentXOfPiece = currentX;
+        currentYOfPiece = currentY;
 
 
-         foreach (GridPiece allPieces in gridPieces)
-         {
-             int xPos = allPieces.xPos;
-             int yPos = allPieces.yPos;
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
-             if (!horseFoundPlayer)
-             {
-                 #region Down Movment
+        foreach (GridPiece allPieces in gridPieces)
+        {
+            int xPos = allPieces.xPos;
+            int yPos = allPieces.yPos;
+
+            if (!horseFoundPlayer)
+            {
+               #region Down Movment
 
                  if (xPos == currentX - 1 && yPos == currentY - 2)
                  {
-                     Debug.Log("HEKL");
                      if (allPieces.playerPieceHere)
                      {
                          Debug.Log("Found Player");
@@ -122,7 +138,7 @@ public class GridController : MonoBehaviour
 
                 #endregion
 
-                #region Right Movment
+               #region Right Movment
 
                 if (xPos == currentX + 2 && yPos == currentY - 1)
                 {
@@ -157,7 +173,7 @@ public class GridController : MonoBehaviour
 
                 #endregion
 
-                #region Left Movment
+               #region Left Movment
 
                 if (xPos == currentX - 2 && yPos == currentY - 1)
                 {
@@ -191,7 +207,7 @@ public class GridController : MonoBehaviour
 
                 #endregion
 
-                #region Up Movment
+               #region Up Movment
 
                 if (xPos == currentX - 1 && yPos == currentY + 2)
                 {
@@ -225,15 +241,59 @@ public class GridController : MonoBehaviour
 
                 #endregion
 
-                //break;
+               //break;
             }
-
         }
+
+        numberOfTimesLookingForPlayerLeft--;
+        Debug.Log(numberOfTimesLookingForPlayerLeft + " Left");
+
+        if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0)
+        {
+            numberOfTimesLookingForPlayer *= 8;
+            Debug.Log(numberOfTimesLookingForPlayer + " Max");
+
+            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+
+            EnemyHorseMovment(currentX - 1, currentY - 2);
+            EnemyHorseMovment(currentX + 1, currentY - 2);
+
+            EnemyHorseMovment(currentX + 2, currentY - 1);
+            EnemyHorseMovment(currentX + 2, currentY + 1);
+
+            EnemyHorseMovment(currentX - 2, currentY - 1);
+            EnemyHorseMovment(currentX - 2, currentY + 1);
+
+            EnemyHorseMovment(currentX - 1, currentY + 2);
+            EnemyHorseMovment(currentX + 1, currentY + 2);
+        }
+
 
     }
 
     public void FindPlayerHorse(int posisionToMoveToX, int possosonToMoveToY)
     {
 
+
+
+    }
+
+    IEnumerator DelayStart()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece piece in gridPieces)
+        {
+            if (piece.enemyPieceHere)
+            {
+                numberOfTimesLookingForPlayer++;
+            }
+        }
+
+        Debug.Log(numberOfTimesLookingForPlayer + " Enemys");
+        numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
     }
 }
