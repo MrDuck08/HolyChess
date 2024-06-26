@@ -64,13 +64,24 @@ public class GridPiece : MonoBehaviour
 
     private void Update()
     {
-        if (enemySpawnGrid)
+        if (enemyPieceHere)
         {
             foreach (Transform child in gameObject.transform)
             {
                 if (child.tag == "EnemyHorse")
                 {
                     child.gameObject.SetActive(true);
+                }
+
+            }
+        }
+        else
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyHorse")
+                {
+                    child.gameObject.SetActive(false);
                 }
 
             }

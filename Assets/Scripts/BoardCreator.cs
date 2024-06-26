@@ -50,7 +50,7 @@ public class BoardCreator : MonoBehaviour
 
         boardWidth = maxXRight + -1 * maxXLeft + 1;
 
-        Debug.Log(boardWidth + " Width");
+        //Debug.Log(boardWidth + " Width");
 
 
 
@@ -60,13 +60,11 @@ public class BoardCreator : MonoBehaviour
         maxYDown = Random.Range(-minRandomRange, -maxRandomRange);
 
         boardHeight = maxYUp + -1 * maxYDown - 1;
-        Debug.Log(boardHeight + " Height");
+        //Debug.Log(boardHeight + " Height");
 
         playerSpawnLocation = boardHeight/3;
         enemySpawnLocation = boardHeight - playerSpawnLocation;
 
-
-        Debug.Log(playerSpawnLocation);
 
         #endregion
 

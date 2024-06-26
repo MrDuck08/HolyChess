@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GridController : MonoBehaviour
@@ -14,9 +15,17 @@ public class GridController : MonoBehaviour
 
     int numberOfTimesLookingForPlayer = 0;
     int numberOfTimesLookingForPlayerLeft = 0;
+    int maxNumberOfTries = 10;
+    int currentAmountOfTries;
 
     int currentXOfPiece;
     int currentYOfPiece;
+
+    List<int> currentXOfHorseList = new List<int>();
+    List<int> currentYOfHorseList = new List<int>();
+
+    List<int> currentXOfHorseListComplete = new List<int>();
+    List<int> currentYOfHorseListComplete = new List<int>();
 
     bool horseFoundPlayer = false;
 
@@ -26,18 +35,6 @@ public class GridController : MonoBehaviour
 
     private void Start()
     {
-        //gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-        //foreach (GridPiece piece in gridPieces)
-        //{
-        //    if (piece.enemyPieceHere)
-        //    {
-        //        numberOfTimesLookingForPlayer++;
-        //    }
-        //}
-        //Debug.Log(numberOfTimesLookingForPlayer);
-        //numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
-
         StartCoroutine(DelayStart());
     }
 
@@ -88,12 +85,31 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    public void EnemyHorseMovmentCall(int xPos, int yPos)
+    {
+        //numberOfTimesLookingForPlayer = 1;
+        //numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+
+        //currentYOfHorseList.Clear();
+        //currentXOfHorseList.Clear();
+        //currentXOfHorseListComplete.Clear();
+        //currentYOfHorseListComplete.Clear();
+
+        //Debug.Log("Call");
+
+        //EnemyHorseMovment(xPos, yPos);
+    }
 
     public void EnemyHorseMovment(int currentX, int currentY)
     {
         currentXOfPiece = currentX;
         currentYOfPiece = currentY;
 
+        currentXOfHorseList.Add(currentXOfPiece);
+        currentYOfHorseList.Add(currentYOfPiece);
+
+        #region Search For Player
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -102,171 +118,183 @@ public class GridController : MonoBehaviour
             int xPos = allPieces.xPos;
             int yPos = allPieces.yPos;
 
-            if (!horseFoundPlayer)
+            #region Down Movment
+
+            if (xPos == currentX - 1 && yPos == currentY - 2)
             {
-               #region Down Movment
-
-                 if (xPos == currentX - 1 && yPos == currentY - 2)
-                 {
-                     if (allPieces.playerPieceHere)
-                     {
-                         Debug.Log("Found Player");
-                         horseFoundPlayer = true;
-
-                        //break;
-                     }
-                     else
-                     {
-                         //EnemyHorseMovment(currentX - 1, currentY - 2);
-                     }
-                 }
-
-                if (xPos == currentX + 1 && yPos == currentY - 2)
+                if (allPieces.playerPieceHere)
                 {
-                    if (allPieces.playerPieceHere)
-                    {
-                        Debug.Log("Found Player");
-                        horseFoundPlayer = true;
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
 
-                        //break;
-                    }
-                    else
-                    {
-                        //EnemyHorseMovment(currentX + 1, currentY - 2);
-                    }
+                    //break;
                 }
-
-                #endregion
-
-               #region Right Movment
-
-                if (xPos == currentX + 2 && yPos == currentY - 1)
+                else
                 {
-                    if (allPieces.playerPieceHere)
-                    {
-                        Debug.Log("Found Player");
-                        horseFoundPlayer = true;
-
-                        //break;
-                    }
-                    else
-                    {
-                        //EnemyHorseMovment(currentX + 2, currentY - 1);
-                    }
+                    //EnemyHorseMovment(currentX - 1, currentY - 2);
                 }
-
-
-                if (xPos == currentX + 2 && yPos == currentY + 1)
-                {
-                    if (allPieces.playerPieceHere)
-                    {
-                        Debug.Log("Found Player");
-                        horseFoundPlayer = true;
-
-                        //break;
-                    }
-                    else
-                    {
-                        //EnemyHorseMovment(currentX + 2, currentY + 1);
-                    }
-                }
-
-                #endregion
-
-               #region Left Movment
-
-                if (xPos == currentX - 2 && yPos == currentY - 1)
-                {
-                    if (allPieces.playerPieceHere)
-                    {
-                        Debug.Log("Found Player");
-                        horseFoundPlayer = true;
-
-                        //break;
-                    }
-                    else
-                    {
-                        //EnemyHorseMovment(currentX - 2, currentY - 1);
-                    }
-                }
-
-                if (xPos == currentX - 2 && yPos == currentY + 1)
-                {
-                    if (allPieces.playerPieceHere)
-                    {
-                        Debug.Log("Found Player");
-                        horseFoundPlayer = true;
-
-                        //break;
-                    }
-                    else
-                    {
-                        //EnemyHorseMovment(currentX - 2, currentY + 1);
-                    }
-                }
-
-                #endregion
-
-               #region Up Movment
-
-                if (xPos == currentX - 1 && yPos == currentY + 2)
-                {
-                    if (allPieces.playerPieceHere)
-                    {
-                        Debug.Log("Found Player");
-                        horseFoundPlayer = true;
-
-                        //break;
-                    }
-                    else
-                    {
-                        //EnemyHorseMovment(currentX - 1, currentY + 2);
-                    }
-                }
-
-                if (xPos == currentX + 1 && yPos == currentY + 2)
-                {
-                    if (allPieces.playerPieceHere)
-                    {
-                        Debug.Log("Found Player");
-                        horseFoundPlayer = true;
-
-                        //break;
-                    }
-                    else
-                    {
-                        //EnemyHorseMovment(currentX + 1, currentY + 2);
-                    }
-                }
-
-                #endregion
-
-               //break;
             }
+
+            if (xPos == currentX + 1 && yPos == currentY - 2)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    //break;
+                }
+                else
+                {
+                    //EnemyHorseMovment(currentX + 1, currentY - 2);
+                }
+            }
+
+            #endregion
+
+            #region Right Movment
+
+            if (xPos == currentX + 2 && yPos == currentY - 1)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    //break;
+                }
+                else
+                {
+                    //EnemyHorseMovment(currentX + 2, currentY - 1);
+                }
+            }
+
+
+            if (xPos == currentX + 2 && yPos == currentY + 1)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    //break;
+                }
+                else
+                {
+                    //EnemyHorseMovment(currentX + 2, currentY + 1);
+                }
+            }
+
+            #endregion
+
+            #region Left Movment
+
+            if (xPos == currentX - 2 && yPos == currentY - 1)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    //break;
+                }
+                else
+                {
+                    //EnemyHorseMovment(currentX - 2, currentY - 1);
+                }
+            }
+
+            if (xPos == currentX - 2 && yPos == currentY + 1)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    //break;
+                }
+                else
+                {
+                    //EnemyHorseMovment(currentX - 2, currentY + 1);
+                }
+            }
+
+            #endregion
+
+            #region Up Movment
+
+            if (xPos == currentX - 1 && yPos == currentY + 2)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    //break;
+                }
+                else
+                {
+                    //EnemyHorseMovment(currentX - 1, currentY + 2);
+                }
+            }
+
+            if (xPos == currentX + 1 && yPos == currentY + 2)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    //break;
+                }
+                else
+                {
+                    //EnemyHorseMovment(currentX + 1, currentY + 2);
+                }
+            }
+
+            #endregion
+
         }
 
-        numberOfTimesLookingForPlayerLeft--;
-        Debug.Log(numberOfTimesLookingForPlayerLeft + " Left");
+        #endregion
 
-        if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0)
+        numberOfTimesLookingForPlayerLeft--;
+        //Debug.Log(numberOfTimesLookingForPlayerLeft + " Left");
+
+        if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0 && currentAmountOfTries < maxNumberOfTries)
         {
             numberOfTimesLookingForPlayer *= 8;
-            Debug.Log(numberOfTimesLookingForPlayer + " Max");
+            currentAmountOfTries++;
+
+            currentXOfHorseListComplete.AddRange(currentXOfHorseList);
+            currentYOfHorseListComplete.AddRange(currentYOfHorseList);
+
+            currentYOfHorseList.Clear();
+            currentXOfHorseList.Clear();
 
             numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
+            Debug.Log(numberOfTimesLookingForPlayer + " Max");
+            Debug.Log(currentXOfHorseListComplete.Count + " List");
 
-            EnemyHorseMovment(currentX - 1, currentY - 2);
-            EnemyHorseMovment(currentX + 1, currentY - 2);
+            for (int i = 0; i < currentXOfHorseListComplete.Count; i++)
+            {
+                Debug.Log(i + " IIII");
+                EnemyHorseMovment(currentXOfHorseListComplete[i] - 1, currentYOfHorseListComplete[i] - 2);
+                EnemyHorseMovment(currentXOfHorseListComplete[i] + 1, currentYOfHorseListComplete[i] - 2);
 
-            EnemyHorseMovment(currentX + 2, currentY - 1);
-            EnemyHorseMovment(currentX + 2, currentY + 1);
+                EnemyHorseMovment(currentXOfHorseListComplete[i] + 2, currentYOfHorseListComplete[i] - 1);
+                EnemyHorseMovment(currentXOfHorseListComplete[i] + 2, currentYOfHorseListComplete[i] + 1);
 
-            EnemyHorseMovment(currentX - 2, currentY - 1);
-            EnemyHorseMovment(currentX - 2, currentY + 1);
+                EnemyHorseMovment(currentXOfHorseListComplete[i] - 2, currentYOfHorseListComplete[i] - 1);
+                EnemyHorseMovment(currentXOfHorseListComplete[i] - 2, currentYOfHorseListComplete[i] + 1);
 
-            EnemyHorseMovment(currentX - 1, currentY + 2);
-            EnemyHorseMovment(currentX + 1, currentY + 2);
+                EnemyHorseMovment(currentXOfHorseListComplete[i] - 1, currentYOfHorseListComplete[i] + 2);
+                EnemyHorseMovment(currentXOfHorseListComplete[i] + 1, currentYOfHorseListComplete[i] + 2);
+
+            }
+
         }
 
 
@@ -292,6 +320,8 @@ public class GridController : MonoBehaviour
                 numberOfTimesLookingForPlayer++;
             }
         }
+
+
 
         Debug.Log(numberOfTimesLookingForPlayer + " Enemys");
         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
