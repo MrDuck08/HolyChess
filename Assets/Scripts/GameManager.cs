@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
         foreach (GridPiece allPieces in gridPieces)
         {
-            allPieces.yourTurn = false;
+            allPieces.playerTurn = false;
         }
 
     }

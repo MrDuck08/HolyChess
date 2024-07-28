@@ -16,13 +16,14 @@ public class GridPiece : MonoBehaviour
     bool playerPawnHere = false;
 
     public bool playerPieceHere = false;
+    public bool enemyHorsePieceHere = false;
     public bool enemyPieceHere = false;
     public bool anticipateMovment;
     public bool anticipatePlayerAttack;
 
     public bool gameHasStarted = false;
     public bool spawningPawnNow = false;
-    public bool yourTurn = true;
+    public bool playerTurn = true;
 
     #endregion
 
@@ -47,6 +48,7 @@ public class GridPiece : MonoBehaviour
         if(spawnWho == 1)
         {
             enemySpawnGrid = true;
+            enemyHorsePieceHere = true;
             enemyPieceHere = true;
         }
 
@@ -64,7 +66,7 @@ public class GridPiece : MonoBehaviour
 
     private void Update()
     {
-        if (enemyPieceHere)
+        if (enemyHorsePieceHere)
         {
             foreach (Transform child in gameObject.transform)
             {
@@ -109,7 +111,7 @@ public class GridPiece : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if(mouseOver && yourTurn)
+            if(mouseOver && playerTurn)
             {
 
                 #region Anticipate Movment
@@ -172,11 +174,22 @@ public class GridPiece : MonoBehaviour
             }
         }
 
-        if (!yourTurn && enemyPieceHere)
+        if (!playerTurn)
         {
-            yourTurn = true;
 
-            controller.EnemyHorseMovmentCall(xPos, yPos, gameObject);
+            if (enemyHorsePieceHere)
+            {
+
+                controller.EnemyHorseMovmentCall(xPos, yPos, gameObject);
+
+                if (playerPieceHere)
+                {
+                    playerPawnHere = false;
+                    Debug.Log("KILL");
+                    // Change This So Player Can Die
+                }
+            }
+
         }
     }
 

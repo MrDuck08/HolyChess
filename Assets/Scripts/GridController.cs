@@ -117,6 +117,8 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    #region Enemy Horse
+
     #region Enemy Horse Movment
 
     public void EnemyHorseMovmentCall(int xPos, int yPos, GameObject calledObject)
@@ -140,140 +142,6 @@ public class GridController : MonoBehaviour
 
         currentXOfHorseList.Add(currentXOfPiece);
         currentYOfHorseList.Add(currentYOfPiece);
-
-        #region Search For Player
-
-        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-        foreach (GridPiece allPieces in gridPieces)
-        {
-            int xPos = allPieces.xPos;
-            int yPos = allPieces.yPos;
-
-            #region Down Movment
-
-            if (xPos == currentX - 1 && yPos == currentY - 2)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-            if (xPos == currentX + 1 && yPos == currentY - 2)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-            #endregion
-
-            #region Right Movment
-
-            if (xPos == currentX + 2 && yPos == currentY - 1)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-
-            if (xPos == currentX + 2 && yPos == currentY + 1)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-            #endregion
-
-            #region Left Movment
-
-            if (xPos == currentX - 2 && yPos == currentY - 1)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-            if (xPos == currentX - 2 && yPos == currentY + 1)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-            #endregion
-
-            #region Up Movment
-
-            if (xPos == currentX - 1 && yPos == currentY + 2)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-            if (xPos == currentX + 1 && yPos == currentY + 2)
-            {
-                if (allPieces.playerPieceHere)
-                {
-                    Debug.Log("Found Player");
-                    horseFoundPlayer = true;
-
-                    allPieces.enemyPieceHere = true;
-
-                    //break;
-                }
-            }
-
-            #endregion
-
-        }
-
-        #endregion
 
         numberOfTimesLookingForPlayerLeft--;
 
@@ -304,8 +172,7 @@ public class GridController : MonoBehaviour
                 #endregion
 
                 infoInt++;
-                Debug.Log(infoInt + " Round");
-                Debug.Log(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + " X Original Pos" + enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + " Y Original Pos");
+                //Debug.Log(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + " X Original Pos" + enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + " Y Original Pos");
 
                 #region Reset
                 currentAmountOfTries = 0;
@@ -319,7 +186,6 @@ public class GridController : MonoBehaviour
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
                 #endregion
-                //Debug.Log("CAll 1");
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i], 1);
                 firstSearchCompleteHorse = true;
 
@@ -335,7 +201,6 @@ public class GridController : MonoBehaviour
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
                 #endregion
-                //Debug.Log("CAll 2");
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i], 2);
                 secondSearchCompleteHorse = true;
 
@@ -351,7 +216,6 @@ public class GridController : MonoBehaviour
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
                 #endregion
-                //Debug.Log("CAll 3");
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i], 3);
                 thirdSearchCompleteHorse = true;
 
@@ -367,7 +231,6 @@ public class GridController : MonoBehaviour
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
                 #endregion
-                //Debug.Log("CAll 4");
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i], 4);
                 fourthSearchCompleteHorse = true;
 
@@ -383,7 +246,6 @@ public class GridController : MonoBehaviour
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
                 #endregion
-                //Debug.Log("CAll 5");
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i], 5);
                 fifthSearchCompleteHorse = true;
 
@@ -398,8 +260,7 @@ public class GridController : MonoBehaviour
                 currentXOfHorseListComplete.Clear();
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
-                #endregion
-                //Debug.Log("CAll 6");          
+                #endregion     
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i], 6);
                 sixtSearchCompleteHorse = true;
 
@@ -415,7 +276,6 @@ public class GridController : MonoBehaviour
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
                 #endregion
-                //Debug.Log("CAll 7");
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i], 7);
                 seventhSearchCompleteHorse = true;
 
@@ -431,7 +291,6 @@ public class GridController : MonoBehaviour
                 currentYOfHorseList.Clear();
                 currentXOfHorseList.Clear();
                 #endregion
-                //Debug.Log("CAll 8");
                 FindPlayerHorse(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i], 8);
                 eightSearchCompleteHorse = true;
 
@@ -441,14 +300,33 @@ public class GridController : MonoBehaviour
 
             #endregion
 
+            #region End Reset
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                allPieces.playerTurn = true;
+            }
+
+            enemyHorseObjectList.Clear();
+
+            currentAmountOfTries = 0;
+            numberOfTimesLookingForPlayer = 1;
+            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+            horseFoundPlayer = false;
+
+            currentYOfHorseListComplete.Clear();
+            currentXOfHorseListComplete.Clear();
+            currentYOfHorseList.Clear();
+            currentXOfHorseList.Clear();
+
+            #endregion
         }
     }
 
     public void FindPlayerHorse(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY,   int posToLookAtX, int posToLookAtY, GameObject pieceToMove, int whatPositionNumber)
     {
-        //Debug.Log(posToMoveToAfterFindingPlayerX + " X");
-        //Debug.Log(posToMoveToAfterFindingPlayerY + " Y");
-        //Debug.Log("RECIVE");
+
         horseFoundPlayer = false;
         didntFindAnytrhingOnce = false;
 
@@ -464,13 +342,13 @@ public class GridController : MonoBehaviour
             int xPos = allPieces.xPos;
             int yPos = allPieces.yPos;
 
-            #region Down Movment
+            #region Check First Position
 
-            if (xPos == posToLookAtX - 1 && yPos == posToLookAtY - 2)
+            if (xPos == posToLookAtX && yPos == posToLookAtY)
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -484,8 +362,40 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+
+                    moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
+                    moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
+
+                    WhatSearchCompletedEnemyHorse(whatPositionNumber, 1);
+                }
+            }
+
+            #endregion
+
+            #region Down Movment
+
+            if (xPos == posToLookAtX - 1 && yPos == posToLookAtY - 2)
+            {
+                if (allPieces.playerPieceHere)
+                {
+                    //Debug.Log("Found Player");
+                    horseFoundPlayer = true;
+
+                    // 2 För det subtraheras 1 på slutet
+                    numberOfTimesLookingForPlayer = 2;
+                    numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                    currentAmountOfTries = 0;
+
+                    currentYOfHorseListComplete.Clear();
+                    currentXOfHorseListComplete.Clear();
+                    currentYOfHorseList.Clear();
+                    currentXOfHorseList.Clear();
+
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -498,7 +408,7 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -512,8 +422,8 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -530,7 +440,7 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -544,8 +454,8 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -559,7 +469,7 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -573,8 +483,8 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -591,7 +501,7 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -605,8 +515,8 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -619,7 +529,7 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -633,8 +543,8 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -651,7 +561,7 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -665,8 +575,8 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -679,7 +589,7 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.playerPieceHere)
                 {
-                    Debug.Log("Found Player");
+                    //Debug.Log("Found Player");
                     horseFoundPlayer = true;
 
                     // 2 För det subtraheras 1 på slutet
@@ -693,8 +603,8 @@ public class GridController : MonoBehaviour
                     currentYOfHorseList.Clear();
                     currentXOfHorseList.Clear();
 
-                    Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
-                    Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                    //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
                     moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                     moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
@@ -710,7 +620,6 @@ public class GridController : MonoBehaviour
         #endregion
 
         numberOfTimesLookingForPlayerLeft--;
-        //Debug.Log(numberOfTimesLookingForPlayerLeft + " Left");
 
         if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0 && currentAmountOfTries < maxNumberOfTries)
         {
@@ -730,9 +639,6 @@ public class GridController : MonoBehaviour
             currentXOfHorseList.Clear();
 
             WhatSearchCompletedEnemyHorse(whatPositionNumber, 1);
-
-            //Debug.Log(numberOfTimesLookingForPlayer + " Max");
-            //Debug.Log(currentXOfHorseListComplete.Count + " List");
 
             #region Search For Player A New
 
@@ -778,7 +684,6 @@ public class GridController : MonoBehaviour
                 {
                     moveToLocationAfterHorseListX.Add(1337);
                     moveToLocationAfterHorseListY.Add(1337);
-                    //Debug.Log("NU Uh");
 
                     WhatSearchCompletedEnemyHorse(whatPositionNumber, 1337);
 
@@ -796,107 +701,76 @@ public class GridController : MonoBehaviour
 
     #endregion
 
-    #region Delay Start
-
-    IEnumerator DelayStart()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-        foreach (GridPiece piece in gridPieces)
-        {
-            if (piece.enemyPieceHere)
-            {
-                numberOfTimesLookingForPlayer++;
-                numberOfEnemys++;
-            }
-        }
-
-
-        Debug.Log(numberOfEnemys + " Enemys");
-        numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
-    }
-
-    #endregion
-
     #region Move Enemy Horse
 
     void MoveToLocationHorse(GameObject pieceToMove)
     {
         if (firstSearchCompleteHorse && secondSearchCompleteHorse && thirdSearchCompleteHorse && fourthSearchCompleteHorse && fifthSearchCompleteHorse && sixtSearchCompleteHorse && seventhSearchCompleteHorse && eightSearchCompleteHorse)
         {
-            Debug.Log("Move");
 
             while (true)
             {
                 howManyTimesFirstPositionSearchedHorse--;
-                //Debug.Log(howManyTimesFirstPositionSearchedHorse + " First Position");
 
                 howManyTimesSecondPositionSearchedHorse--;
-                //Debug.Log(howManyTimesSecondPositionSearchedHorse + " Second Position");
 
                 howManyTimesThirdPositionSearchedHorse--;
-                //Debug.Log(howManyTimesThirdPositionSearchedHorse + " Third Position");
 
                 howManyTimesFourthPositionSearchedHorse--;
-                //Debug.Log(howManyTimesFourthPositionSearchedHorse + " Fourth Position");
 
                 howManyTimesFifthPositionSearchedHorse--;
-                //Debug.Log(howManyTimesFifthPositionSearchedHorse + " Fifth Position");
 
                 howManyTimesSixtPositionSearchedHorse--;
-                //Debug.Log(howManyTimesSixtPositionSearchedHorse + " Sixt Position");
 
                 howManyTimesSeventhPositionSearchedHorse--;
-                //Debug.Log(howManyTimesSeventhPositionSearchedHorse + " Seventh Position");
 
                 howManyTimesEightPositionSearchedHorse--;
-                //Debug.Log(howManyTimesEightPositionSearchedHorse + " Eight Position");
 
                 if (howManyTimesFirstPositionSearchedHorse < 0 && fifthSearchCompleteHorse)
                 {
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 1");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[0] && yPosToGO == moveToLocationAfterHorseListY[0])
                         {
-                            //Debug.Log("YES 111");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -908,46 +782,47 @@ public class GridController : MonoBehaviour
 
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 2");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[1] && yPosToGO == moveToLocationAfterHorseListY[1])
                         {
-                            Debug.Log("YES 222");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
 
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -958,46 +833,47 @@ public class GridController : MonoBehaviour
                 {
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 3");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[2] && yPosToGO == moveToLocationAfterHorseListY[2])
                         {
-                            Debug.Log("YES 333");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
 
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -1008,46 +884,47 @@ public class GridController : MonoBehaviour
                 {
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 4");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[3] && yPosToGO == moveToLocationAfterHorseListY[3])
                         {
-                            Debug.Log("YES 444");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
 
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -1058,46 +935,47 @@ public class GridController : MonoBehaviour
                 {
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 5");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[4] && yPosToGO == moveToLocationAfterHorseListY[4])
                         {
-                            Debug.Log("YES 555");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
 
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -1108,46 +986,47 @@ public class GridController : MonoBehaviour
                 {
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 6");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[5] && yPosToGO == moveToLocationAfterHorseListY[5])
                         {
-                            Debug.Log("YES 666");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
 
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -1158,46 +1037,47 @@ public class GridController : MonoBehaviour
                 {
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 7");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[6] && yPosToGO == moveToLocationAfterHorseListY[6])
                         {
-                            Debug.Log("YES 777");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
 
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -1208,46 +1088,47 @@ public class GridController : MonoBehaviour
                 {
                     foreach (GridPiece pieceToMoveTo in gridPieces)
                     {
-                        //Debug.Log("Seathcing For Position 8");
+
                         int xPosToGo = pieceToMoveTo.xPos;
                         int yPosToGO = pieceToMoveTo.yPos;
 
                         if (xPosToGo == moveToLocationAfterHorseListX[7] && yPosToGO == moveToLocationAfterHorseListY[7])
                         {
-                            Debug.Log("YES 888");
 
                             if (pieceToMoveTo.enemyPieceHere == false)
                             {
+                                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
                                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                                pieceToMoveTo.enemyHorsePieceHere = true;
                                 pieceToMoveTo.enemyPieceHere = true;
+
+                                howManyTimesFirstPositionSearchedHorse = 1337;
+                                howManyTimesSecondPositionSearchedHorse = 1337;
+                                howManyTimesThirdPositionSearchedHorse = 1337;
+                                howManyTimesFourthPositionSearchedHorse = 1337;
+                                howManyTimesFifthPositionSearchedHorse = 1337;
+                                howManyTimesSixtPositionSearchedHorse = 1337;
+                                howManyTimesSeventhPositionSearchedHorse = 1337;
+                                howManyTimesEightPositionSearchedHorse = 1337;
+
+                                firstSearchCompleteHorse = false;
+                                secondSearchCompleteHorse = false;
+                                thirdSearchCompleteHorse = false;
+                                fourthSearchCompleteHorse = false;
+                                fifthSearchCompleteHorse = false;
+                                seventhSearchCompleteHorse = false;
+                                eightSearchCompleteHorse = false;
+
+                                moveToLocationAfterHorseListX.Clear();
+                                moveToLocationAfterHorseListY.Clear();
 
                             }
                             else
                             {
-                                Debug.Log("Enemy Piece Arleady There");
+                                //Debug.Log("Enemy Piece Arleady There");
                             }
 
-                            Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
-
-                            howManyTimesFirstPositionSearchedHorse = 1337;
-                            howManyTimesSecondPositionSearchedHorse = 1337;
-                            howManyTimesThirdPositionSearchedHorse = 1337;
-                            howManyTimesFourthPositionSearchedHorse = 1337;
-                            howManyTimesFifthPositionSearchedHorse = 1337;
-                            howManyTimesSixtPositionSearchedHorse = 1337;
-                            howManyTimesSeventhPositionSearchedHorse = 1337;
-                            howManyTimesEightPositionSearchedHorse = 1337;
-
-                            firstSearchCompleteHorse = false;
-                            secondSearchCompleteHorse = false;
-                            thirdSearchCompleteHorse = false;
-                            fourthSearchCompleteHorse = false;
-                            fifthSearchCompleteHorse = false;
-                            seventhSearchCompleteHorse = false;
-                            eightSearchCompleteHorse = false;
-
-                            moveToLocationAfterHorseListX.Clear();
-                            moveToLocationAfterHorseListY.Clear();
+                            //Debug.Log(xPosToGo + " Where I Move X " + yPosToGO + " Where I Move Y");
 
                             break;
                         }
@@ -1278,7 +1159,7 @@ public class GridController : MonoBehaviour
                     moveToLocationAfterHorseListX.Clear();
                     moveToLocationAfterHorseListY.Clear();
 
-                    Debug.Log("No Position Found");
+                    //Debug.Log("No Position Found");
 
                     break;
                 }
@@ -1299,16 +1180,12 @@ public class GridController : MonoBehaviour
         {
             howManyTimesFirstPositionSearchedHorse += howMuchToAdd;
 
-            //Debug.Log(howManyTimesFirstPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
-
             firstSearchCompleteHorse = true;
         }
 
         if (whatPositionNumber == 2)
         {
             howManyTimesSecondPositionSearchedHorse += howMuchToAdd;
-
-            //Debug.Log(howManyTimesSecondPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
 
             secondSearchCompleteHorse = true;
         }
@@ -1317,16 +1194,12 @@ public class GridController : MonoBehaviour
         {
             howManyTimesThirdPositionSearchedHorse += howMuchToAdd;
 
-            //Debug.Log(howManyTimesThirdPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
-
             thirdSearchCompleteHorse = true;
         }
 
         if (whatPositionNumber == 4)
         {
             howManyTimesFourthPositionSearchedHorse += howMuchToAdd;
-
-            //Debug.Log(howManyTimesFourthPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
 
             fourthSearchCompleteHorse = true;
         }
@@ -1335,16 +1208,12 @@ public class GridController : MonoBehaviour
         {
             howManyTimesFifthPositionSearchedHorse += howMuchToAdd;
 
-            //Debug.Log(howManyTimesFifthPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
-
             fifthSearchCompleteHorse = true;
         }
 
         if (whatPositionNumber == 6)
         {
             howManyTimesSixtPositionSearchedHorse += howMuchToAdd;
-
-            //Debug.Log(howManyTimesSixtPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
 
             sixtSearchCompleteHorse = true;
         }
@@ -1353,8 +1222,6 @@ public class GridController : MonoBehaviour
         {
             howManyTimesSeventhPositionSearchedHorse += howMuchToAdd;
 
-            //Debug.Log(howManyTimesSeventhPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
-
             seventhSearchCompleteHorse = true;
         }
 
@@ -1362,12 +1229,37 @@ public class GridController : MonoBehaviour
         {
             howManyTimesEightPositionSearchedHorse += howMuchToAdd;
 
-            //Debug.Log(howManyTimesEightPositionSearchedHorse + " How Many Times Searched  " + whatPositionNumber + " What Search");
-
             eightSearchCompleteHorse = true;
         }
 
     }
 
     #endregion
+
+    #endregion
+
+    #region Delay Start
+
+    IEnumerator DelayStart()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece piece in gridPieces)
+        {
+            if (piece.enemyHorsePieceHere)
+            {
+                numberOfTimesLookingForPlayer++;
+                numberOfEnemys++;
+            }
+        }
+
+
+        Debug.Log(numberOfEnemys + " Enemys");
+        numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+    }
+
+    #endregion
+
 }

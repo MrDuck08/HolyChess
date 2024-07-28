@@ -46,6 +46,8 @@ public class BoardCreator : MonoBehaviour
 
         maxXRight = Random.Range(minRandomRange, maxRandomRange);
         maxXLeft = Random.Range(-minRandomRange, -maxRandomRange);
+        //maxXRight = minRandomRange;
+        //maxXLeft = -minRandomRange;
 
 
         boardWidth = maxXRight + -1 * maxXLeft + 1;
@@ -58,6 +60,8 @@ public class BoardCreator : MonoBehaviour
 
         maxYUp = Random.Range(minRandomRange, maxRandomRange);
         maxYDown = Random.Range(-minRandomRange, -maxRandomRange);
+        //maxYUp = minRandomRange;
+        //maxYDown = -minRandomRange;
 
         boardHeight = maxYUp + -1 * maxYDown - 1;
         //Debug.Log(boardHeight + " Height");
