@@ -83,9 +83,12 @@ public class GridController : MonoBehaviour
 
             if (xPos == currentX && yPos == currentY + 1)
             {
-                allPieces.anticipateMovment = true;
+                if (allPieces.enemyPieceHere == false)
+                {
+                    allPieces.anticipateMovment = true;
 
-                moveToTile = allPieces.gameObject;
+                    moveToTile = allPieces.gameObject;
+                }
             }
         }
     }
@@ -95,23 +98,10 @@ public class GridController : MonoBehaviour
         if(whatToMove == 0)
         {
             moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
-            foreach (Transform child in moveFromTileObject.transform)
-            {
-                if (child.tag == "Pawn")
-                {
-                    child.gameObject.SetActive(false);
-                }
+            moveFromTileObject.GetComponent<GridPiece>().playerPawnHere = false;
 
-            }
-
-            foreach (Transform child in moveToTile.transform)
-            {
-                if (child.tag == "Pawn")
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-            }
+            moveToTile.GetComponent<GridPiece>().playerPawnHere = true;
+            moveToTile.GetComponent<GridPiece>().playerPieceHere = true;
         }
     }
 
@@ -304,6 +294,8 @@ public class GridController : MonoBehaviour
 
             foreach (GridPiece allPieces in gridPieces)
             {
+                allPieces.CheckIfEnemyAttackedPlayer();
+
                 allPieces.playerTurn = true;
             }
 

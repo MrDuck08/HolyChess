@@ -13,7 +13,7 @@ public class GridPiece : MonoBehaviour
     bool enemySpawnGrid = false;
 
     bool mouseOver = false;
-    bool playerPawnHere = false;
+    public bool playerPawnHere = false;
 
     public bool playerPieceHere = false;
     public bool enemyHorsePieceHere = false;
@@ -66,6 +66,41 @@ public class GridPiece : MonoBehaviour
 
     private void Update()
     {
+
+        #region Pieces Visuals
+
+        #region Player Pieces
+
+        if (gameHasStarted)
+        {
+            if (playerPawnHere)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "Pawn")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "Pawn")
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+
+                }
+            }
+        }
+
+        #endregion
+
+        #region Enemy Pieces
+
         if (enemyHorsePieceHere)
         {
             foreach (Transform child in gameObject.transform)
@@ -88,6 +123,10 @@ public class GridPiece : MonoBehaviour
 
             }
         }
+
+        #endregion
+
+        #endregion
 
         if (!playerPieceHere)
         {
@@ -182,12 +221,6 @@ public class GridPiece : MonoBehaviour
 
                 controller.EnemyHorseMovmentCall(xPos, yPos, gameObject);
 
-                if (playerPieceHere)
-                {
-                    playerPawnHere = false;
-                    Debug.Log("KILL");
-                    // Change This So Player Can Die
-                }
             }
 
         }
@@ -231,5 +264,15 @@ public class GridPiece : MonoBehaviour
     }
 
     #endregion
+
+    public void CheckIfEnemyAttackedPlayer()
+    {
+        if (playerPieceHere && enemyPieceHere)
+        {
+            playerPawnHere = false;
+            Debug.Log("KILL");
+
+        }
+    }
 
 }

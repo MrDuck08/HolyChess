@@ -17,7 +17,7 @@ public class BoardCreator : MonoBehaviour
 
     int whiteOrBlackToSPawn = 1;
 
-    [SerializeField] int maxRandomRange = 11;
+    [SerializeField] int maxRandomRange = 10;
     [SerializeField] int minRandomRange = 5;
 
     bool firstDone = false;
