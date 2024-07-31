@@ -102,13 +102,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xPos: 0
   yPos: 0
+  playerPawnHere: 0
   playerPieceHere: 0
+  enemyHorsePieceHere: 0
   enemyPieceHere: 0
   anticipateMovment: 0
   anticipatePlayerAttack: 0
   gameHasStarted: 0
   spawningPawnNow: 0
-  yourTurn: 1
+  playerTurn: 1
 --- !u!61 &7472471489871962610
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -27,7 +27,8 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
-    Color32 visualls;
+    Color32 anticipateMovemtVisualls;
+    Color32 PieceVisualls;
 
     GridController controller;
 
@@ -39,7 +40,8 @@ public class GridPiece : MonoBehaviour
     {
         xPos = x;
         yPos = y;
-        visualls = whatVisualls;
+        anticipateMovemtVisualls = whatVisualls;
+        PieceVisualls = whatVisualls;
 
         if(spawnWho == 0)
         {
@@ -52,7 +54,7 @@ public class GridPiece : MonoBehaviour
             enemyPieceHere = true;
         }
 
-        gameObject.GetComponent<SpriteRenderer>().color = visualls;
+        gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
 
         transform.position = new Vector2 (xPos, yPos);
     }
@@ -137,14 +139,20 @@ public class GridPiece : MonoBehaviour
 
         if (anticipateMovment)
         {
-            visualls.a = 144;
-            gameObject.GetComponent<SpriteRenderer>().color = visualls;
+            anticipateMovemtVisualls.a = 144;
+            gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
         }
         else
         {
-            visualls.a = 255;
-            gameObject.GetComponent<SpriteRenderer>().color = visualls;
+            anticipateMovemtVisualls.a = 255;
+            gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
         }
+
+        if (anticipatePlayerAttack)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+
 
         #endregion
 
@@ -158,16 +166,17 @@ public class GridPiece : MonoBehaviour
                 if (playerPawnHere && gameHasStarted)
                 {
                     controller.AnticipatePawnMovment(xPos, yPos, gameObject);
+                    controller.AnticipatePawnAttack(xPos, yPos, gameObject);
                 }
 
                 #endregion
 
-                if (!playerPawnHere)
+                if (!playerPieceHere)
                 {
 
                     #region Start Spawn
 
-                    if (playerSpawnGrid && spawningPawnNow)
+                    if (playerSpawnGrid && spawningPawnNow && !gameHasStarted)
                     {
                         playerPawnHere = true;
                         playerPieceHere = true;
@@ -209,9 +218,40 @@ public class GridPiece : MonoBehaviour
                     }
                     #endregion
 
+                    #region Attacking
+
+                    if (anticipatePlayerAttack)
+                    {
+                        controller.AttackPiece(0);
+
+                        playerPieceHere = true;
+                        playerPawnHere = true;
+
+                        enemyPieceHere = false;
+                        enemyHorsePieceHere = false;
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.anticipatePlayerAttack = false;
+                        }
+                    }
+                    else
+                    {
+                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.anticipatePlayerAttack = false;
+                        }
+                    }
+
+                    #endregion
+
                 }
             }
         }
+
+        #region Enemy Movments
 
         if (!playerTurn)
         {
@@ -224,6 +264,8 @@ public class GridPiece : MonoBehaviour
             }
 
         }
+
+        #endregion
     }
 
     #region Mouse Over & Exit

@@ -9,7 +9,8 @@ public class GridController : MonoBehaviour
     GridPiece[] gridPieces;
 
     GameObject moveFromTileObject;
-    GameObject moveToTile;
+    GameObject moveToTileObject;
+    List<GameObject> attackFromTileObjectList = new List<GameObject>();
 
     #region Horse movemnt 
 
@@ -87,22 +88,74 @@ public class GridController : MonoBehaviour
                 {
                     allPieces.anticipateMovment = true;
 
-                    moveToTile = allPieces.gameObject;
+                    moveToTileObject = allPieces.gameObject;
+
                 }
             }
         }
     }
 
+    public void AnticipatePawnAttack(int currentX, int currentY, GameObject callerGameObject)
+    {
+        moveFromTileObject = callerGameObject;
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece allPieces in gridPieces)
+        {
+            int xPos = allPieces.xPos;
+            int yPos = allPieces.yPos;
+
+            if (xPos == currentX + 1 && yPos == currentY + 1)
+            {
+
+                if(allPieces.enemyPieceHere == true)
+                {
+                    allPieces.anticipatePlayerAttack = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+                }
+
+            }
+
+            if (xPos == currentX - 1 && yPos == currentY + 1)
+            {
+
+                if (allPieces.enemyPieceHere == true)
+                {
+                    allPieces.anticipatePlayerAttack = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+                }
+
+            }
+        }
+
+    }
+
     public void movePiece(int whatToMove)
     {
+        // 0 = Pawn
+
         if(whatToMove == 0)
         {
             moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
             moveFromTileObject.GetComponent<GridPiece>().playerPawnHere = false;
 
-            moveToTile.GetComponent<GridPiece>().playerPawnHere = true;
-            moveToTile.GetComponent<GridPiece>().playerPieceHere = true;
         }
+    }
+
+    public void AttackPiece(int whatToMove)
+    {
+        // What Piece Is Attacking
+        // 0 = Pawn
+
+        if(whatToMove == 0)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+            moveFromTileObject.GetComponent<GridPiece>().playerPawnHere = false;
+        }
+
     }
 
     #endregion
