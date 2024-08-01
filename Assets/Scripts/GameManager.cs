@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
         foreach (GridPiece allPieces in gridPieces)
         {
             allPieces.playerTurn = false;
+
+            allPieces.movedOnce = false;
         }
 
     }

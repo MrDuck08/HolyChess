@@ -12,7 +12,7 @@ public class GridController : MonoBehaviour
     GameObject moveToTileObject;
     List<GameObject> attackFromTileObjectList = new List<GameObject>();
 
-    #region Horse movemnt 
+    #region Enemy Horse movemnt 
 
     int numberOfTimesLookingForPlayer = 0;
     int numberOfTimesLookingForPlayerLeft = 0;
@@ -69,7 +69,9 @@ public class GridController : MonoBehaviour
         StartCoroutine(DelayStart());
     }
 
-    #region Pawn Movment
+    #region Player Movment/Attack
+
+    #region Pawn
 
     public void AnticipatePawnMovment(int currentX, int currentY, GameObject callerGameObject)
     {
@@ -87,8 +89,7 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == false)
                 {
                     allPieces.anticipateMovment = true;
-
-                    moveToTileObject = allPieces.gameObject;
+                    allPieces.anticipatingPlayerPawn = true;
 
                 }
             }
@@ -112,6 +113,7 @@ public class GridController : MonoBehaviour
                 if(allPieces.enemyPieceHere == true)
                 {
                     allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerPawn = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
                 }
@@ -124,6 +126,7 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
                     allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerPawn = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
                 }
@@ -133,15 +136,200 @@ public class GridController : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Horse
+
+    public void AnticipateHorseMovment(int currentX, int currentY, GameObject callerGameObject)
+    {
+        moveFromTileObject = callerGameObject;
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece allPieces in gridPieces)
+        {
+            int xPos = allPieces.xPos;
+            int yPos = allPieces.yPos;
+
+            #region Upp
+
+            if (xPos == currentX + 1 && yPos == currentY + 2)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            if (xPos == currentX - 1 && yPos == currentY + 2)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            #endregion
+
+            #region Down
+
+            if (xPos == currentX + 1 && yPos == currentY - 2)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            if (xPos == currentX - 1 && yPos == currentY - 2)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            #endregion
+
+            #region Right
+
+            if (xPos == currentX + 2 && yPos == currentY + 1)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            if (xPos == currentX + 2 && yPos == currentY - 1)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            #endregion
+
+            #region Left
+
+            if (xPos == currentX - 2 && yPos == currentY + 1)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            if (xPos == currentX - 2 && yPos == currentY - 1)
+            {
+                if (allPieces.enemyPieceHere == true)
+                {
+
+                    allPieces.anticipatePlayerAttack = true;
+                    allPieces.anticipatingPlayerHorse = true;
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+                else
+                {
+                    allPieces.anticipateMovment = true;
+                    allPieces.anticipatingPlayerHorse = true;
+                }
+            }
+
+            #endregion
+        }
+    }
+
+    #endregion
+
     public void movePiece(int whatToMove)
     {
         // 0 = Pawn
+        // 1 = Horse
 
-        if(whatToMove == 0)
+        moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+
+        if (whatToMove == 0)
         {
-            moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
             moveFromTileObject.GetComponent<GridPiece>().playerPawnHere = false;
+        }
 
+        if(whatToMove == 1)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerHorseHere = false;
         }
     }
 
@@ -149,11 +337,18 @@ public class GridController : MonoBehaviour
     {
         // What Piece Is Attacking
         // 0 = Pawn
+        // 1 = Horse
 
-        if(whatToMove == 0)
+        moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+
+        if (whatToMove == 0)
         {
-            moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
             moveFromTileObject.GetComponent<GridPiece>().playerPawnHere = false;
+        }
+
+        if(whatToMove == 1)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerHorseHere = false;
         }
 
     }

@@ -7,22 +7,32 @@ public class GridPiece : MonoBehaviour
     public int xPos;
     public int yPos;
 
+
+
     #region bools
 
     bool playerSpawnGrid = false;
     bool enemySpawnGrid = false;
 
     bool mouseOver = false;
-    public bool playerPawnHere = false;
 
+    public bool playerPawnHere = false;
+    public bool playerHorseHere = false;
     public bool playerPieceHere = false;
+
     public bool enemyHorsePieceHere = false;
     public bool enemyPieceHere = false;
+
     public bool anticipateMovment;
     public bool anticipatePlayerAttack;
+    public bool anticipatingPlayerPawn;
+    public bool anticipatingPlayerHorse;
+    public bool movedOnce = false;
 
     public bool gameHasStarted = false;
     public bool spawningPawnNow = false;
+    public bool spawningHorseNow = false;
+    public bool placingDownAUNitNow = false;
     public bool playerTurn = true;
 
     #endregion
@@ -97,6 +107,29 @@ public class GridPiece : MonoBehaviour
 
                 }
             }
+
+            if (playerHorseHere)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerHorse")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerHorse")
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+
+                }
+            }
         }
 
         #endregion
@@ -130,14 +163,19 @@ public class GridPiece : MonoBehaviour
 
         #endregion
 
+        #region Check If Dead
+
         if (!playerPieceHere)
         {
             playerPawnHere = false;
+            playerHorseHere = false;
         }
+
+        #endregion
 
         #region Anticipate Movment
 
-        if (anticipateMovment)
+        if (anticipateMovment && !movedOnce)
         {
             anticipateMovemtVisualls.a = 144;
             gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
@@ -148,13 +186,15 @@ public class GridPiece : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
         }
 
-        if (anticipatePlayerAttack)
+        if (anticipatePlayerAttack && !movedOnce)
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         }
 
 
         #endregion
+
+        #region Movment
 
         if (Input.GetMouseButton(0))
         {
@@ -163,10 +203,22 @@ public class GridPiece : MonoBehaviour
 
                 #region Anticipate Movment
 
-                if (playerPawnHere && gameHasStarted)
+                if (gameHasStarted)
                 {
-                    controller.AnticipatePawnMovment(xPos, yPos, gameObject);
-                    controller.AnticipatePawnAttack(xPos, yPos, gameObject);
+                    if (!movedOnce)
+                    {
+
+                        if (playerPawnHere)
+                        {
+                            controller.AnticipatePawnMovment(xPos, yPos, gameObject);
+                            controller.AnticipatePawnAttack(xPos, yPos, gameObject);
+                        }
+
+                        if (playerHorseHere)
+                        {
+                            controller.AnticipateHorseMovment(xPos, yPos, gameObject);
+                        }
+                    }
                 }
 
                 #endregion
@@ -176,16 +228,34 @@ public class GridPiece : MonoBehaviour
 
                     #region Start Spawn
 
-                    if (playerSpawnGrid && spawningPawnNow && !gameHasStarted)
+                    if (playerSpawnGrid && !gameHasStarted)
                     {
-                        playerPawnHere = true;
-                        playerPieceHere = true;
-
-                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                        foreach (GridPiece allPiece in gridPieces)
+                        if (spawningPawnNow)
                         {
-                            allPiece.spawningPawnNow = false;
+                            playerPawnHere = true;
+                            playerPieceHere = true;
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.spawningPawnNow = false;
+                                allPiece.placingDownAUNitNow = false;
+                            }
+                        }
+
+                        if (spawningHorseNow)
+                        {
+                            playerHorseHere = true;
+                            playerPieceHere = true;
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.spawningHorseNow = false;
+                                allPiece.placingDownAUNitNow = false;
+                            }
                         }
                     }
 
@@ -195,10 +265,25 @@ public class GridPiece : MonoBehaviour
 
                     if (anticipateMovment)
                     {
-                        controller.movePiece(0);
+                        #region Who Is Moving
+
+                        if (anticipatingPlayerPawn)
+                        {
+                            playerPawnHere = true;
+                            controller.movePiece(0);
+                        }
+
+                        if (anticipatingPlayerHorse)
+                        {
+                            playerHorseHere = true;
+                            controller.movePiece(1);
+                        }
+
+                        #endregion
 
                         playerPieceHere = true;
-                        playerPawnHere = true;
+
+                        movedOnce = true;
 
                         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -206,6 +291,7 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipateMovment = false;
                         }
+
                     }
                     else
                     {
@@ -222,10 +308,26 @@ public class GridPiece : MonoBehaviour
 
                     if (anticipatePlayerAttack)
                     {
-                        controller.AttackPiece(0);
+
+                        #region Who Is Attacking
+
+                        if (anticipatingPlayerPawn)
+                        {
+                            playerPawnHere = true;
+                            controller.AttackPiece(0);
+                        }
+
+                        if (anticipatingPlayerHorse)
+                        {
+                            playerHorseHere = true;
+                            controller.AttackPiece(1);
+                        }
+
+                        #endregion
 
                         playerPieceHere = true;
-                        playerPawnHere = true;
+
+                        movedOnce = true;
 
                         enemyPieceHere = false;
                         enemyHorsePieceHere = false;
@@ -234,6 +336,7 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipatePlayerAttack = false;
                         }
+
                     }
                     else
                     {
@@ -250,6 +353,8 @@ public class GridPiece : MonoBehaviour
                 }
             }
         }
+
+        #endregion
 
         #region Enemy Movments
 
@@ -272,15 +377,29 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if(playerSpawnGrid && !playerPawnHere && spawningPawnNow && !gameHasStarted)
+        if(playerSpawnGrid && !playerPawnHere && !gameHasStarted && !playerHorseHere)
         {
-            foreach (Transform child in gameObject.transform)
+            if (spawningPawnNow)
             {
-                if (child.tag == "Pawn")
+                foreach (Transform child in gameObject.transform)
                 {
-                    child.gameObject.SetActive(true);
-                }
+                    if (child.tag == "Pawn")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
 
+                }
+            }
+
+            if (spawningHorseNow)
+            {
+                foreach(Transform child in gameObject.transform)
+                {
+                    if(child.tag == "PlayerHorse")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                }
             }
         }
 
@@ -289,7 +408,7 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (playerSpawnGrid && !playerPawnHere && !gameHasStarted)
+        if (playerSpawnGrid && !playerPawnHere && !gameHasStarted && !playerHorseHere)
         {
             foreach (Transform child in gameObject.transform)
             {
@@ -298,6 +417,10 @@ public class GridPiece : MonoBehaviour
                     child.gameObject.SetActive(false);
                 }
 
+                if(child.tag == "PlayerHorse")
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
         }
         
@@ -311,8 +434,8 @@ public class GridPiece : MonoBehaviour
     {
         if (playerPieceHere && enemyPieceHere)
         {
-            playerPawnHere = false;
-            Debug.Log("KILL");
+
+            playerPieceHere = false;        
 
         }
     }

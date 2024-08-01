@@ -5,6 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public int pawnsInInventory = 0;
+    public int horseInInvenory = 0;
 
     public bool gameHasStarted = false;
 
@@ -12,16 +13,41 @@ public class Inventory : MonoBehaviour
 
     public void PlacePawn()
     {
-        if(pawnsInInventory > 0 && !gameHasStarted)
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+        foreach (GridPiece piece in gridPieces)
         {
-            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-            foreach (GridPiece allPieces in gridPieces)
+            if (pawnsInInventory > 0 && !gameHasStarted && piece.placingDownAUNitNow == false)
             {
-                allPieces.spawningPawnNow = true;
-            }
 
-            pawnsInInventory--;
+                foreach (GridPiece allPieces in gridPieces)
+                {
+                    allPieces.spawningPawnNow = true;
+                    allPieces.placingDownAUNitNow = true;
+                }
+
+                pawnsInInventory--;
+            }
+        }
+
+    }
+
+    public void PlaceHorse()
+    {
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+        foreach (GridPiece piece in gridPieces)
+        {
+            if (horseInInvenory > 0 && !gameHasStarted && piece.placingDownAUNitNow == false)
+            {
+                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                foreach (GridPiece allPieces in gridPieces)
+                {
+                    allPieces.spawningHorseNow = true;
+                    allPieces.placingDownAUNitNow = true;
+                }
+
+                horseInInvenory--;
+            }
         }
     }
 }
