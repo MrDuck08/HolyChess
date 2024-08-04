@@ -18,6 +18,7 @@ public class GridPiece : MonoBehaviour
 
     public bool playerPawnHere = false;
     public bool playerHorseHere = false;
+    public bool playerTowerHere = false;
     public bool playerPieceHere = false;
 
     public bool enemyHorsePieceHere = false;
@@ -32,6 +33,7 @@ public class GridPiece : MonoBehaviour
     public bool gameHasStarted = false;
     public bool spawningPawnNow = false;
     public bool spawningHorseNow = false;
+    public bool spawningTowerNow = false;
     public bool placingDownAUNitNow = false;
     public bool playerTurn = true;
 
@@ -108,6 +110,29 @@ public class GridPiece : MonoBehaviour
                 }
             }
 
+            if (playerTowerHere)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerTower")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerTower")
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+
+                }
+            }
+
             if (playerHorseHere)
             {
                 foreach (Transform child in gameObject.transform)
@@ -175,7 +200,7 @@ public class GridPiece : MonoBehaviour
 
         #region Anticipate Movment
 
-        if (anticipateMovment && !movedOnce)
+        if (anticipateMovment && !movedOnce && !playerPieceHere)
         {
             anticipateMovemtVisualls.a = 144;
             gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
@@ -194,7 +219,7 @@ public class GridPiece : MonoBehaviour
 
         #endregion
 
-        #region Movment
+        #region Movment + Spawn
 
         if (Input.GetMouseButton(0))
         {
@@ -217,6 +242,11 @@ public class GridPiece : MonoBehaviour
                         if (playerHorseHere)
                         {
                             controller.AnticipateHorseMovment(xPos, yPos, gameObject);
+                        }
+
+                        if (playerTowerHere)
+                        {
+                            controller.AnticipateTowerMovment(xPos, yPos, gameObject);
                         }
                     }
                 }
@@ -254,6 +284,20 @@ public class GridPiece : MonoBehaviour
                             foreach (GridPiece allPiece in gridPieces)
                             {
                                 allPiece.spawningHorseNow = false;
+                                allPiece.placingDownAUNitNow = false;
+                            }
+                        }
+
+                        if (spawningTowerNow)
+                        {
+                            playerTowerHere = true;
+                            playerPieceHere = true;
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.spawningTowerNow = false;
                                 allPiece.placingDownAUNitNow = false;
                             }
                         }
@@ -377,7 +421,7 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if(playerSpawnGrid && !playerPawnHere && !gameHasStarted && !playerHorseHere)
+        if(playerSpawnGrid && !gameHasStarted && !playerPieceHere)
         {
             if (spawningPawnNow)
             {
@@ -401,6 +445,17 @@ public class GridPiece : MonoBehaviour
                     }
                 }
             }
+
+            if (spawningTowerNow)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerTower")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                }
+            }
         }
 
         mouseOver = true;
@@ -408,7 +463,7 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (playerSpawnGrid && !playerPawnHere && !gameHasStarted && !playerHorseHere)
+        if (playerSpawnGrid && !gameHasStarted && !playerPieceHere)
         {
             foreach (Transform child in gameObject.transform)
             {
@@ -418,6 +473,11 @@ public class GridPiece : MonoBehaviour
                 }
 
                 if(child.tag == "PlayerHorse")
+                {
+                    child.gameObject.SetActive(false);
+                }
+
+                if (child.tag == "PlayerTower")
                 {
                     child.gameObject.SetActive(false);
                 }

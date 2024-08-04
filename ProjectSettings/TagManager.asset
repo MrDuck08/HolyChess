@@ -7,6 +7,7 @@ TagManager:
   - Pawn
   - EnemyHorse
   - PlayerHorse
+  - PlayerTower
   layers:
   - Default
   - TransparentFX

@@ -58,6 +58,15 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    #region Player Tower
+
+    bool foundNothing = false;
+    bool foundSomething;
+    bool hitSomething = false;
+    int numberOfRound = 1;
+
+    #endregion
+
     int infoInt = 0;
 
     int testInt;
@@ -315,6 +324,260 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    #region Tower
+
+    public void AnticipateTowerMovment(int currentX, int currentY, GameObject callerGameObject)
+    {
+        moveFromTileObject = callerGameObject;
+
+        #region Left
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - numberOfRound && yPos == currentY)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+                    else
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        break;
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        foundNothing = true;
+                    }
+                }
+            }
+
+            numberOfRound++;
+
+            if (foundNothing)
+            {
+                foundSomething = false;
+                foundNothing = false;
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Right
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + numberOfRound && yPos == currentY)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+                    else
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        break;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        foundNothing = true;
+                    }
+                }
+            }
+
+            numberOfRound++;
+
+            if (foundNothing)
+            {
+                foundSomething = false;
+                foundNothing = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Down
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX && yPos == currentY - numberOfRound)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+                    else
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        break;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        foundNothing = true;
+                    }
+                }
+            }
+
+            numberOfRound++;
+
+            if (foundNothing)
+            {
+                foundSomething = false;
+                foundNothing = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Up
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX && yPos == currentY + numberOfRound)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+                    else
+                    {
+                        foundSomething = true;
+                        foundNothing = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerHorse = true;
+
+                        break;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        foundNothing = true;
+                    }
+                }
+            }
+
+            numberOfRound++;
+
+            if (foundNothing)
+            {
+                foundSomething = false;
+                foundNothing = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+    }
+
+    #endregion
+
+    #region General Stuff
+
     public void movePiece(int whatToMove)
     {
         // 0 = Pawn
@@ -352,6 +615,8 @@ public class GridController : MonoBehaviour
         }
 
     }
+
+    #endregion
 
     #endregion
 
