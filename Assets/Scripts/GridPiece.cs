@@ -28,6 +28,7 @@ public class GridPiece : MonoBehaviour
     public bool anticipatePlayerAttack;
     public bool anticipatingPlayerPawn;
     public bool anticipatingPlayerHorse;
+    public bool anticipatingPlayerTower;
     public bool movedOnce = false;
 
     public bool gameHasStarted = false;
@@ -194,6 +195,7 @@ public class GridPiece : MonoBehaviour
         {
             playerPawnHere = false;
             playerHorseHere = false;
+            playerTowerHere = false;
         }
 
         #endregion
@@ -323,6 +325,13 @@ public class GridPiece : MonoBehaviour
                             controller.movePiece(1);
                         }
 
+
+                        if (anticipatingPlayerTower)
+                        {
+                            playerTowerHere = true;
+                            controller.movePiece(2);
+                        }
+
                         #endregion
 
                         playerPieceHere = true;
@@ -365,6 +374,12 @@ public class GridPiece : MonoBehaviour
                         {
                             playerHorseHere = true;
                             controller.AttackPiece(1);
+                        }
+
+                        if (anticipatingPlayerTower)
+                        {
+                            playerTowerHere = true;
+                            controller.AttackPiece(2);
                         }
 
                         #endregion

@@ -60,7 +60,7 @@ public class GridController : MonoBehaviour
 
     #region Player Tower
 
-    bool foundNothing = false;
+    bool breakLoop = false;
     bool foundSomething;
     bool hitSomething = false;
     int numberOfRound = 1;
@@ -341,45 +341,55 @@ public class GridController : MonoBehaviour
 
                 if (xPos == currentX - numberOfRound && yPos == currentY)
                 {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
                     if (allPieces.enemyPieceHere == true)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerHorse = true;
+                        allPieces.anticipatingPlayerTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
                         break;
 
                     }
-                    else
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerHorse = true;
+                        allPieces.anticipatingPlayerTower = true;
 
-                        break;
                     }
                 }
                 else
                 {
                     if (!foundSomething)
                     {
-                        foundNothing = true;
+                        breakLoop = true;
                     }
                 }
             }
 
+            foundSomething = false;
+
             numberOfRound++;
 
-            if (foundNothing)
+            if (breakLoop)
             {
                 foundSomething = false;
-                foundNothing = false;
+                breakLoop = false;
+
                 numberOfRound = 1;
 
                 break;
@@ -400,28 +410,34 @@ public class GridController : MonoBehaviour
 
                 if (xPos == currentX + numberOfRound && yPos == currentY)
                 {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
                     if (allPieces.enemyPieceHere == true)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerHorse = true;
+                        allPieces.anticipatingPlayerTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
                         break;
 
                     }
-                    else
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerHorse = true;
-
-                        break;
+                        allPieces.anticipatingPlayerTower = true;
 
                     }
                 }
@@ -429,17 +445,19 @@ public class GridController : MonoBehaviour
                 {
                     if (!foundSomething)
                     {
-                        foundNothing = true;
+                        breakLoop = true;
                     }
                 }
             }
 
+            foundSomething = false;
+
             numberOfRound++;
 
-            if (foundNothing)
+            if (breakLoop)
             {
                 foundSomething = false;
-                foundNothing = false;
+                breakLoop = false;
 
                 numberOfRound = 1;
 
@@ -461,28 +479,34 @@ public class GridController : MonoBehaviour
 
                 if (xPos == currentX && yPos == currentY - numberOfRound)
                 {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
                     if (allPieces.enemyPieceHere == true)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerHorse = true;
+                        allPieces.anticipatingPlayerTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
                         break;
 
                     }
-                    else
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerHorse = true;
-
-                        break;
+                        allPieces.anticipatingPlayerTower = true;
 
                     }
                 }
@@ -490,17 +514,19 @@ public class GridController : MonoBehaviour
                 {
                     if (!foundSomething)
                     {
-                        foundNothing = true;
+                        breakLoop = true;
                     }
                 }
             }
 
+            foundSomething = false;
+
             numberOfRound++;
 
-            if (foundNothing)
+            if (breakLoop)
             {
                 foundSomething = false;
-                foundNothing = false;
+                breakLoop = false;
 
                 numberOfRound = 1;
 
@@ -522,28 +548,34 @@ public class GridController : MonoBehaviour
 
                 if (xPos == currentX && yPos == currentY + numberOfRound)
                 {
+                    if(allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
                     if (allPieces.enemyPieceHere == true)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerHorse = true;
+                        allPieces.anticipatingPlayerTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
                         break;
 
                     }
-                    else
+
+                    if(allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
                     {
                         foundSomething = true;
-                        foundNothing = false;
+                        breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerHorse = true;
-
-                        break;
+                        allPieces.anticipatingPlayerTower = true;
 
                     }
                 }
@@ -551,17 +583,19 @@ public class GridController : MonoBehaviour
                 {
                     if (!foundSomething)
                     {
-                        foundNothing = true;
+                        breakLoop = true;
                     }
                 }
             }
 
+            foundSomething = false;
+
             numberOfRound++;
 
-            if (foundNothing)
+            if (breakLoop)
             {
                 foundSomething = false;
-                foundNothing = false;
+                breakLoop = false;
 
                 numberOfRound = 1;
 
@@ -582,6 +616,7 @@ public class GridController : MonoBehaviour
     {
         // 0 = Pawn
         // 1 = Horse
+        // 2 = Tower
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
 
@@ -593,6 +628,11 @@ public class GridController : MonoBehaviour
         if(whatToMove == 1)
         {
             moveFromTileObject.GetComponent<GridPiece>().playerHorseHere = false;
+        }
+
+        if (whatToMove == 2)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerTowerHere = false;
         }
     }
 
@@ -601,6 +641,7 @@ public class GridController : MonoBehaviour
         // What Piece Is Attacking
         // 0 = Pawn
         // 1 = Horse
+        // 2 = Tower
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
 
@@ -612,6 +653,11 @@ public class GridController : MonoBehaviour
         if(whatToMove == 1)
         {
             moveFromTileObject.GetComponent<GridPiece>().playerHorseHere = false;
+        }
+
+        if(whatToMove == 2)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerTowerHere = false;
         }
 
     }
