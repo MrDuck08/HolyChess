@@ -31,6 +31,9 @@ public class BoardCreator : MonoBehaviour
 
     #endregion
 
+    int howManyEnemies;
+    int testInt = 0;
+
 
     [SerializeField] GridPiece gridPieceObject;
 
@@ -125,8 +128,12 @@ public class BoardCreator : MonoBehaviour
 
                     GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                    spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(255, 255, 255, 255));
+                    spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(255, 255, 255, 255), testInt);
 
+                    if(playerOrEnemySpawnPiece == 1)
+                    {
+                        testInt++;
+                    }
 
                     whiteOrBlackToSPawn++;
                 }
@@ -155,9 +162,12 @@ public class BoardCreator : MonoBehaviour
 
                         GridPiece spawnedObject = Instantiate(gridPieceObject);
 
-                        spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(0, 142, 99, 255));
+                        spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(0, 142, 99, 255), testInt);
 
-
+                        if (playerOrEnemySpawnPiece == 1)
+                        {
+                            testInt++;
+                        }
                         whiteOrBlackToSPawn--;
                     }
                 }

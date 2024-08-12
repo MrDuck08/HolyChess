@@ -110,6 +110,7 @@ MonoBehaviour:
   playerTowerHere: 0
   playerPieceHere: 0
   enemyHorsePieceHere: 0
+  enemyTowerPieceHere: 0
   enemyPieceHere: 0
   anticipateMovment: 0
   anticipatePlayerAttack: 0
@@ -182,11 +183,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4777245173948433625, guid: e11bc86f5b600264da8de66fd4da2179, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.8725986
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4777245173948433625, guid: e11bc86f5b600264da8de66fd4da2179, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.0657618
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4777245173948433625, guid: e11bc86f5b600264da8de66fd4da2179, type: 3}
       propertyPath: m_LocalPosition.z

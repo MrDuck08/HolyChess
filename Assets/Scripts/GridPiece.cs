@@ -22,6 +22,7 @@ public class GridPiece : MonoBehaviour
     public bool playerPieceHere = false;
 
     public bool enemyHorsePieceHere = false;
+    public bool enemyTowerPieceHere = false;
     public bool enemyPieceHere = false;
 
     public bool anticipateMovment;
@@ -49,7 +50,7 @@ public class GridPiece : MonoBehaviour
 
     #region Spawn info
 
-    public void SpawnLocation(int x, int y, int spawnWho, Color32 whatVisualls)
+    public void SpawnLocation(int x, int y, int spawnWho, Color32 whatVisualls, int whatEnemyToSpawn)
     {
         xPos = x;
         yPos = y;
@@ -63,8 +64,14 @@ public class GridPiece : MonoBehaviour
         if(spawnWho == 1)
         {
             enemySpawnGrid = true;
-            enemyHorsePieceHere = true;
             enemyPieceHere = true;
+
+            //Change Later
+            if(whatEnemyToSpawn == 0)
+            {
+                enemyTowerPieceHere = true;
+            }
+
         }
 
         gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
@@ -178,6 +185,29 @@ public class GridPiece : MonoBehaviour
             foreach (Transform child in gameObject.transform)
             {
                 if (child.tag == "EnemyHorse")
+                {
+                    child.gameObject.SetActive(false);
+                }
+
+            }
+        }
+
+        if (enemyTowerPieceHere)
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyTower")
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+            }
+        }
+        else
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyTower")
                 {
                     child.gameObject.SetActive(false);
                 }
@@ -424,6 +454,13 @@ public class GridPiece : MonoBehaviour
             {
 
                 controller.EnemyHorseMovmentCall(xPos, yPos, gameObject);
+
+            }
+
+            if (enemyTowerPieceHere)
+            {
+
+                controller.EnemyTowerMovmentCall(xPos, yPos, gameObject);
 
             }
 

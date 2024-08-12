@@ -2252,7 +2252,6 @@ public class GridController : MonoBehaviour
                         moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
                         moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
 
-                        WhatSearchCompletedEnemyHorse(whatPositionNumber, 1);
                     }
                 }
 
@@ -2267,199 +2266,351 @@ public class GridController : MonoBehaviour
             numberOfTimesLookingForPlayerLeft--;
         }
 
-        if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0 && currentAmountOfTries < maxNumberOfTries)
+        if (currentAmountOfTries < maxNumberOfTries)
         {
-
-            currentAmountOfTries += 2;
-
-            numberOfTimesLookingForPlayer = 1;
-            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
-
-            currentXOfHorseListComplete.Clear();
-            currentYOfHorseListComplete.Clear();
-
-            currentXOfHorseListComplete.AddRange(currentXOfHorseList);
-            currentYOfHorseListComplete.AddRange(currentYOfHorseList);
-
-            currentYOfHorseList.Clear();
-            currentXOfHorseList.Clear();
-
-            WhatSearchCompletedEnemyHorse(whatPositionNumber, 1);
-
-            #region Search For Player A New
-
-            for (int i = 0; i < currentXOfHorseListComplete.Count; i++)
+            if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0)
             {
 
-                // 0 = Check Horizontal(It Was A Up Or Down Movment)
-                // 1 = Check Vertical(It Was A Left Or Right Movment)
+                currentAmountOfTries += 2;
 
-                // Fixa Det Här ( Tänk På Hur Den Ska Ta Alla Positioner Sen)
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
-                if(yOrXMovment == 0)
+                currentXOfHorseListComplete.Clear();
+                currentYOfHorseListComplete.Clear();
+
+                currentXOfHorseListComplete.AddRange(currentXOfHorseList);
+                currentYOfHorseListComplete.AddRange(currentYOfHorseList);
+
+                currentYOfHorseList.Clear();
+                currentXOfHorseList.Clear();
+
+                #region Search For Player A New
+
+                for (int i = 0; i < currentXOfHorseListComplete.Count; i++)
                 {
-                    if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+
+                    // 0 = Check Horizontal(It Was A Up Or Down Movment)
+                    // 1 = Check Vertical(It Was A Left Or Right Movment)
+
+                    if (yOrXMovment == 0)
                     {
-                        #region Up
-
-                        while (true)
+                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                         {
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+                            #region Up
 
-                            foreach (GridPiece allPieces in gridPieces)
+                            while (true)
                             {
-                                int xPos = allPieces.xPos;
-                                int yPos = allPieces.yPos;
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
-                                if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRound)
+                                foreach (GridPiece allPieces in gridPieces)
                                 {
-                                    if (allPieces.playerPieceHere == true)
-                                    {
-                                        foundSomething = true;
-                                        breakLoop = true;
+                                    int xPos = allPieces.xPos;
+                                    int yPos = allPieces.yPos;
 
-                                        break;
+                                    if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRound)
+                                    {
+                                        if (allPieces.playerPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+                                        }
+
+                                        if (allPieces.enemyPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+
+                                        }
+
+                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = false;
+
+                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                                            {
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, false);
+
+                                            }
+
+                                        }
                                     }
-
-                                    if (allPieces.enemyPieceHere == true)
+                                    else
                                     {
-                                        foundSomething = true;
-                                        breakLoop = true;
-
-                                        break;
-
-                                    }
-
-                                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
-                                    {
-                                        foundSomething = true;
-                                        breakLoop = false;
-
-                                        FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, false);
-
+                                        if (!foundSomething)
+                                        {
+                                            breakLoop = true;
+                                        }
                                     }
                                 }
-                                else
-                                {
-                                    if (!foundSomething)
-                                    {
-                                        breakLoop = true;
-                                    }
-                                }
-                            }
 
-                            foundSomething = false;
-
-                            numberOfRound++;
-
-                            if (breakLoop || horseFoundPlayer)
-                            {
                                 foundSomething = false;
-                                breakLoop = false;
 
-                                numberOfRound = 1;
+                                numberOfRound++;
 
-                                break;
+                                if (breakLoop || horseFoundPlayer)
+                                {
+                                    foundSomething = false;
+                                    breakLoop = false;
+
+                                    numberOfRound = 1;
+
+                                    break;
+                                }
+
+
                             }
 
+                            #endregion
+
+                            #region Down
+
+                            while (true)
+                            {
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                                foreach (GridPiece allPieces in gridPieces)
+                                {
+                                    int xPos = allPieces.xPos;
+                                    int yPos = allPieces.yPos;
+
+                                    if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRound)
+                                    {
+                                        if (allPieces.playerPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+                                        }
+
+                                        if (allPieces.enemyPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+
+                                        }
+
+                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = false;
+
+                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                                            {
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, false);
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!foundSomething)
+                                        {
+                                            breakLoop = true;
+                                        }
+                                    }
+                                }
+
+                                foundSomething = false;
+
+                                numberOfRound++;
+
+                                if (breakLoop)
+                                {
+                                    foundSomething = false;
+                                    breakLoop = false;
+
+                                    numberOfRound = 1;
+
+                                    break;
+                                }
+
+                            }
+
+                            #endregion
+
+                        }
+                    }
+
+                    if (yOrXMovment == 1)
+                    {
+
+                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                        {
+                            #region Right
+
+                            while (true)
+                            {
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                                foreach (GridPiece allPieces in gridPieces)
+                                {
+                                    int xPos = allPieces.xPos;
+                                    int yPos = allPieces.yPos;
+
+                                    if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRound)
+                                    {
+                                        if (allPieces.playerPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+                                        }
+
+                                        if (allPieces.enemyPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+
+                                        }
+
+                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = false;
+
+                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                                            {
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] + numberOfRound, currentYOfHorseListComplete[i], pieceToMove, whatPositionNumber, 0, false);
+
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!foundSomething)
+                                        {
+                                            breakLoop = true;
+                                        }
+                                    }
+                                }
+
+                                foundSomething = false;
+
+                                numberOfRound++;
+
+                                if (breakLoop || horseFoundPlayer)
+                                {
+                                    foundSomething = false;
+                                    breakLoop = false;
+
+                                    numberOfRound = 1;
+
+                                    break;
+                                }
+
+
+                            }
+
+                            #endregion
+
+                            #region Left
+
+                            while (true)
+                            {
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                                foreach (GridPiece allPieces in gridPieces)
+                                {
+                                    int xPos = allPieces.xPos;
+                                    int yPos = allPieces.yPos;
+
+                                    if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRound)
+                                    {
+                                        if (allPieces.playerPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+                                        }
+
+                                        if (allPieces.enemyPieceHere == true)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = true;
+
+                                            break;
+
+                                        }
+
+                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        {
+                                            foundSomething = true;
+                                            breakLoop = false;
+
+                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                                            {
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] - numberOfRound, currentYOfHorseListComplete[i], pieceToMove, whatPositionNumber, 1, false);
+                                            }
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (!foundSomething)
+                                        {
+                                            breakLoop = true;
+                                        }
+                                    }
+                                }
+
+                                foundSomething = false;
+
+                                numberOfRound++;
+
+                                if (breakLoop)
+                                {
+                                    foundSomething = false;
+                                    breakLoop = false;
+
+                                    numberOfRound = 1;
+
+                                    break;
+                                }
+
+                            }
+
+                            #endregion
 
                         }
 
-                        #endregion
-
-                        #region Down
-
-                        while (true)
-                        {
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                            foreach (GridPiece allPieces in gridPieces)
-                            {
-                                int xPos = allPieces.xPos;
-                                int yPos = allPieces.yPos;
-
-                                if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRound)
-                                {
-                                    if (allPieces.playerPieceHere == true)
-                                    {
-                                        foundSomething = true;
-                                        breakLoop = true;
-
-                                        break;
-                                    }
-
-                                    if (allPieces.enemyPieceHere == true)
-                                    {
-                                        foundSomething = true;
-                                        breakLoop = true;
-
-                                        break;
-
-                                    }
-
-                                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
-                                    {
-                                        foundSomething = true;
-                                        breakLoop = false;
-
-                                        FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, false);
-
-                                    }
-                                }
-                                else
-                                {
-                                    if (!foundSomething)
-                                    {
-                                        breakLoop = true;
-                                    }
-                                }
-                            }
-
-                            foundSomething = false;
-
-                            numberOfRound++;
-
-                            if (breakLoop)
-                            {
-                                foundSomething = false;
-                                breakLoop = false;
-
-                                numberOfRound = 1;
-
-                                break;
-                            }
-
-                        }
-
-                        #endregion
-
-                        FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, true);
                     }
-                }
 
-                if(yOrXMovment == 1)
-                {
-                    if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                    FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, true);
+
+                    if (currentAmountOfTries >= maxNumberOfTries && !didntFindAnytrhingOnce && !horseFoundPlayer)
                     {
-                        FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i], pieceToMove, whatPositionNumber, 0, false);
+                        moveToLocationAfterHorseListX.Add(1337);
+                        moveToLocationAfterHorseListY.Add(1337);
+
+                        WhatSearchCompletedEnemyHorse(whatPositionNumber, 1337);
+
+                        didntFindAnytrhingOnce = true;
+                        break;
                     }
+
                 }
 
-                if (currentAmountOfTries >= maxNumberOfTries && !didntFindAnytrhingOnce && !horseFoundPlayer)
-                {
-                    moveToLocationAfterHorseListX.Add(1337);
-                    moveToLocationAfterHorseListY.Add(1337);
-
-                    WhatSearchCompletedEnemyHorse(whatPositionNumber, 1337);
-
-                    didntFindAnytrhingOnce = true;
-                    break;
-                }
+                #endregion
 
             }
-
-            #endregion
-
+        }
+        else
+        {
+            numberOfTriesToFindPlayerTower.Add(1337);
         }
 
     }
@@ -2470,12 +2621,9 @@ public class GridController : MonoBehaviour
 
     void MoveToLocationTower(GameObject pieceToMove)
     {
-        // Fixa Så Att Den Går Igenom Alla Positioner En I Taget 
 
-        for (int i = 0; i < moveToLocationAfterHorseListY.Count; i++)
+        for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
         {
-            //Kolla Om Fiende
-            //Gör Sökningen och Kollanded
 
             if(numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
             {
@@ -2492,7 +2640,7 @@ public class GridController : MonoBehaviour
                         {
                             //Kollar Om Hur Försöken Är Hägre Eller Mindre
                             currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
-                            //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken
+                            //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
                             towerWithTheLeastTries = i;
 
                         }
@@ -2518,10 +2666,10 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterHorseListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterHorseListY[towerWithTheLeastTries])
             {
-
-                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
+                // Glöm Inte Byta Till Tower
+                pieceToMove.GetComponent<GridPiece>().enemyTowerPieceHere = false;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.enemyHorsePieceHere = true;
+                pieceToMoveTo.enemyTowerPieceHere = true;
                 pieceToMoveTo.enemyPieceHere = true;
 
 
@@ -2550,6 +2698,12 @@ public class GridController : MonoBehaviour
         foreach (GridPiece piece in gridPieces)
         {
             if (piece.enemyHorsePieceHere)
+            {
+                numberOfTimesLookingForPlayer++;
+                numberOfEnemys++;
+            }
+
+            if (piece.enemyTowerPieceHere)
             {
                 numberOfTimesLookingForPlayer++;
                 numberOfEnemys++;
