@@ -64,11 +64,12 @@ public class GridPiece : MonoBehaviour
         if(spawnWho == 1)
         {
             enemySpawnGrid = true;
-            enemyPieceHere = true;
+
 
             //Change Later
             if(whatEnemyToSpawn == 0)
             {
+                enemyPieceHere = true;
                 enemyTowerPieceHere = true;
             }
 

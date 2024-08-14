@@ -1847,14 +1847,7 @@ public class GridController : MonoBehaviour
             {
                 #region Start Reset
 
-                howManyTimesFirstPositionSearchedHorse = 0;
-                howManyTimesSecondPositionSearchedHorse = 0;
-                howManyTimesThirdPositionSearchedHorse = 0;
-                howManyTimesFourthPositionSearchedHorse = 0;
-                howManyTimesFifthPositionSearchedHorse = 0;
-                howManyTimesSixtPositionSearchedHorse = 0;
-                howManyTimesSeventhPositionSearchedHorse = 0;
-                howManyTimesEightPositionSearchedHorse = 0;
+                numberOfRound = 1;
 
                 #endregion
 
@@ -1877,6 +1870,8 @@ public class GridController : MonoBehaviour
                 #endregion
                 while (true)
                 {
+                    Debug.Log(numberOfRound + " Rounds");
+                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -1884,41 +1879,35 @@ public class GridController : MonoBehaviour
 
                         if (xPos == currentX - numberOfRound && yPos == currentY)
                         {
-                            if (allPieces.playerPieceHere == true)
-                            {
-                                foundSomething = true;
-                                breakLoop = true;
-
-                                break;
-                            }
 
                             if (allPieces.enemyPieceHere == true)
                             {
                                 foundSomething = true;
                                 breakLoop = true;
-
+                                Debug.Log("Enemy");
                                 break;
 
                             }
-
-                            if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                            else
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-
-                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 1 ,1, false);
+                                Debug.Log("Free To Go");
+                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 0, false);
 
                             }
                         }
                         else
                         {
+
                             if (!foundSomething)
                             {
                                 breakLoop = true;
+
                             }
                         }
                     }
-
+                    Debug.Log("SToped Searching");
                     foundSomething = false;
 
                     numberOfRound++;
@@ -1927,7 +1916,7 @@ public class GridController : MonoBehaviour
                     {
                         foundSomething = false;
                         breakLoop = false;
-
+                        Debug.Log("Exit");
                         numberOfRound = 1;
 
                         break;
@@ -1961,13 +1950,6 @@ public class GridController : MonoBehaviour
 
                         if (xPos == currentX + numberOfRound && yPos == currentY)
                         {
-                            if (allPieces.playerPieceHere == true)
-                            {
-                                foundSomething = true;
-                                breakLoop = true;
-
-                                break;
-                            }
 
                             if (allPieces.enemyPieceHere == true)
                             {
@@ -1977,13 +1959,12 @@ public class GridController : MonoBehaviour
                                 break;
 
                             }
-
-                            if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                            else
                             {
                                 foundSomething = true;
                                 breakLoop = false;
 
-                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 2 , 1, false);
+                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 0, false);
 
                             }
                         }
@@ -2038,13 +2019,6 @@ public class GridController : MonoBehaviour
 
                         if (xPos == currentX && yPos == currentY - numberOfRound)
                         {
-                            if (allPieces.playerPieceHere == true)
-                            {
-                                foundSomething = true;
-                                breakLoop = true;
-
-                                break;
-                            }
 
                             if (allPieces.enemyPieceHere == true)
                             {
@@ -2054,13 +2028,12 @@ public class GridController : MonoBehaviour
                                 break;
 
                             }
-
-                            if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                            else
                             {
                                 foundSomething = true;
                                 breakLoop = false;
 
-                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 3 , 0, false);
+                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 1, false);
 
                             }
                         }
@@ -2115,13 +2088,6 @@ public class GridController : MonoBehaviour
 
                         if (xPos == currentX && yPos == currentY + numberOfRound)
                         {
-                            if (allPieces.playerPieceHere == true)
-                            {
-                                foundSomething = true;
-                                breakLoop = true;
-
-                                break;
-                            }
 
                             if (allPieces.enemyPieceHere == true)
                             {
@@ -2131,13 +2097,12 @@ public class GridController : MonoBehaviour
                                 break;
 
                             }
-
-                            if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                            else
                             {
                                 foundSomething = true;
                                 breakLoop = false;
 
-                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i], 4 , 0, false);
+                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i], 1, false);
 
                             }
                         }
@@ -2203,13 +2168,13 @@ public class GridController : MonoBehaviour
 
     #region Searching For PLayer Loop
 
-    public void FindPlayerTower(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY, int posToLookAtX, int posToLookAtY, GameObject pieceToMove, int whatPositionNumber, int yOrXMovment, bool lastMovment)
+    public void FindPlayerTower(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY, int posToLookAtX, int posToLookAtY, GameObject pieceToMove, int yOrXMovment, bool lastMovment)
     {
         if (!lastMovment)
         {
             horseFoundPlayer = false;
             didntFindAnytrhingOnce = false;
-
+            Debug.Log(posToLookAtX + " x " + posToLookAtY + " y");
             currentXOfHorseList.Add(posToLookAtX);
             currentYOfHorseList.Add(posToLookAtY);
             // Fixa det här
@@ -2230,7 +2195,7 @@ public class GridController : MonoBehaviour
                 {
                     if (allPieces.playerPieceHere)
                     {
-                        //Debug.Log("Found Player");
+                        Debug.Log("Found Player");
                         horseFoundPlayer = true;
 
                         // 2 För det subtraheras 1 på slutet
@@ -2271,8 +2236,8 @@ public class GridController : MonoBehaviour
             if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0)
             {
 
-                currentAmountOfTries += 2;
-
+                currentAmountOfTries += 1;
+                Debug.Log("NEW MoVment");
                 numberOfTimesLookingForPlayer = 1;
                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
@@ -2290,8 +2255,8 @@ public class GridController : MonoBehaviour
                 for (int i = 0; i < currentXOfHorseListComplete.Count; i++)
                 {
 
-                    // 0 = Check Horizontal(It Was A Up Or Down Movment)
-                    // 1 = Check Vertical(It Was A Left Or Right Movment)
+                    // 0 = Check Horizontal (It Was A Left Or Right Movment)
+                    // 1 = Check Vertical (It Was A Up Or Down Movment)
 
                     if (yOrXMovment == 0)
                     {
@@ -2302,7 +2267,7 @@ public class GridController : MonoBehaviour
                             while (true)
                             {
                                 gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
+                                Debug.Log(numberOfRound + " Number Of Rounds");
                                 foreach (GridPiece allPieces in gridPieces)
                                 {
                                     int xPos = allPieces.xPos;
@@ -2310,13 +2275,6 @@ public class GridController : MonoBehaviour
 
                                     if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRound)
                                     {
-                                        if (allPieces.playerPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
-
-                                            break;
-                                        }
 
                                         if (allPieces.enemyPieceHere == true)
                                         {
@@ -2326,15 +2284,14 @@ public class GridController : MonoBehaviour
                                             break;
 
                                         }
-
-                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        else
                                         {
                                             foundSomething = true;
                                             breakLoop = false;
 
                                             if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                                             {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, false);
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, 1, false);
 
                                             }
 
@@ -2373,7 +2330,7 @@ public class GridController : MonoBehaviour
                             while (true)
                             {
                                 gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
+                                Debug.Log(numberOfRound + " Number Of Rounds");
                                 foreach (GridPiece allPieces in gridPieces)
                                 {
                                     int xPos = allPieces.xPos;
@@ -2381,13 +2338,6 @@ public class GridController : MonoBehaviour
 
                                     if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRound)
                                     {
-                                        if (allPieces.playerPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
-
-                                            break;
-                                        }
 
                                         if (allPieces.enemyPieceHere == true)
                                         {
@@ -2397,18 +2347,18 @@ public class GridController : MonoBehaviour
                                             break;
 
                                         }
-
-                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        else
                                         {
                                             foundSomething = true;
                                             breakLoop = false;
 
                                             if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                                             {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, false);
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] - numberOfRound, pieceToMove, 1, false);
                                             }
 
                                         }
+
                                     }
                                     else
                                     {
@@ -2423,7 +2373,7 @@ public class GridController : MonoBehaviour
 
                                 numberOfRound++;
 
-                                if (breakLoop)
+                                if (breakLoop || horseFoundPlayer)
                                 {
                                     foundSomething = false;
                                     breakLoop = false;
@@ -2458,13 +2408,6 @@ public class GridController : MonoBehaviour
 
                                     if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRound)
                                     {
-                                        if (allPieces.playerPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
-
-                                            break;
-                                        }
 
                                         if (allPieces.enemyPieceHere == true)
                                         {
@@ -2474,15 +2417,14 @@ public class GridController : MonoBehaviour
                                             break;
 
                                         }
-
-                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        else
                                         {
                                             foundSomething = true;
                                             breakLoop = false;
 
                                             if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                                             {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] + numberOfRound, currentYOfHorseListComplete[i], pieceToMove, whatPositionNumber, 0, false);
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] + numberOfRound, currentYOfHorseListComplete[i], pieceToMove, 0, false);
 
                                             }
 
@@ -2529,13 +2471,6 @@ public class GridController : MonoBehaviour
 
                                     if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRound)
                                     {
-                                        if (allPieces.playerPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
-
-                                            break;
-                                        }
 
                                         if (allPieces.enemyPieceHere == true)
                                         {
@@ -2545,15 +2480,14 @@ public class GridController : MonoBehaviour
                                             break;
 
                                         }
-
-                                        if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                                        else
                                         {
                                             foundSomething = true;
                                             breakLoop = false;
 
                                             if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                                             {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] - numberOfRound, currentYOfHorseListComplete[i], pieceToMove, whatPositionNumber, 1, false);
+                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] - numberOfRound, currentYOfHorseListComplete[i], pieceToMove, 1, false);
                                             }
 
                                         }
@@ -2571,7 +2505,7 @@ public class GridController : MonoBehaviour
 
                                 numberOfRound++;
 
-                                if (breakLoop)
+                                if (breakLoop || horseFoundPlayer)
                                 {
                                     foundSomething = false;
                                     breakLoop = false;
@@ -2589,14 +2523,15 @@ public class GridController : MonoBehaviour
 
                     }
 
-                    FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, whatPositionNumber, 1, true);
+                    Debug.Log("Done Searching Onto Next");
+                    // Spelar Ingen Roll Vad Jag Sätter In
+                    FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 1337, true);
 
                     if (currentAmountOfTries >= maxNumberOfTries && !didntFindAnytrhingOnce && !horseFoundPlayer)
                     {
                         moveToLocationAfterHorseListX.Add(1337);
                         moveToLocationAfterHorseListY.Add(1337);
 
-                        WhatSearchCompletedEnemyHorse(whatPositionNumber, 1337);
 
                         didntFindAnytrhingOnce = true;
                         break;
@@ -2611,6 +2546,9 @@ public class GridController : MonoBehaviour
         else
         {
             numberOfTriesToFindPlayerTower.Add(1337);
+
+            foundSomething = true;
+            numberOfTimesLookingForPlayer = 1;
         }
 
     }
@@ -2621,12 +2559,15 @@ public class GridController : MonoBehaviour
 
     void MoveToLocationTower(GameObject pieceToMove)
     {
-
+        Debug.Log(numberOfTriesToFindPlayerTower.Count + " Count");
         for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
         {
+            Debug.Log(numberOfTriesToFindPlayerTower[i] + " Amout Of Tries");
 
-            if(numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
+            if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
             {
+                Debug.Log("HELLO3333");
+
                 foreach (GridPiece pieceToMoveTo in gridPieces)
                 {
 
@@ -2635,9 +2576,11 @@ public class GridController : MonoBehaviour
 
                     if (xPosToGo == moveToLocationAfterHorseListX[i] && yPosToGO == moveToLocationAfterHorseListY[i])
                     {
-
+                        Debug.Log("HELLO222");
                         if (pieceToMoveTo.enemyPieceHere == false)
                         {
+                            Debug.Log("HELLO");
+
                             //Kollar Om Hur Försöken Är Hägre Eller Mindre
                             currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
                             //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
@@ -2646,11 +2589,9 @@ public class GridController : MonoBehaviour
                         }
                         else
                         {
-                            //Debug.Log("Enemy Piece Arleady There");
+                            Debug.Log("Enemy Piece Arleady There");
                         }
 
-
-                        break;
                     }
                 }
             }
@@ -2663,7 +2604,7 @@ public class GridController : MonoBehaviour
 
             int xPosToGo = pieceToMoveTo.xPos;
             int yPosToGO = pieceToMoveTo.yPos;
-
+            Debug.Log(towerWithTheLeastTries + " What i");
             if (xPosToGo == moveToLocationAfterHorseListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterHorseListY[towerWithTheLeastTries])
             {
                 // Glöm Inte Byta Till Tower
@@ -2677,6 +2618,8 @@ public class GridController : MonoBehaviour
 
                 moveToLocationAfterHorseListX.Clear();
                 moveToLocationAfterHorseListY.Clear();
+
+                break;
             }
         }
     }
