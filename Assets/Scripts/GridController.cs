@@ -19,9 +19,12 @@ public class GridController : MonoBehaviour
     List<GameObject> enemyTowerObjectList = new List<GameObject>();
 
     List<int> numberOfTriesToFindPlayerTower = new List<int>();
+    List<int> yOrXMovmentList = new List<int>();
+    List<int> yOrXMovmentListComplete = new List<int>();
 
     int towerWithTheLeastTries = 1337;
     int currentXWhereTowerIsGoingToGo = 1337;
+    int numberOfRoundsContinuation = 1;
 
     #endregion
 
@@ -1835,11 +1838,11 @@ public class GridController : MonoBehaviour
         if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0 && currentAmountOfTries < maxNumberOfTries)
         {
             numberOfTimesLookingForPlayer = 1;
+            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
             currentYOfHorseList.Clear();
             currentXOfHorseList.Clear();
 
-            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
             #region Search For Player
 
@@ -1858,7 +1861,7 @@ public class GridController : MonoBehaviour
 
                 #region Reset
                 currentAmountOfTries = 0;
-                numberOfTimesLookingForPlayer = 0;
+                numberOfTimesLookingForPlayer = 1;
                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                 horseFoundPlayer = false;
@@ -1870,8 +1873,8 @@ public class GridController : MonoBehaviour
                 #endregion
                 while (true)
                 {
-                    Debug.Log(numberOfRound + " Rounds");
-                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
+                    Debug.Log(numberOfRound + " Rounds Left");
+
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -1892,7 +1895,7 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-                                Debug.Log("Free To Go");
+                                Debug.Log("Searching Left");
                                 FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 0, false);
 
                             }
@@ -1907,7 +1910,7 @@ public class GridController : MonoBehaviour
                             }
                         }
                     }
-                    Debug.Log("SToped Searching");
+
                     foundSomething = false;
 
                     numberOfRound++;
@@ -1923,7 +1926,6 @@ public class GridController : MonoBehaviour
                     }
 
                 }
-                firstSearchCompleteHorse = true;
 
                 #endregion
 
@@ -1931,7 +1933,7 @@ public class GridController : MonoBehaviour
 
                 #region Reset
                 currentAmountOfTries = 0;
-                numberOfTimesLookingForPlayer = 0;
+                numberOfTimesLookingForPlayer = 1;
                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                 horseFoundPlayer = false;
@@ -1943,6 +1945,9 @@ public class GridController : MonoBehaviour
                 #endregion
                 while (true)
                 {
+
+                    Debug.Log(numberOfRound + " Rounds Right");
+                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -1955,7 +1960,7 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = true;
-
+                                Debug.Log("Enemy");
                                 break;
 
                             }
@@ -1963,7 +1968,7 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-
+                                Debug.Log("Searching Right");
                                 FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 0, false);
 
                             }
@@ -1985,14 +1990,13 @@ public class GridController : MonoBehaviour
                     {
                         foundSomething = false;
                         breakLoop = false;
-
+                        Debug.Log("Exit");
                         numberOfRound = 1;
 
                         break;
                     }
 
                 }
-                secondSearchCompleteHorse = true;
 
                 #endregion
 
@@ -2000,7 +2004,7 @@ public class GridController : MonoBehaviour
 
                 #region Reset
                 currentAmountOfTries = 0;
-                numberOfTimesLookingForPlayer = 0;
+                numberOfTimesLookingForPlayer = 1;
                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                 horseFoundPlayer = false;
@@ -2012,6 +2016,9 @@ public class GridController : MonoBehaviour
                 #endregion
                 while (true)
                 {
+
+                    Debug.Log(numberOfRound + " Rounds Down");
+                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2024,7 +2031,7 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = true;
-
+                                Debug.Log("Enemy");
                                 break;
 
                             }
@@ -2032,7 +2039,7 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-
+                                Debug.Log("Searching Down");
                                 FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 1, false);
 
                             }
@@ -2054,14 +2061,13 @@ public class GridController : MonoBehaviour
                     {
                         foundSomething = false;
                         breakLoop = false;
-
+                        Debug.Log("Exit");
                         numberOfRound = 1;
 
                         break;
                     }
 
                 }
-                thirdSearchCompleteHorse = true;
 
                 #endregion
 
@@ -2069,7 +2075,7 @@ public class GridController : MonoBehaviour
 
                 #region Reset
                 currentAmountOfTries = 0;
-                numberOfTimesLookingForPlayer = 0;
+                numberOfTimesLookingForPlayer = 1;
                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                 horseFoundPlayer = false;
@@ -2081,6 +2087,9 @@ public class GridController : MonoBehaviour
                 #endregion
                 while (true)
                 {
+
+                    Debug.Log(numberOfRound + " Rounds Up");
+                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2093,7 +2102,7 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = true;
-
+                                Debug.Log("Enemy");
                                 break;
 
                             }
@@ -2101,7 +2110,7 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-
+                                Debug.Log("Searching Up");
                                 FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i], 1, false);
 
                             }
@@ -2125,7 +2134,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         numberOfRound = 1;
-
+                        Debug.Log("Exit");
                         break;
                     }
 
@@ -2173,10 +2182,7 @@ public class GridController : MonoBehaviour
         if (!lastMovment)
         {
             horseFoundPlayer = false;
-            didntFindAnytrhingOnce = false;
-            Debug.Log(posToLookAtX + " x " + posToLookAtY + " y");
-            currentXOfHorseList.Add(posToLookAtX);
-            currentYOfHorseList.Add(posToLookAtY);
+
             // Fixa det här
             #region Search For Player
 
@@ -2199,7 +2205,7 @@ public class GridController : MonoBehaviour
                         horseFoundPlayer = true;
 
                         // 2 För det subtraheras 1 på slutet
-                        numberOfTimesLookingForPlayer = 2;
+                        numberOfTimesLookingForPlayer = 1;
                         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
 
@@ -2224,316 +2230,99 @@ public class GridController : MonoBehaviour
 
             }
 
-            #endregion
-        }
-        else
-        {
-            numberOfTimesLookingForPlayerLeft--;
-        }
-
-        if (currentAmountOfTries < maxNumberOfTries)
-        {
-            if (!horseFoundPlayer && numberOfTimesLookingForPlayerLeft == 0)
+            if(yOrXMovment == 1)
             {
 
-                currentAmountOfTries += 1;
-                Debug.Log("NEW MoVment");
-                numberOfTimesLookingForPlayer = 1;
-                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+                #region Left
 
-                currentXOfHorseListComplete.Clear();
-                currentYOfHorseListComplete.Clear();
-
-                currentXOfHorseListComplete.AddRange(currentXOfHorseList);
-                currentYOfHorseListComplete.AddRange(currentYOfHorseList);
-
-                currentYOfHorseList.Clear();
-                currentXOfHorseList.Clear();
-
-                #region Search For Player A New
-
-                for (int i = 0; i < currentXOfHorseListComplete.Count; i++)
+                while (true)
                 {
 
-                    // 0 = Check Horizontal (It Was A Left Or Right Movment)
-                    // 1 = Check Vertical (It Was A Up Or Down Movment)
+                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Left Continuation");
 
-                    if (yOrXMovment == 0)
+                    infoInt = posToLookAtX - numberOfRoundsContinuation;
+
+                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking COntinuation");
+                    foreach (GridPiece allPieces in gridPieces)
                     {
-                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX - numberOfRoundsContinuation && yPos == posToLookAtY)
                         {
-                            #region Up
 
-                            while (true)
+                            if (allPieces.playerPieceHere == true)
                             {
-                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-                                Debug.Log(numberOfRound + " Number Of Rounds");
-                                foreach (GridPiece allPieces in gridPieces)
-                                {
-                                    int xPos = allPieces.xPos;
-                                    int yPos = allPieces.yPos;
+                                Debug.Log("Found Player");
+                                horseFoundPlayer = true;
 
-                                    if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRound)
-                                    {
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
-                                        if (allPieces.enemyPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
 
-                                            break;
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
 
-                                        }
-                                        else
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = false;
+                                currentYOfHorseListComplete.Clear();
+                                currentXOfHorseListComplete.Clear();
+                                currentYOfHorseList.Clear();
+                                currentXOfHorseList.Clear();
 
-                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
-                                            {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRound, pieceToMove, 1, false);
+                                //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                                //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
 
-                                            }
+                                moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
 
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!foundSomething)
-                                        {
-                                            breakLoop = true;
-                                        }
-                                    }
-                                }
+                                foundSomething = true;
+                                breakLoop = true;
+                            }
 
-                                foundSomething = false;
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
 
-                                numberOfRound++;
 
-                                if (breakLoop || horseFoundPlayer)
-                                {
-                                    foundSomething = false;
-                                    breakLoop = false;
-
-                                    numberOfRound = 1;
-
-                                    break;
-                                }
-
+                                break;
 
                             }
 
-                            #endregion
-
-                            #region Down
-
-                            while (true)
+                            if (allPieces.enemyPieceHere == false)
                             {
-                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-                                Debug.Log(numberOfRound + " Number Of Rounds");
-                                foreach (GridPiece allPieces in gridPieces)
-                                {
-                                    int xPos = allPieces.xPos;
-                                    int yPos = allPieces.yPos;
+                                foundSomething = true;
+                                breakLoop = false;
 
-                                    if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRound)
-                                    {
+                                didntFindAnytrhingOnce = false;
+                                //Debug.Log("Found Normal Piece");
 
-                                        if (allPieces.enemyPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
+                                currentXOfHorseList.Add(posToLookAtX);
+                                currentYOfHorseList.Add(posToLookAtY);
 
-                                            break;
-
-                                        }
-                                        else
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = false;
-
-                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
-                                            {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] - numberOfRound, pieceToMove, 1, false);
-                                            }
-
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        if (!foundSomething)
-                                        {
-                                            breakLoop = true;
-                                        }
-                                    }
-                                }
-
-                                foundSomething = false;
-
-                                numberOfRound++;
-
-                                if (breakLoop || horseFoundPlayer)
-                                {
-                                    foundSomething = false;
-                                    breakLoop = false;
-
-                                    numberOfRound = 1;
-
-                                    break;
-                                }
+                                yOrXMovmentList.Add(0);
 
                             }
-
-                            #endregion
-
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
                         }
                     }
 
-                    if (yOrXMovment == 1)
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || horseFoundPlayer)
                     {
+                        foundSomething = false;
+                        breakLoop = false;
 
-                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
-                        {
-                            #region Right
+                        numberOfRoundsContinuation = 1;
 
-                            while (true)
-                            {
-                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                                foreach (GridPiece allPieces in gridPieces)
-                                {
-                                    int xPos = allPieces.xPos;
-                                    int yPos = allPieces.yPos;
-
-                                    if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRound)
-                                    {
-
-                                        if (allPieces.enemyPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
-
-                                            break;
-
-                                        }
-                                        else
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = false;
-
-                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
-                                            {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] + numberOfRound, currentYOfHorseListComplete[i], pieceToMove, 0, false);
-
-                                            }
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!foundSomething)
-                                        {
-                                            breakLoop = true;
-                                        }
-                                    }
-                                }
-
-                                foundSomething = false;
-
-                                numberOfRound++;
-
-                                if (breakLoop || horseFoundPlayer)
-                                {
-                                    foundSomething = false;
-                                    breakLoop = false;
-
-                                    numberOfRound = 1;
-
-                                    break;
-                                }
-
-
-                            }
-
-                            #endregion
-
-                            #region Left
-
-                            while (true)
-                            {
-                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                                foreach (GridPiece allPieces in gridPieces)
-                                {
-                                    int xPos = allPieces.xPos;
-                                    int yPos = allPieces.yPos;
-
-                                    if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRound)
-                                    {
-
-                                        if (allPieces.enemyPieceHere == true)
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = true;
-
-                                            break;
-
-                                        }
-                                        else
-                                        {
-                                            foundSomething = true;
-                                            breakLoop = false;
-
-                                            if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
-                                            {
-                                                FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] - numberOfRound, currentYOfHorseListComplete[i], pieceToMove, 1, false);
-                                            }
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!foundSomething)
-                                        {
-                                            breakLoop = true;
-                                        }
-                                    }
-                                }
-
-                                foundSomething = false;
-
-                                numberOfRound++;
-
-                                if (breakLoop || horseFoundPlayer)
-                                {
-                                    foundSomething = false;
-                                    breakLoop = false;
-
-                                    numberOfRound = 1;
-
-                                    break;
-                                }
-
-                            }
-
-                            #endregion
-
-                        }
-
-                    }
-
-                    Debug.Log("Done Searching Onto Next");
-                    // Spelar Ingen Roll Vad Jag Sätter In
-                    FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 1337, true);
-
-                    if (currentAmountOfTries >= maxNumberOfTries && !didntFindAnytrhingOnce && !horseFoundPlayer)
-                    {
-                        moveToLocationAfterHorseListX.Add(1337);
-                        moveToLocationAfterHorseListY.Add(1337);
-
-
-                        didntFindAnytrhingOnce = true;
                         break;
                     }
 
@@ -2541,15 +2330,680 @@ public class GridController : MonoBehaviour
 
                 #endregion
 
+                #region Right
+
+                Debug.Log("Right Movment");
+
+                while (true)
+                {
+                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Right Continuation");
+
+                    infoInt = posToLookAtX + numberOfRoundsContinuation;
+
+                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking COntinuation");
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX + numberOfRoundsContinuation && yPos == posToLookAtY)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+                                Debug.Log("Found Player");
+                                horseFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfHorseListComplete.Clear();
+                                currentXOfHorseListComplete.Clear();
+                                currentYOfHorseList.Clear();
+                                currentXOfHorseList.Clear();
+
+                                //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                                //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+
+                                moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+                                //Debug.Log("Found Normal Piece");
+
+                                currentXOfHorseList.Add(posToLookAtX);
+                                currentYOfHorseList.Add(posToLookAtY);
+
+                                yOrXMovmentList.Add(0);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || horseFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
             }
+
+            if (yOrXMovment == 0)
+            {
+
+                #region Down
+
+                while (true)
+                {
+
+                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Down Continuation");
+
+                    infoInt = posToLookAtY - numberOfRoundsContinuation;
+
+                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking COntinuation");
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+                                Debug.Log("Found Player");
+                                horseFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfHorseListComplete.Clear();
+                                currentXOfHorseListComplete.Clear();
+                                currentYOfHorseList.Clear();
+                                currentXOfHorseList.Clear();
+
+                                //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                                //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+
+                                moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+                                //Debug.Log("Found Normal Piece");
+
+                                currentXOfHorseList.Add(posToLookAtX);
+                                currentYOfHorseList.Add(posToLookAtY);
+
+                                yOrXMovmentList.Add(1);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || horseFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                #region Up
+
+                Debug.Log("Up Movment");
+
+                while (true)
+                {
+                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds up Continuation");
+
+                    infoInt = posToLookAtY + numberOfRoundsContinuation;
+
+                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking COntinuation");
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+                                Debug.Log("Found Player");
+                                horseFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfHorseListComplete.Clear();
+                                currentXOfHorseListComplete.Clear();
+                                currentYOfHorseList.Clear();
+                                currentXOfHorseList.Clear();
+
+                                //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
+                                //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
+
+                                moveToLocationAfterHorseListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterHorseListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+                                //Debug.Log("Found Normal Piece");
+
+                                currentXOfHorseList.Add(posToLookAtX);
+                                currentYOfHorseList.Add(posToLookAtY);
+
+                                yOrXMovmentList.Add(1);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || horseFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+            }
+
+            #endregion
         }
         else
         {
-            numberOfTriesToFindPlayerTower.Add(1337);
-
-            foundSomething = true;
             numberOfTimesLookingForPlayer = 1;
+            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
         }
+
+        if (numberOfTimesLookingForPlayerLeft == 1)
+        {
+            if (!horseFoundPlayer && currentAmountOfTries < maxNumberOfTries)
+            {
+
+                currentAmountOfTries += 1;
+                Debug.Log("NEW MoVment Continuation");
+                numberOfTimesLookingForPlayer = 2;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                currentXOfHorseListComplete.Clear();
+                currentYOfHorseListComplete.Clear();
+                yOrXMovmentListComplete.Clear();
+
+                yOrXMovmentListComplete.AddRange(yOrXMovmentList);
+                currentXOfHorseListComplete.AddRange(currentXOfHorseList);
+                currentYOfHorseListComplete.AddRange(currentYOfHorseList);
+
+
+                yOrXMovmentList.Clear();
+                currentYOfHorseList.Clear();
+                currentXOfHorseList.Clear();
+
+                #region Search For Player A New
+                //Debug.Log(yOrXMovmentListComplete.Count + " How Many x Y Movment");
+                //Debug.Log(currentXOfHorseListComplete.Count + " How Many X Positions");
+                for (int i = 0; i < currentXOfHorseListComplete.Count; i++)
+                {
+
+                    // 0 = Check Horizontal (It Was A Left Or Right Movment)
+                    // 1 = Check Vertical (It Was A Up Or Down Movment)
+
+                    // Kanske Ändra Hella Systemet
+
+                    if (yOrXMovmentList[i] == 1)
+                    {
+                        Debug.Log("New Movment Vertical Continuation");
+
+                        FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i], pieceToMove, 0, false);
+                    }
+
+                    if (yOrXMovmentList[i] == 0)
+                    {
+                        Debug.Log("New Movment Horizontal Continuation");
+
+                        FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i], pieceToMove, 1, false);
+                    }
+
+                    #region Old System
+
+                    //if (yOrXMovment == 0)
+                    //{
+                    //    if (!horseFoundPlayer && currentAmountOfTries < maxNumberOfTries)
+                    //    {
+                    //        #region Up
+
+                    //        while (true)
+                    //        {
+                    //            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+                    //            Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Up Continuation");
+                    //            foreach (GridPiece allPieces in gridPieces)
+                    //            {
+                    //                int xPos = allPieces.xPos;
+                    //                int yPos = allPieces.yPos;
+
+                    //                if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRoundsContinuation)
+                    //                {
+
+                    //                    if (allPieces.enemyPieceHere == true)
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = true;
+
+                    //                        break;
+
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = false;
+
+                    //                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                    //                        {
+
+                    //                            FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] + numberOfRoundsContinuation, pieceToMove, 1, false);
+
+                    //                        }
+
+                    //                    }
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (!foundSomething)
+                    //                    {
+                    //                        breakLoop = true;
+                    //                    }
+                    //                }
+                    //            }
+
+                    //            foundSomething = false;
+
+                    //            numberOfRoundsContinuation++;
+
+                    //            if (breakLoop || horseFoundPlayer)
+                    //            {
+                    //                foundSomething = false;
+                    //                breakLoop = false;
+
+                    //                numberOfRoundsContinuation = 1;
+
+                    //                break;
+                    //            }
+
+
+                    //        }
+
+                    //        #endregion
+
+                    //        #region Down
+
+                    //        while (true)
+                    //        {
+                    //            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+                    //            Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Down Continuation");
+                    //            foreach (GridPiece allPieces in gridPieces)
+                    //            {
+                    //                int xPos = allPieces.xPos;
+                    //                int yPos = allPieces.yPos;
+
+                    //                if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRoundsContinuation)
+                    //                {
+
+                    //                    if (allPieces.enemyPieceHere == true)
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = true;
+
+                    //                        break;
+
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = false;
+
+                    //                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                    //                        {
+                    //                            FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i] - numberOfRoundsContinuation, pieceToMove, 1, false);
+                    //                        }
+
+                    //                    }
+
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (!foundSomething)
+                    //                    {
+                    //                        breakLoop = true;
+                    //                    }
+                    //                }
+                    //            }
+
+                    //            foundSomething = false;
+
+                    //            numberOfRoundsContinuation++;
+
+                    //            if (breakLoop || horseFoundPlayer)
+                    //            {
+                    //                foundSomething = false;
+                    //                breakLoop = false;
+
+                    //                numberOfRoundsContinuation = 1;
+
+                    //                break;
+                    //            }
+
+                    //        }
+
+                    //        #endregion
+
+                    //    }
+                    //}
+
+                    //if (yOrXMovment == 1)
+                    //{
+
+                    //    if (!horseFoundPlayer && currentAmountOfTries < maxNumberOfTries)
+                    //    {
+
+                    //        #region Right
+
+                    //        while (true)
+                    //        {
+                    //            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+                    //            Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Right Continuation");
+
+                    //            int InfoInt;
+
+                    //            infoInt = posToLookAtY + numberOfRoundsContinuation;
+
+                    //            Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking COntinuation");
+
+                    //            foreach (GridPiece allPieces in gridPieces)
+                    //            {
+                    //                int xPos = allPieces.xPos;
+                    //                int yPos = allPieces.yPos;
+
+                    //                if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRoundsContinuation)
+                    //                {
+                    //                    Debug.Log("HEllo 2");
+                    //                    if (allPieces.enemyPieceHere == true)
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = true;
+
+                    //                        break;
+
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = false;
+
+                    //                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                    //                        {
+                    //                            Debug.Log("Searching Right Continuation");
+                    //                            FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] + numberOfRoundsContinuation, currentYOfHorseListComplete[i], pieceToMove, 0, false);
+
+                    //                        }
+
+                    //                    }
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (!foundSomething)
+                    //                    {
+                    //                        breakLoop = true;
+                    //                    }
+                    //                }
+                    //            }
+
+                    //            foundSomething = false;
+
+                    //            numberOfRoundsContinuation++;
+
+                    //            if (breakLoop || horseFoundPlayer)
+                    //            {
+                    //                foundSomething = false;
+                    //                breakLoop = false;
+
+                    //                numberOfRoundsContinuation = 1;
+
+                    //                break;
+                    //            }
+
+
+                    //        }
+
+                    //        #endregion
+
+                    //        #region Left
+
+                    //        while (true)
+                    //        {
+                    //            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+                    //            Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Left Continuation");
+                    //            int InfoInt;
+
+                    //            infoInt = posToLookAtY - numberOfRoundsContinuation;
+
+                    //            Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking COntinuation");
+                    //            foreach (GridPiece allPieces in gridPieces)
+                    //            {
+                    //                int xPos = allPieces.xPos;
+                    //                int yPos = allPieces.yPos;
+
+
+                    //                if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRoundsContinuation)
+                    //                {
+                    //                    Debug.Log("HEllo");
+                    //                    if (allPieces.enemyPieceHere == true)
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = true;
+
+                    //                        break;
+
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        foundSomething = true;
+                    //                        breakLoop = false;
+
+                    //                        if (!horseFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                    //                        {
+                    //                            Debug.Log("Searching Left Continuation");
+                    //                            FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i] - numberOfRoundsContinuation, currentYOfHorseListComplete[i], pieceToMove, 1, false);
+                    //                        }
+
+                    //                    }
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (!foundSomething)
+                    //                    {
+                    //                        breakLoop = true;
+                    //                    }
+                    //                }
+                    //            }
+
+                    //            foundSomething = false;
+
+                    //            numberOfRoundsContinuation++;
+
+                    //            if (breakLoop || horseFoundPlayer)
+                    //            {
+                    //                foundSomething = false;
+                    //                breakLoop = false;
+
+                    //                numberOfRoundsContinuation = 1;
+
+                    //                break;
+                    //            }
+
+                    //        }
+
+                    //        #endregion
+
+                    //    }
+
+                    //}
+
+                    #endregion
+
+                }
+                if (!horseFoundPlayer && currentAmountOfTries < maxNumberOfTries)
+                {
+                    Debug.Log("Done Searching Onto Next Continuation");
+                    // Spelar Ingen Roll Vad Jag Sätter In
+                    if (yOrXMovment == 0)
+                    {
+                        FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 1, true);
+                    }
+                    if (yOrXMovment == 1)
+                    {
+                        FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 0, true);
+                    }
+                }
+                #endregion
+
+            }
+        }
+        //else
+        //{
+        //    numberOfTriesToFindPlayerTower.Add(1337);
+
+        //    foundSomething = true;
+        //    breakLoop = false;
+        //    horseFoundPlayer = false;
+
+        //    numberOfTimesLookingForPlayer = 1;
+        //    numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+        //    currentYOfHorseListComplete.Clear();
+        //    currentXOfHorseListComplete.Clear();
+        //    currentYOfHorseList.Clear();
+        //    currentXOfHorseList.Clear();
+        //}
 
     }
 
