@@ -88,6 +88,7 @@ public class GridController : MonoBehaviour
     int infoInt = 0;
 
     int testInt;
+    bool testBool;
 
     bool didntFindAnytrhingOnce = false;
 
@@ -1857,6 +1858,8 @@ public class GridController : MonoBehaviour
                 infoInt++;
                 //Debug.Log(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + " X Original Pos" + enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + " Y Original Pos");
 
+                //Fixa Så Att Resten Fungerar
+
                 #region Left Search
 
                 #region Reset
@@ -1893,11 +1896,11 @@ public class GridController : MonoBehaviour
                             }
                             else
                             {
+                                int x = enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound;
+                                Debug.Log("Completly New Search Left On " + x + " X " + enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + " Y");
+                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 0, false);
                                 foundSomething = true;
                                 breakLoop = false;
-                                Debug.Log("Searching Left");
-                                FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 0, false);
-
                             }
                         }
                         else
@@ -1914,7 +1917,7 @@ public class GridController : MonoBehaviour
                     foundSomething = false;
 
                     numberOfRound++;
-
+                    
                     if (breakLoop)
                     {
                         foundSomething = false;
@@ -2145,6 +2148,13 @@ public class GridController : MonoBehaviour
 
                 MoveToLocationTower(enemyTowerObjectList[i]);
 
+                testBool = false;
+                if (testBool)
+                {
+
+                }
+
+
             }
 
             #endregion
@@ -2183,7 +2193,7 @@ public class GridController : MonoBehaviour
         {
             horseFoundPlayer = false;
 
-            // Fixa det här
+
             #region Search For Player
 
             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
@@ -2201,7 +2211,7 @@ public class GridController : MonoBehaviour
                 {
                     if (allPieces.playerPieceHere)
                     {
-                        Debug.Log("Found Player");
+                        Debug.Log("Found Player At " + posToLookAtX + " X " + posToLookAtY + " Y");
                         horseFoundPlayer = true;
 
                         // 2 För det subtraheras 1 på slutet
@@ -2216,6 +2226,8 @@ public class GridController : MonoBehaviour
                         currentXOfHorseListComplete.Clear();
                         currentYOfHorseList.Clear();
                         currentXOfHorseList.Clear();
+                        yOrXMovmentListComplete.Clear();
+                        yOrXMovmentList.Clear();
 
                         //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
                         //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
@@ -2238,11 +2250,9 @@ public class GridController : MonoBehaviour
                 while (true)
                 {
 
-                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Left Continuation");
-
                     infoInt = posToLookAtX - numberOfRoundsContinuation;
 
-                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking COntinuation");
+                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Left COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2267,6 +2277,8 @@ public class GridController : MonoBehaviour
                                 currentXOfHorseListComplete.Clear();
                                 currentYOfHorseList.Clear();
                                 currentXOfHorseList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
 
                                 //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
                                 //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
@@ -2276,6 +2288,8 @@ public class GridController : MonoBehaviour
 
                                 foundSomething = true;
                                 breakLoop = true;
+
+                                break;
                             }
 
                             if (allPieces.enemyPieceHere == true)
@@ -2296,10 +2310,10 @@ public class GridController : MonoBehaviour
                                 didntFindAnytrhingOnce = false;
                                 //Debug.Log("Found Normal Piece");
 
-                                currentXOfHorseList.Add(posToLookAtX);
+                                currentXOfHorseList.Add(posToLookAtX - numberOfRoundsContinuation);
                                 currentYOfHorseList.Add(posToLookAtY);
 
-                                yOrXMovmentList.Add(0);
+                                yOrXMovmentList.Add(1);
 
                             }
                         }
@@ -2336,11 +2350,10 @@ public class GridController : MonoBehaviour
 
                 while (true)
                 {
-                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Right Continuation");
 
                     infoInt = posToLookAtX + numberOfRoundsContinuation;
 
-                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking COntinuation");
+                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Right COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2365,6 +2378,8 @@ public class GridController : MonoBehaviour
                                 currentXOfHorseListComplete.Clear();
                                 currentYOfHorseList.Clear();
                                 currentXOfHorseList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
 
                                 //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
                                 //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
@@ -2374,6 +2389,8 @@ public class GridController : MonoBehaviour
 
                                 foundSomething = true;
                                 breakLoop = true;
+
+                                break;
                             }
 
                             if (allPieces.enemyPieceHere == true)
@@ -2392,12 +2409,11 @@ public class GridController : MonoBehaviour
                                 breakLoop = false;
 
                                 didntFindAnytrhingOnce = false;
-                                //Debug.Log("Found Normal Piece");
 
-                                currentXOfHorseList.Add(posToLookAtX);
+                                currentXOfHorseList.Add(posToLookAtX + numberOfRoundsContinuation);
                                 currentYOfHorseList.Add(posToLookAtY);
 
-                                yOrXMovmentList.Add(0);
+                                yOrXMovmentList.Add(1);
 
                             }
                         }
@@ -2437,11 +2453,9 @@ public class GridController : MonoBehaviour
                 while (true)
                 {
 
-                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds Down Continuation");
-
                     infoInt = posToLookAtY - numberOfRoundsContinuation;
 
-                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking COntinuation");
+                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking Down COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2466,6 +2480,8 @@ public class GridController : MonoBehaviour
                                 currentXOfHorseListComplete.Clear();
                                 currentYOfHorseList.Clear();
                                 currentXOfHorseList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
 
                                 //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
                                 //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
@@ -2475,6 +2491,8 @@ public class GridController : MonoBehaviour
 
                                 foundSomething = true;
                                 breakLoop = true;
+
+                                break;
                             }
 
                             if (allPieces.enemyPieceHere == true)
@@ -2496,9 +2514,9 @@ public class GridController : MonoBehaviour
                                 //Debug.Log("Found Normal Piece");
 
                                 currentXOfHorseList.Add(posToLookAtX);
-                                currentYOfHorseList.Add(posToLookAtY);
+                                currentYOfHorseList.Add(posToLookAtY - numberOfRoundsContinuation);
 
-                                yOrXMovmentList.Add(1);
+                                yOrXMovmentList.Add(0);
 
                             }
                         }
@@ -2535,11 +2553,10 @@ public class GridController : MonoBehaviour
 
                 while (true)
                 {
-                    Debug.Log(numberOfRoundsContinuation + " Number Of Rounds up Continuation");
 
                     infoInt = posToLookAtY + numberOfRoundsContinuation;
 
-                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking COntinuation");
+                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking Up COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2564,6 +2581,8 @@ public class GridController : MonoBehaviour
                                 currentXOfHorseListComplete.Clear();
                                 currentYOfHorseList.Clear();
                                 currentXOfHorseList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
 
                                 //Debug.Log(posToMoveToAfterFindingPlayerX + " X To Move To");
                                 //Debug.Log(posToMoveToAfterFindingPlayerY + " Y To Move To");
@@ -2573,6 +2592,8 @@ public class GridController : MonoBehaviour
 
                                 foundSomething = true;
                                 breakLoop = true;
+
+                                break;
                             }
 
                             if (allPieces.enemyPieceHere == true)
@@ -2594,9 +2615,9 @@ public class GridController : MonoBehaviour
                                 //Debug.Log("Found Normal Piece");
 
                                 currentXOfHorseList.Add(posToLookAtX);
-                                currentYOfHorseList.Add(posToLookAtY);
+                                currentYOfHorseList.Add(posToLookAtY + numberOfRoundsContinuation);
 
-                                yOrXMovmentList.Add(1);
+                                yOrXMovmentList.Add(0);
 
                             }
                         }
@@ -2668,16 +2689,14 @@ public class GridController : MonoBehaviour
                     // 0 = Check Horizontal (It Was A Left Or Right Movment)
                     // 1 = Check Vertical (It Was A Up Or Down Movment)
 
-                    // Kanske Ändra Hella Systemet
-
-                    if (yOrXMovmentList[i] == 1)
+                    if (yOrXMovmentListComplete[i] == 1 && !horseFoundPlayer)
                     {
                         Debug.Log("New Movment Vertical Continuation");
 
                         FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i], pieceToMove, 0, false);
                     }
 
-                    if (yOrXMovmentList[i] == 0)
+                    if (yOrXMovmentListComplete[i] == 0 && !horseFoundPlayer)
                     {
                         Debug.Log("New Movment Horizontal Continuation");
 
@@ -2974,15 +2993,15 @@ public class GridController : MonoBehaviour
                 if (!horseFoundPlayer && currentAmountOfTries < maxNumberOfTries)
                 {
                     Debug.Log("Done Searching Onto Next Continuation");
-                    // Spelar Ingen Roll Vad Jag Sätter In
-                    if (yOrXMovment == 0)
-                    {
-                        FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 1, true);
-                    }
-                    if (yOrXMovment == 1)
-                    {
-                        FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 0, true);
-                    }
+                    //// Spelar Ingen Roll Vad Jag Sätter In
+                    //if (yOrXMovment == 0)
+                    //{
+                    //    FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 1, true);
+                    //}
+                    //if (yOrXMovment == 1)
+                    //{
+                    //    FindPlayerTower(1337, 1337, 1337, 1337, pieceToMove, 0, true);
+                    //}
                 }
                 #endregion
 
