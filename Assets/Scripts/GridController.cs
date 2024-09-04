@@ -1950,7 +1950,7 @@ public class GridController : MonoBehaviour
                 {
 
                     Debug.Log(numberOfRound + " Rounds Right");
-                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
+                    Debug.Log(currentX + numberOfRound + " X " + currentY + " Y Searching For");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -1971,7 +1971,8 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-                                Debug.Log("Searching Right");
+                                int x = enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound;
+                                Debug.Log("Completly New Search Right On " + x + " X " + enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + " Y");
                                 FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 0, false);
 
                             }
@@ -2021,7 +2022,8 @@ public class GridController : MonoBehaviour
                 {
 
                     Debug.Log(numberOfRound + " Rounds Down");
-                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
+                    int y = currentY - numberOfRound;
+                    Debug.Log(currentX + " X " + y + " Y Searching For");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2042,7 +2044,8 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-                                Debug.Log("Searching Down");
+                                int yDebug = enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound;
+                                Debug.Log("Completly New Search Down On " + enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + " X " + yDebug + " Y");
                                 FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 1, false);
 
                             }
@@ -2092,7 +2095,8 @@ public class GridController : MonoBehaviour
                 {
 
                     Debug.Log(numberOfRound + " Rounds Up");
-                    Debug.Log(currentX - numberOfRound + " X " + currentY + " Y Searching For");
+                    int y = currentY + numberOfRound;
+                    Debug.Log(currentX + " X " + y + " Y Searching For");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2113,7 +2117,8 @@ public class GridController : MonoBehaviour
                             {
                                 foundSomething = true;
                                 breakLoop = false;
-                                Debug.Log("Searching Up");
+                                int yDebug = enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound;
+                                Debug.Log("Completly New Search Up On " + enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + " X " + yDebug + " Y");
                                 FindPlayerTower(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i], 1, false);
 
                             }
@@ -2246,7 +2251,7 @@ public class GridController : MonoBehaviour
             {
 
                 #region Left
-
+                Debug.Log("Left Movment");
                 while (true)
                 {
 
@@ -2353,7 +2358,7 @@ public class GridController : MonoBehaviour
 
                     infoInt = posToLookAtX + numberOfRoundsContinuation;
 
-                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Right COntinuation");
+                    //Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Right COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2449,13 +2454,13 @@ public class GridController : MonoBehaviour
             {
 
                 #region Down
-
+                Debug.Log("Down Movment");
                 while (true)
                 {
 
                     infoInt = posToLookAtY - numberOfRoundsContinuation;
 
-                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking Down COntinuation");
+                    //Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking Down COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2556,7 +2561,7 @@ public class GridController : MonoBehaviour
 
                     infoInt = posToLookAtY + numberOfRoundsContinuation;
 
-                    Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking Up COntinuation");
+                    //Debug.Log(posToLookAtX + " x " + infoInt + " y Where I Am Looking Up COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2657,6 +2662,8 @@ public class GridController : MonoBehaviour
             numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
         }
 
+        Debug.Log(numberOfTimesLookingForPlayerLeft + " NumerOfTimesLeft");
+
         if (numberOfTimesLookingForPlayerLeft == 1)
         {
             if (!horseFoundPlayer && currentAmountOfTries < maxNumberOfTries)
@@ -2696,11 +2703,16 @@ public class GridController : MonoBehaviour
                         FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i], pieceToMove, 0, false);
                     }
 
-                    if (yOrXMovmentListComplete[i] == 0 && !horseFoundPlayer)
+                    if (!horseFoundPlayer)
                     {
-                        Debug.Log("New Movment Horizontal Continuation");
 
-                        FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i], pieceToMove, 1, false);
+                        if(yOrXMovmentListComplete[i] == 0)
+                        {
+                            Debug.Log("New Movment Horizontal Continuation");
+
+                            FindPlayerTower(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfHorseListComplete[i], currentYOfHorseListComplete[i], pieceToMove, 1, false);
+                        }
+
                     }
 
                     #region Old System
@@ -3039,7 +3051,6 @@ public class GridController : MonoBehaviour
 
             if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
             {
-                Debug.Log("HELLO3333");
 
                 foreach (GridPiece pieceToMoveTo in gridPieces)
                 {
@@ -3049,10 +3060,10 @@ public class GridController : MonoBehaviour
 
                     if (xPosToGo == moveToLocationAfterHorseListX[i] && yPosToGO == moveToLocationAfterHorseListY[i])
                     {
-                        Debug.Log("HELLO222");
+
                         if (pieceToMoveTo.enemyPieceHere == false)
                         {
-                            Debug.Log("HELLO");
+                            Debug.Log(towerWithTheLeastTries + "What i To Move To");
 
                             //Kollar Om Hur Försöken Är Hägre Eller Mindre
                             currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
@@ -3086,6 +3097,8 @@ public class GridController : MonoBehaviour
                 pieceToMoveTo.enemyTowerPieceHere = true;
                 pieceToMoveTo.enemyPieceHere = true;
 
+                currentXWhereTowerIsGoingToGo = 1337;
+                towerWithTheLeastTries = 1337;
 
                 numberOfTriesToFindPlayerTower.Clear();
 
