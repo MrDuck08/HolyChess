@@ -2150,13 +2150,6 @@ public class GridController : MonoBehaviour
 
                 MoveToLocationTower(enemyTowerObjectList[i]);
 
-                testBool = false;
-                if (testBool)
-                {
-
-                }
-
-
             }
 
             #endregion
@@ -2170,7 +2163,7 @@ public class GridController : MonoBehaviour
                 allPieces.playerTurn = true;
             }
 
-            enemyHorseObjectList.Clear();
+            enemyTowerObjectList.Clear();
 
             currentAmountOfTries = 0;
             numberOfTimesLookingForPlayer = 1;
@@ -2220,7 +2213,7 @@ public class GridController : MonoBehaviour
                         numberOfTimesLookingForPlayer = 1;
                         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
-
+                        Debug.Log(currentAmountOfTries + " Amount Of Tries Added");
                         numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                         currentAmountOfTries = 0;
 
@@ -2254,7 +2247,7 @@ public class GridController : MonoBehaviour
 
                     infoInt = posToLookAtX - numberOfRoundsContinuation;
 
-                    Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Left COntinuation");
+                    //Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Left COntinuation");
                     foreach (GridPiece allPieces in gridPieces)
                     {
                         int xPos = allPieces.xPos;
@@ -2271,7 +2264,8 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayer = 1;
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
-
+                                currentAmountOfTries += 1;
+                                Debug.Log(currentAmountOfTries + " Amount Of Tries Added");
                                 numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
@@ -2369,10 +2363,11 @@ public class GridController : MonoBehaviour
                                 Debug.Log("Found Player Right");
                                 horseFoundPlayer = true;
 
+                                currentAmountOfTries += 1;
                                 numberOfTimesLookingForPlayer = 1;
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
-
+                                Debug.Log(currentAmountOfTries + " Amount Of Tries Added");
                                 numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
@@ -2474,7 +2469,8 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayer = 1;
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
-
+                                currentAmountOfTries += 1;
+                                Debug.Log(currentAmountOfTries + " Amount Of Tries Added");
                                 numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
@@ -2575,7 +2571,8 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayer = 1;
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
-
+                                currentAmountOfTries += 1;
+                                Debug.Log(currentAmountOfTries + " Amount Of Tries Added");
                                 numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
@@ -2659,7 +2656,7 @@ public class GridController : MonoBehaviour
             numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
         }
 
-        Debug.Log(numberOfTimesLookingForPlayerLeft + " NumerOfTimesLeft");
+        //Debug.Log(numberOfTimesLookingForPlayerLeft + " NumerOfTimesLeft");
 
         if (numberOfTimesLookingForPlayerLeft == 1)
         {
@@ -3101,7 +3098,7 @@ public class GridController : MonoBehaviour
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
-
+                Debug.Log("MOVE");
                 numberOfTriesToFindPlayerTower.Clear();
 
                 moveToLocationAfterHorseListX.Clear();
