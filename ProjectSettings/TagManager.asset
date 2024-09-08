@@ -9,6 +9,7 @@ TagManager:
   - PlayerHorse
   - PlayerTower
   - EnemyTower
+  - EnemyBishop
   layers:
   - Default
   - TransparentFX

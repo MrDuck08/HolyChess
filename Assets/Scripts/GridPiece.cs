@@ -16,14 +16,23 @@ public class GridPiece : MonoBehaviour
 
     bool mouseOver = false;
 
+    #region Player Pieces
+
     public bool playerPawnHere = false;
     public bool playerHorseHere = false;
     public bool playerTowerHere = false;
     public bool playerPieceHere = false;
 
+    #endregion
+
+    #region Enemy Pieces
+
     public bool enemyHorsePieceHere = false;
     public bool enemyTowerPieceHere = false;
+    public bool enemyBishopPieceHere = false;
     public bool enemyPieceHere = false;
+
+    #endregion
 
     public bool anticipateMovment;
     public bool anticipatePlayerAttack;
@@ -70,7 +79,7 @@ public class GridPiece : MonoBehaviour
             if(whatEnemyToSpawn == 0)
             {
                 enemyPieceHere = true;
-                enemyTowerPieceHere = true;
+                enemyBishopPieceHere = true;
             }
 
         }
@@ -209,6 +218,29 @@ public class GridPiece : MonoBehaviour
             foreach (Transform child in gameObject.transform)
             {
                 if (child.tag == "EnemyTower")
+                {
+                    child.gameObject.SetActive(false);
+                }
+
+            }
+        }
+
+        if (enemyBishopPieceHere)
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyBishop")
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+            }
+        }
+        else
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyBishop")
                 {
                     child.gameObject.SetActive(false);
                 }
@@ -462,6 +494,13 @@ public class GridPiece : MonoBehaviour
             {
 
                 controller.EnemyTowerMovmentCall(xPos, yPos, gameObject);
+
+            }
+
+            if (enemyBishopPieceHere)
+            {
+
+                controller.EnemyBishopMovmentCall(xPos, yPos, gameObject);
 
             }
 
