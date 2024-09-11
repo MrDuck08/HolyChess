@@ -31,6 +31,7 @@ public class GridController : MonoBehaviour
     #region Bishop
 
     List<GameObject> enemyBishopObjectList = new List<GameObject>();
+    int maxNumberOfTriesBishop = 2;
 
     #endregion
 
@@ -2727,6 +2728,11 @@ public class GridController : MonoBehaviour
         }
 
 
+        if(moveToLocationAfterEnemyListX.Count == 0)
+        {
+            return;
+        }
+
         foreach (GridPiece pieceToMoveTo in gridPieces)
         {
 
@@ -2766,7 +2772,7 @@ public class GridController : MonoBehaviour
 
     #endregion
 
-    #region Tower
+    #region Bishop
 
     public void EnemyBishopMovmentCall(int xPos, int yPos, GameObject calledObject)
     {
@@ -2812,7 +2818,7 @@ public class GridController : MonoBehaviour
                 #endregion
 
                 infoInt++;
-                Debug.Log("Left Up Search");
+
                 #region Left Up Search
 
                 #region Reset
@@ -2882,7 +2888,7 @@ public class GridController : MonoBehaviour
                 }
 
                 #endregion
-                Debug.Log("Right Down Search");
+
                 #region Right Down Search
 
                 #region Reset
@@ -2905,7 +2911,7 @@ public class GridController : MonoBehaviour
                         int xPos = allPieces.xPos;
                         int yPos = allPieces.yPos;
 
-                        if (xPos == currentX + numberOfRound && yPos == currentY- - numberOfRound)
+                        if (xPos == currentX + numberOfRound && yPos == currentY - numberOfRound)
                         {
 
                             if (allPieces.enemyPieceHere == true)
@@ -2949,7 +2955,7 @@ public class GridController : MonoBehaviour
                 }
 
                 #endregion
-                Debug.Log("Right Up Search");
+
                 #region Right Up Search
 
                 #region Reset
@@ -3017,7 +3023,7 @@ public class GridController : MonoBehaviour
                 fourthSearchCompleteHorse = true;
 
                 #endregion
-                Debug.Log("Left Down Search");
+
                 #region Left Down Search
 
                 #region Reset
@@ -3053,10 +3059,6 @@ public class GridController : MonoBehaviour
                             }
                             else
                             {
-                                int x = enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound;
-                                int y = enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound;
-
-                                Debug.Log(x + " X " + y + " Y Big Search");
                                 FindPlayerBishop(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 1, false);
                                 foundSomething = true;
                                 breakLoop = false;
@@ -3129,7 +3131,6 @@ public class GridController : MonoBehaviour
         {
             enemyFoundPlayer = false;
 
-            Debug.Log(posToLookAtX + " X " + posToLookAtY + " Y Where Im Looking Now");
 
             #region Search For Player
 
@@ -3196,7 +3197,7 @@ public class GridController : MonoBehaviour
 
                             if (allPieces.playerPieceHere == true)
                             {
-                                Debug.Log("Player Found Left Up");
+
                                 enemyFoundPlayer = true;
 
                                 numberOfTimesLookingForPlayer = 1;
@@ -3294,7 +3295,7 @@ public class GridController : MonoBehaviour
                             {
 
                                 enemyFoundPlayer = true;
-                                Debug.Log("Player Found Right Down");
+
                                 numberOfTimesLookingForPlayer = 1;
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
@@ -3390,7 +3391,7 @@ public class GridController : MonoBehaviour
 
                             if (allPieces.playerPieceHere == true)
                             {
-                                Debug.Log("Player Found Left Down");
+
                                 enemyFoundPlayer = true;
 
                                 numberOfTimesLookingForPlayer = 1;
@@ -3485,7 +3486,7 @@ public class GridController : MonoBehaviour
 
                             if (allPieces.playerPieceHere == true)
                             {
-                                Debug.Log("Player Found Right Up");
+
                                 enemyFoundPlayer = true;
 
                                 numberOfTimesLookingForPlayer = 1;
@@ -3571,16 +3572,17 @@ public class GridController : MonoBehaviour
         {
             numberOfTimesLookingForPlayer = 1;
             numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
         }
 
 
         if (numberOfTimesLookingForPlayerLeft == 1)
         {
-            if (!enemyFoundPlayer && currentAmountOfTries < maxNumberOfTries)
+            if (!enemyFoundPlayer && currentAmountOfTries < maxNumberOfTriesBishop)
             {
 
                 currentAmountOfTries += 1;
-                Debug.Log(currentAmountOfTries + " Current Amount Of Tries");
+
                 numberOfTimesLookingForPlayer = 2;
                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
@@ -3598,7 +3600,7 @@ public class GridController : MonoBehaviour
                 currentXOfEnemyList.Clear();
 
                 #region Search For Player A New
-                Debug.Log(currentXOfEnemyListComplete.Count + " How Many Positions To Go Though");
+
                 for (int i = 0; i < currentXOfEnemyListComplete.Count; i++)
                 {
 
@@ -3610,7 +3612,7 @@ public class GridController : MonoBehaviour
                     {
                         if (yOrXMovmentListComplete[i] == 1)
                         {
-                            Debug.Log("New Search Continuation 0 ");
+
                             FindPlayerBishop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfEnemyListComplete[i], currentYOfenemyListComplete[i], pieceToMove, 0, false);
                         }
                     }
@@ -3620,7 +3622,7 @@ public class GridController : MonoBehaviour
 
                         if (yOrXMovmentListComplete[i] == 0)
                         {
-                            Debug.Log("New Search Continuation 1 ");
+
                             FindPlayerBishop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfEnemyListComplete[i], currentYOfenemyListComplete[i], pieceToMove, 1, false);
                         }
 
@@ -3629,24 +3631,28 @@ public class GridController : MonoBehaviour
                 }
 
                 #endregion
-
+                FindPlayerBishop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, 1337, 1337, pieceToMove, 1337, true);
             }
+
         }
 
     }
 
     #endregion
 
-    #region Move Tower
+    #region Move Bishop
 
     void MoveToLocationBishop(GameObject pieceToMove)
     {
-        Debug.Log(moveToLocationAfterEnemyListX.Count + " Amount Of Final Locations");
+
+        if(moveToLocationAfterEnemyListX.Count == 0)
+        {
+            return;
+        }
+
         for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
         {
 
-            Debug.Log(numberOfTriesToFindPlayerTower[i] + " Amount Of Tries");
-            Debug.Log(moveToLocationAfterEnemyListX[i] + "x" + moveToLocationAfterEnemyListY[i] + "Y Where To Go After");
             if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
             {
 
