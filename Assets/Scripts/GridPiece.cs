@@ -30,6 +30,7 @@ public class GridPiece : MonoBehaviour
     public bool enemyHorsePieceHere = false;
     public bool enemyTowerPieceHere = false;
     public bool enemyBishopPieceHere = false;
+    public bool enemyQueenPieceHere = false;
     public bool enemyPieceHere = false;
 
     #endregion
@@ -79,7 +80,7 @@ public class GridPiece : MonoBehaviour
             if(whatEnemyToSpawn == 0)
             {
                 enemyPieceHere = true;
-                enemyBishopPieceHere = true;
+                enemyQueenPieceHere = true;
             }
 
         }
@@ -241,6 +242,29 @@ public class GridPiece : MonoBehaviour
             foreach (Transform child in gameObject.transform)
             {
                 if (child.tag == "EnemyBishop")
+                {
+                    child.gameObject.SetActive(false);
+                }
+
+            }
+        }
+
+        if (enemyQueenPieceHere)
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyQueen")
+                {
+                    child.gameObject.SetActive(true);
+                }
+
+            }
+        }
+        else
+        {
+            foreach (Transform child in gameObject.transform)
+            {
+                if (child.tag == "EnemyQueen")
                 {
                     child.gameObject.SetActive(false);
                 }
@@ -501,6 +525,13 @@ public class GridPiece : MonoBehaviour
             {
 
                 controller.EnemyBishopMovmentCall(xPos, yPos, gameObject);
+
+            }
+
+            if (enemyQueenPieceHere)
+            {
+
+                controller.EnemyQueenMovmentCall(xPos, yPos, gameObject);
 
             }
 

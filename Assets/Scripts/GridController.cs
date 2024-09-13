@@ -30,8 +30,13 @@ public class GridController : MonoBehaviour
 
     #region Bishop
 
-    List<GameObject> enemyBishopObjectList = new List<GameObject>();
     int maxNumberOfTriesBishop = 2;
+
+    #endregion
+
+    #region Queen
+
+    int maxNumberOfTriesQueen = 2;
 
     #endregion
 
@@ -3698,6 +3703,1619 @@ public class GridController : MonoBehaviour
                 pieceToMove.GetComponent<GridPiece>().enemyBishopPieceHere = false;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
                 pieceToMoveTo.enemyBishopPieceHere = true;
+                pieceToMoveTo.enemyPieceHere = true;
+
+                currentXWhereTowerIsGoingToGo = 1337;
+                towerWithTheLeastTries = 1337;
+
+                numberOfTriesToFindPlayerTower.Clear();
+
+                moveToLocationAfterEnemyListX.Clear();
+                moveToLocationAfterEnemyListY.Clear();
+
+                currentXOfEnemyListComplete.Clear();
+                currentYOfenemyListComplete.Clear();
+                yOrXMovmentListComplete.Clear();
+
+                yOrXMovmentList.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+
+                break;
+            }
+        }
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Bishop
+
+    public void EnemyQueenMovmentCall(int xPos, int yPos, GameObject calledObject)
+    {
+        enemyTowerObjectList.Add(calledObject);
+
+        if (enemyTowerObjectList.Count >= numberOfEnemys)
+        {
+            for (int i = 0; i < enemyTowerObjectList.Count; i++)
+            {
+                EnemyQueenMovment(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos);
+            }
+        }
+
+    }
+
+    public void EnemyQueenMovment(int currentX, int currentY)
+    {
+        currentXOfPiece = currentX;
+        currentYOfPiece = currentY;
+
+        currentXOfEnemyList.Add(currentXOfPiece);
+        currentYOfEnemyList.Add(currentYOfPiece);
+
+        numberOfTimesLookingForPlayerLeft--;
+
+        if (!enemyFoundPlayer && numberOfTimesLookingForPlayerLeft == 0 && currentAmountOfTries < maxNumberOfTries)
+        {
+            numberOfTimesLookingForPlayer = 1;
+            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+            currentYOfEnemyList.Clear();
+            currentXOfEnemyList.Clear();
+
+
+            #region Search For Player
+
+            for (int i = 0; i < enemyTowerObjectList.Count; i++)
+            {
+                #region Start Reset
+
+                numberOfRound = 1;
+
+                #endregion
+
+                infoInt++;
+
+                #region Left Up Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX - numberOfRound && yPos == currentY + numberOfRound)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i], 0, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                #region Right Down Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX + numberOfRound && yPos == currentY - numberOfRound)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 0, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+
+                #region Right Up Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX + numberOfRound && yPos == currentY + numberOfRound)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i], 1, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+                fourthSearchCompleteHorse = true;
+
+                #endregion
+
+                #region Left Down Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX - numberOfRound && yPos == currentY - numberOfRound)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 1, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+
+                #region Up Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX && yPos == currentY + numberOfRound)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos + numberOfRound, enemyTowerObjectList[i], 2, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                #region Down Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX && yPos == currentY - numberOfRound)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos - numberOfRound, enemyTowerObjectList[i], 2, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+
+                #region Right Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX + numberOfRound && yPos == currentY)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos + numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 3, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+                fourthSearchCompleteHorse = true;
+
+                #endregion
+
+                #region Left Search
+
+                #region Reset
+                currentAmountOfTries = 0;
+                numberOfTimesLookingForPlayer = 1;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                enemyFoundPlayer = false;
+
+                currentYOfenemyListComplete.Clear();
+                currentXOfEnemyListComplete.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+                #endregion
+                while (true)
+                {
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == currentX - numberOfRound && yPos == currentY)
+                        {
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+
+                            }
+                            else
+                            {
+                                FindPlayerQueen(enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i].GetComponent<GridPiece>().xPos - numberOfRound, enemyTowerObjectList[i].GetComponent<GridPiece>().yPos, enemyTowerObjectList[i], 3, false);
+                                foundSomething = true;
+                                breakLoop = false;
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRound++;
+
+                    if (breakLoop)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRound = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                MoveToLocationQueen(enemyTowerObjectList[i]);
+
+            }
+
+            #endregion
+
+            #region End Reset
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                allPieces.CheckIfEnemyAttackedPlayer();
+
+                allPieces.playerTurn = true;
+            }
+
+            enemyTowerObjectList.Clear();
+
+            currentAmountOfTries = 0;
+            numberOfTimesLookingForPlayer = 1;
+            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+            enemyFoundPlayer = false;
+
+            currentYOfenemyListComplete.Clear();
+            currentXOfEnemyListComplete.Clear();
+            currentYOfEnemyList.Clear();
+            currentXOfEnemyList.Clear();
+
+            #endregion
+        }
+    }
+
+    #region Searching For PLayer Loop
+
+    public void FindPlayerQueen(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY, int posToLookAtX, int posToLookAtY, GameObject pieceToMove, int yOrXMovment, bool lastMovment)
+    {
+        if (!lastMovment)
+        {
+            enemyFoundPlayer = false;
+
+
+            #region Search For Player
+
+            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                #region Check First Position
+
+                if (xPos == posToLookAtX && yPos == posToLookAtY)
+                {
+                    if (allPieces.playerPieceHere)
+                    {
+
+                        enemyFoundPlayer = true;
+
+                        // 2 För det subtraheras 1 på slutet
+                        numberOfTimesLookingForPlayer = 1;
+                        numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+
+                        numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                        currentAmountOfTries = 0;
+
+                        currentYOfenemyListComplete.Clear();
+                        currentXOfEnemyListComplete.Clear();
+                        currentYOfEnemyList.Clear();
+                        currentXOfEnemyList.Clear();
+                        yOrXMovmentListComplete.Clear();
+                        yOrXMovmentList.Clear();
+
+
+                        moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                        moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                    }
+                }
+
+                #endregion
+
+            }
+
+            if (yOrXMovment != 0)
+            {
+                #region Left Up
+
+                while (true)
+                {
+
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX - numberOfRoundsContinuation && yPos == posToLookAtY + numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+
+
+                                currentXOfEnemyList.Add(posToLookAtX - numberOfRoundsContinuation);
+                                currentYOfEnemyList.Add(posToLookAtY + numberOfRoundsContinuation);
+
+                                yOrXMovmentList.Add(0);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                #region Right Down
+
+
+                while (true)
+                {
+
+                    //Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Right COntinuation");
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX + numberOfRoundsContinuation && yPos == posToLookAtY - numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+
+                                currentXOfEnemyList.Add(posToLookAtX + numberOfRoundsContinuation);
+                                currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
+
+                                yOrXMovmentList.Add(0);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+            }
+
+            if (yOrXMovment != 1)
+            {
+                #region Right Up
+
+                while (true)
+                {
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX + numberOfRoundsContinuation && yPos == posToLookAtY + numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+
+                                currentXOfEnemyList.Add(posToLookAtX + numberOfRoundsContinuation);
+                                currentYOfEnemyList.Add(posToLookAtY + numberOfRoundsContinuation);
+
+                                yOrXMovmentList.Add(1);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                #region Left Down
+
+                while (true)
+                {
+
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX - numberOfRoundsContinuation && yPos == posToLookAtY - numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+                                //Debug.Log("Found Normal Piece");
+
+                                currentXOfEnemyList.Add(posToLookAtX - numberOfRoundsContinuation);
+                                currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
+
+                                yOrXMovmentList.Add(1);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+            }
+
+            if (yOrXMovment != 2)
+            {
+                #region Up
+
+                while (true)
+                {
+
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX && yPos == posToLookAtY + numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+
+
+                                currentXOfEnemyList.Add(posToLookAtX);
+                                currentYOfEnemyList.Add(posToLookAtY + numberOfRoundsContinuation);
+
+                                yOrXMovmentList.Add(2);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                #region Down
+
+
+                while (true)
+                {
+
+                    //Debug.Log(infoInt + " x " + posToLookAtY + " y Where I Am Looking Right COntinuation");
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRoundsContinuation)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+
+                                currentXOfEnemyList.Add(posToLookAtX);
+                                currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
+
+                                yOrXMovmentList.Add(2);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+            }
+
+            if (yOrXMovment != 3)
+            {
+                #region Right
+
+
+                while (true)
+                {
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX + numberOfRoundsContinuation && yPos == posToLookAtY)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+
+                                currentXOfEnemyList.Add(posToLookAtX + numberOfRoundsContinuation);
+                                currentYOfEnemyList.Add(posToLookAtY);
+
+                                yOrXMovmentList.Add(3);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+
+                #region Left
+
+                while (true)
+                {
+
+
+                    foreach (GridPiece allPieces in gridPieces)
+                    {
+                        int xPos = allPieces.xPos;
+                        int yPos = allPieces.yPos;
+
+                        if (xPos == posToLookAtX - numberOfRoundsContinuation && yPos == posToLookAtY)
+                        {
+
+                            if (allPieces.playerPieceHere == true)
+                            {
+
+                                enemyFoundPlayer = true;
+
+                                numberOfTimesLookingForPlayer = 1;
+                                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                                currentAmountOfTries += 1;
+
+                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                currentAmountOfTries = 0;
+
+                                currentYOfenemyListComplete.Clear();
+                                currentXOfEnemyListComplete.Clear();
+                                currentYOfEnemyList.Clear();
+                                currentXOfEnemyList.Clear();
+                                yOrXMovmentListComplete.Clear();
+                                yOrXMovmentList.Clear();
+
+                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+
+                                foundSomething = true;
+                                breakLoop = true;
+
+                                break;
+                            }
+
+                            if (allPieces.enemyPieceHere == true)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+
+
+                                break;
+
+                            }
+
+                            if (allPieces.enemyPieceHere == false)
+                            {
+                                foundSomething = true;
+                                breakLoop = false;
+
+                                didntFindAnytrhingOnce = false;
+
+
+                                currentXOfEnemyList.Add(posToLookAtX - numberOfRoundsContinuation);
+                                currentYOfEnemyList.Add(posToLookAtY);
+
+                                yOrXMovmentList.Add(3);
+
+                            }
+                        }
+                        else
+                        {
+                            if (!foundSomething)
+                            {
+                                breakLoop = true;
+                            }
+                        }
+                    }
+
+                    foundSomething = false;
+
+                    numberOfRoundsContinuation++;
+
+                    if (breakLoop || enemyFoundPlayer)
+                    {
+                        foundSomething = false;
+                        breakLoop = false;
+
+                        numberOfRoundsContinuation = 1;
+
+                        break;
+                    }
+
+                }
+
+                #endregion
+            }
+
+            #endregion
+        }
+        else
+        {
+            numberOfTimesLookingForPlayer = 1;
+            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+        }
+
+
+        if (numberOfTimesLookingForPlayerLeft == 1)
+        {
+            if (!enemyFoundPlayer && currentAmountOfTries < maxNumberOfTriesQueen)
+            {
+
+                currentAmountOfTries += 1;
+
+                numberOfTimesLookingForPlayer = 2;
+                numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                currentXOfEnemyListComplete.Clear();
+                currentYOfenemyListComplete.Clear();
+                yOrXMovmentListComplete.Clear();
+
+                yOrXMovmentListComplete.AddRange(yOrXMovmentList);
+                currentXOfEnemyListComplete.AddRange(currentXOfEnemyList);
+                currentYOfenemyListComplete.AddRange(currentYOfEnemyList);
+
+
+                yOrXMovmentList.Clear();
+                currentYOfEnemyList.Clear();
+                currentXOfEnemyList.Clear();
+
+                #region Search For Player A New
+
+                for (int i = 0; i < currentXOfEnemyListComplete.Count; i++)
+                {
+
+                    // 0 = Check Horizontal (It Was A Left Or Right Movment)
+                    // 1 = Check Vertical (It Was A Up Or Down Movment)
+
+
+                    if (!enemyFoundPlayer)
+                    {
+                        //if (yOrXMovmentListComplete[i] == 1)
+                        //{
+
+                        //    FindPlayerQueen(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfEnemyListComplete[i], currentYOfenemyListComplete[i], pieceToMove, 0, false);
+                        //}
+
+                        FindPlayerQueen(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfEnemyListComplete[i], currentYOfenemyListComplete[i], pieceToMove, yOrXMovmentListComplete[i], false);
+                    }
+
+                    if (!enemyFoundPlayer)
+                    {
+
+                        //if (yOrXMovmentListComplete[i] == 0)
+                        //{
+
+                        //    FindPlayerQueen(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, currentXOfEnemyListComplete[i], currentYOfenemyListComplete[i], pieceToMove, 1, false);
+                        //}
+
+                    }
+
+                }
+
+                #endregion
+                FindPlayerQueen(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY, 1337, 1337, pieceToMove, 1337, true);
+            }
+
+        }
+
+    }
+
+    #endregion
+
+    #region Move Bishop
+
+    void MoveToLocationQueen(GameObject pieceToMove)
+    {
+
+        if (moveToLocationAfterEnemyListX.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
+        {
+
+            if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
+            {
+
+                foreach (GridPiece pieceToMoveTo in gridPieces)
+                {
+
+                    int xPosToGo = pieceToMoveTo.xPos;
+                    int yPosToGO = pieceToMoveTo.yPos;
+
+                    if (xPosToGo == moveToLocationAfterEnemyListX[i] && yPosToGO == moveToLocationAfterEnemyListY[i])
+                    {
+
+                        if (pieceToMoveTo.enemyPieceHere == false)
+                        {
+
+
+                            //Kollar Om Hur Försöken Är Högre Eller Mindre
+                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
+
+                            //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
+                            towerWithTheLeastTries = i;
+
+
+                        }
+
+                    }
+                }
+            }
+
+            numberOftimesLookingForPositionHorse++;
+        }
+
+
+        foreach (GridPiece pieceToMoveTo in gridPieces)
+        {
+
+            int xPosToGo = pieceToMoveTo.xPos;
+            int yPosToGO = pieceToMoveTo.yPos;
+
+            if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
+            {
+
+                pieceToMove.GetComponent<GridPiece>().enemyQueenPieceHere = false;
+                pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
+                pieceToMoveTo.enemyQueenPieceHere = true;
                 pieceToMoveTo.enemyPieceHere = true;
 
                 currentXWhereTowerIsGoingToGo = 1337;

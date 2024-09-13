@@ -10,6 +10,7 @@ TagManager:
   - PlayerTower
   - EnemyTower
   - EnemyBishop
+  - EnemyQueen
   layers:
   - Default
   - TransparentFX
