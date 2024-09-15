@@ -7,6 +7,8 @@ public class Inventory : MonoBehaviour
     public int pawnsInInventory = 0;
     public int horseInInvenory = 0;
     public int towersInInventory = 0;
+    public int bishopInInventory = 0;
+    public int queenInInventory = 0;
 
     public bool gameHasStarted = false;
 
@@ -17,13 +19,13 @@ public class Inventory : MonoBehaviour
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
         foreach (GridPiece piece in gridPieces)
         {
-            if (pawnsInInventory > 0 && !gameHasStarted && piece.placingDownAUNitNow == false)
+            if (pawnsInInventory > 0 && !gameHasStarted && piece.placingDownAUnitNow == false)
             {
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
                     allPieces.spawningPawnNow = true;
-                    allPieces.placingDownAUNitNow = true;
+                    allPieces.placingDownAUnitNow = true;
                 }
 
                 pawnsInInventory--;
@@ -37,14 +39,14 @@ public class Inventory : MonoBehaviour
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
         foreach (GridPiece piece in gridPieces)
         {
-            if (horseInInvenory > 0 && !gameHasStarted && piece.placingDownAUNitNow == false)
+            if (horseInInvenory > 0 && !gameHasStarted && piece.placingDownAUnitNow == false)
             {
                 gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
                     allPieces.spawningHorseNow = true;
-                    allPieces.placingDownAUNitNow = true;
+                    allPieces.placingDownAUnitNow = true;
                 }
 
                 horseInInvenory--;
@@ -57,17 +59,57 @@ public class Inventory : MonoBehaviour
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
         foreach (GridPiece piece in gridPieces)
         {
-            if (towersInInventory > 0 && !gameHasStarted && piece.placingDownAUNitNow == false)
+            if (towersInInventory > 0 && !gameHasStarted && piece.placingDownAUnitNow == false)
             {
                 gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
                     allPieces.spawningTowerNow = true;
-                    allPieces.placingDownAUNitNow = true;
+                    allPieces.placingDownAUnitNow = true;
                 }
 
                 horseInInvenory--;
+            }
+        }
+    }
+
+    public void PlaceBishop()
+    {
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+        foreach (GridPiece piece in gridPieces)
+        {
+            if (bishopInInventory > 0 && !gameHasStarted && piece.placingDownAUnitNow == false)
+            {
+                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                foreach (GridPiece allPieces in gridPieces)
+                {
+                    allPieces.spawningBishopNow = true;
+                    allPieces.placingDownAUnitNow = true;
+                }
+
+                bishopInInventory--;
+            }
+        }
+    }
+
+    public void PlaceQueen()
+    {
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+        foreach (GridPiece piece in gridPieces)
+        {
+            if (queenInInventory > 0 && !gameHasStarted && piece.placingDownAUnitNow == false)
+            {
+                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                foreach (GridPiece allPieces in gridPieces)
+                {
+                    allPieces.spawningQueenNow = true;
+                    allPieces.placingDownAUnitNow = true;
+                }
+
+                queenInInventory--;
             }
         }
     }

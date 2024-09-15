@@ -12,6 +12,8 @@ TagManager:
   - EnemyBishop
   - EnemyQueen
   - EnemyPawn
+  - PlayerBishop
+  - PlayerQueen
   layers:
   - Default
   - TransparentFX

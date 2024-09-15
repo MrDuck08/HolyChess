@@ -647,6 +647,858 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    #region Bishop
+
+    public void AnticipateBishopMovment(int currentX, int currentY, GameObject callerGameObject)
+    {
+        moveFromTileObject = callerGameObject;
+
+        #region Left Up
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - numberOfRound && yPos == currentY + numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Right Down
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + numberOfRound && yPos == currentY - numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+
+        #region Down Left
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - numberOfRound && yPos == currentY - numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Right Up
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + numberOfRound && yPos == currentY + numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerBishop = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+    }
+
+    #endregion
+
+    #region Queen
+
+    public void AnticipateQueenMovment(int currentX, int currentY, GameObject callerGameObject)
+    {
+        moveFromTileObject = callerGameObject;
+
+        #region Left Up
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - numberOfRound && yPos == currentY + numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Right Down
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + numberOfRound && yPos == currentY - numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+
+        #region Down Left
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - numberOfRound && yPos == currentY - numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Right Up
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + numberOfRound && yPos == currentY + numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+
+        #region Up
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX && yPos == currentY + numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Down
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX && yPos == currentY - numberOfRound)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+
+        #region Left
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX - numberOfRound && yPos == currentY)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+        #region Right
+
+        while (true)
+        {
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX + numberOfRound && yPos == currentY)
+                {
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false && allPieces.playerPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        allPieces.anticipateMovment = true;
+                        allPieces.anticipatingPlayerQueen = true;
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+            }
+
+            foundSomething = false;
+
+            numberOfRound++;
+
+            if (breakLoop)
+            {
+                foundSomething = false;
+                breakLoop = false;
+
+                numberOfRound = 1;
+
+                break;
+            }
+
+        }
+
+        #endregion
+
+    }
+
+    #endregion
+
     #region General Stuff
 
     public void movePiece(int whatToMove)
@@ -654,6 +1506,8 @@ public class GridController : MonoBehaviour
         // 0 = Pawn
         // 1 = Horse
         // 2 = Tower
+        // 3 = Bishop
+        // 4 = Queen
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
 
@@ -671,6 +1525,16 @@ public class GridController : MonoBehaviour
         {
             moveFromTileObject.GetComponent<GridPiece>().playerTowerHere = false;
         }
+
+        if (whatToMove == 3)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerBishopHere = false;
+        }
+
+        if (whatToMove == 4)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerQueenHere = false;
+        }
     }
 
     public void AttackPiece(int whatToMove)
@@ -679,6 +1543,8 @@ public class GridController : MonoBehaviour
         // 0 = Pawn
         // 1 = Horse
         // 2 = Tower
+        // 3 = Bishop
+        // 4 = Queen
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
 
@@ -695,6 +1561,16 @@ public class GridController : MonoBehaviour
         if(whatToMove == 2)
         {
             moveFromTileObject.GetComponent<GridPiece>().playerTowerHere = false;
+        }
+
+        if (whatToMove == 3)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerBishopHere = false;
+        }
+
+        if (whatToMove == 4)
+        {
+            moveFromTileObject.GetComponent<GridPiece>().playerQueenHere = false;
         }
 
     }
@@ -892,7 +1768,7 @@ public class GridController : MonoBehaviour
 
             foreach (GridPiece allPieces in gridPieces)
             {
-                allPieces.CheckIfEnemyAttackedPlayer();
+                allPieces.CheckWhoDied();
 
                 allPieces.playerTurn = true;
             }
@@ -2157,7 +3033,7 @@ public class GridController : MonoBehaviour
 
             foreach (GridPiece allPieces in gridPieces)
             {
-                allPieces.CheckIfEnemyAttackedPlayer();
+                allPieces.CheckWhoDied();
 
                 allPieces.playerTurn = true;
             }
@@ -3112,7 +3988,7 @@ public class GridController : MonoBehaviour
 
             foreach (GridPiece allPieces in gridPieces)
             {
-                allPieces.CheckIfEnemyAttackedPlayer();
+                allPieces.CheckWhoDied();
 
                 allPieces.playerTurn = true;
             }
@@ -4340,7 +5216,7 @@ public class GridController : MonoBehaviour
 
             foreach (GridPiece allPieces in gridPieces)
             {
-                allPieces.CheckIfEnemyAttackedPlayer();
+                allPieces.CheckWhoDied();
 
                 allPieces.playerTurn = true;
             }
@@ -5438,7 +6314,7 @@ public class GridController : MonoBehaviour
 
             foreach (GridPiece allPieces in gridPieces)
             {
-                allPieces.CheckIfEnemyAttackedPlayer();
+                allPieces.CheckWhoDied();
 
                 allPieces.playerTurn = true;
             }

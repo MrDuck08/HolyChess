@@ -21,6 +21,8 @@ public class GridPiece : MonoBehaviour
     public bool playerPawnHere = false;
     public bool playerHorseHere = false;
     public bool playerTowerHere = false;
+    public bool playerBishopHere = false;
+    public bool playerQueenHere = false;
     public bool playerPieceHere = false;
 
     #endregion
@@ -36,19 +38,32 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
+    #region Player Movment
+
     public bool anticipateMovment;
     public bool anticipatePlayerAttack;
     public bool anticipatingPlayerPawn;
     public bool anticipatingPlayerHorse;
     public bool anticipatingPlayerTower;
+    public bool anticipatingPlayerBishop;
+    public bool anticipatingPlayerQueen;
     public bool movedOnce = false;
 
-    public bool gameHasStarted = false;
+    #endregion
+
+    #region Spawning & Turns
+
     public bool spawningPawnNow = false;
     public bool spawningHorseNow = false;
     public bool spawningTowerNow = false;
-    public bool placingDownAUNitNow = false;
+    public bool spawningBishopNow = false;
+    public bool spawningQueenNow = false;
+
+    public bool gameHasStarted = false;
+    public bool placingDownAUnitNow = false;
     public bool playerTurn = true;
+
+    #endregion
 
     #endregion
 
@@ -107,6 +122,9 @@ public class GridPiece : MonoBehaviour
 
         if (gameHasStarted)
         {
+
+            #region Pawn
+
             if (playerPawnHere)
             {
                 foreach (Transform child in gameObject.transform)
@@ -129,6 +147,10 @@ public class GridPiece : MonoBehaviour
 
                 }
             }
+
+            #endregion
+
+            #region Tower
 
             if (playerTowerHere)
             {
@@ -153,6 +175,10 @@ public class GridPiece : MonoBehaviour
                 }
             }
 
+            #endregion
+
+            #region Horse
+
             if (playerHorseHere)
             {
                 foreach (Transform child in gameObject.transform)
@@ -175,11 +201,69 @@ public class GridPiece : MonoBehaviour
 
                 }
             }
+
+            #endregion
+
+            #region Bishop
+
+            if (playerBishopHere)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerBishop")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerBishop")
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+
+                }
+            }
+
+            #endregion
+
+            #region Queen
+
+            if (playerQueenHere)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerQueen")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerQueen")
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+
+                }
+            }
+
+            #endregion
         }
 
         #endregion
 
         #region Enemy Pieces
+
+        #region Horse
 
         if (enemyHorsePieceHere)
         {
@@ -204,6 +288,10 @@ public class GridPiece : MonoBehaviour
             }
         }
 
+        #endregion
+
+        #region Tower
+
         if (enemyTowerPieceHere)
         {
             foreach (Transform child in gameObject.transform)
@@ -226,6 +314,10 @@ public class GridPiece : MonoBehaviour
 
             }
         }
+
+        #endregion
+
+        #region Bishop
 
         if (enemyBishopPieceHere)
         {
@@ -250,6 +342,10 @@ public class GridPiece : MonoBehaviour
             }
         }
 
+        #endregion
+
+        #region Queen
+
         if (enemyQueenPieceHere)
         {
             foreach (Transform child in gameObject.transform)
@@ -272,6 +368,10 @@ public class GridPiece : MonoBehaviour
 
             }
         }
+
+        #endregion
+
+        #region Pawn
 
         if (enemyPawnPieceHere)
         {
@@ -300,6 +400,8 @@ public class GridPiece : MonoBehaviour
 
         #endregion
 
+        #endregion
+
         #region Check If Dead
 
         if (!playerPieceHere)
@@ -307,6 +409,17 @@ public class GridPiece : MonoBehaviour
             playerPawnHere = false;
             playerHorseHere = false;
             playerTowerHere = false;
+            playerBishopHere = false;
+            playerQueenHere = false;
+        }
+
+        if (!enemyPieceHere)
+        {
+            enemyBishopPieceHere = false;
+            enemyPawnPieceHere = false;
+            enemyHorsePieceHere = false;
+            enemyTowerPieceHere = false;
+            enemyQueenPieceHere = false;
         }
 
         #endregion
@@ -361,6 +474,16 @@ public class GridPiece : MonoBehaviour
                         {
                             controller.AnticipateTowerMovment(xPos, yPos, gameObject);
                         }
+
+                        if (playerBishopHere)
+                        {
+                            controller.AnticipateBishopMovment(xPos, yPos, gameObject);
+                        }
+
+                        if (playerQueenHere)
+                        {
+                            controller.AnticipateQueenMovment(xPos, yPos, gameObject);
+                        }
                     }
                 }
 
@@ -383,7 +506,7 @@ public class GridPiece : MonoBehaviour
                             foreach (GridPiece allPiece in gridPieces)
                             {
                                 allPiece.spawningPawnNow = false;
-                                allPiece.placingDownAUNitNow = false;
+                                allPiece.placingDownAUnitNow = false;
                             }
                         }
 
@@ -397,7 +520,7 @@ public class GridPiece : MonoBehaviour
                             foreach (GridPiece allPiece in gridPieces)
                             {
                                 allPiece.spawningHorseNow = false;
-                                allPiece.placingDownAUNitNow = false;
+                                allPiece.placingDownAUnitNow = false;
                             }
                         }
 
@@ -411,7 +534,35 @@ public class GridPiece : MonoBehaviour
                             foreach (GridPiece allPiece in gridPieces)
                             {
                                 allPiece.spawningTowerNow = false;
-                                allPiece.placingDownAUNitNow = false;
+                                allPiece.placingDownAUnitNow = false;
+                            }
+                        }
+
+                        if (spawningBishopNow)
+                        {
+                            playerBishopHere = true;
+                            playerPieceHere = true;
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.spawningBishopNow = false;
+                                allPiece.placingDownAUnitNow = false;
+                            }
+                        }
+
+                        if (spawningQueenNow)
+                        {
+                            playerQueenHere = true;
+                            playerPieceHere = true;
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.spawningQueenNow = false;
+                                allPiece.placingDownAUnitNow = false;
                             }
                         }
                     }
@@ -441,6 +592,18 @@ public class GridPiece : MonoBehaviour
                         {
                             playerTowerHere = true;
                             controller.movePiece(2);
+                        }
+
+                        if (anticipatingPlayerBishop)
+                        {
+                            playerBishopHere = true;
+                            controller.movePiece(3);
+                        }
+
+                        if (anticipatingPlayerQueen)
+                        {
+                            playerQueenHere = true;
+                            controller.movePiece(4);
                         }
 
                         #endregion
@@ -493,6 +656,18 @@ public class GridPiece : MonoBehaviour
                             controller.AttackPiece(2);
                         }
 
+                        if (anticipatingPlayerBishop)
+                        {
+                            playerBishopHere = true;
+                            controller.AttackPiece(3);
+                        }
+
+                        if (anticipatingPlayerQueen)
+                        {
+                            playerQueenHere = true;
+                            controller.AttackPiece(4);
+                        }
+
                         #endregion
 
                         playerPieceHere = true;
@@ -500,7 +675,6 @@ public class GridPiece : MonoBehaviour
                         movedOnce = true;
 
                         enemyPieceHere = false;
-                        enemyHorsePieceHere = false;
 
                         foreach (GridPiece allPiece in gridPieces)
                         {
@@ -610,6 +784,28 @@ public class GridPiece : MonoBehaviour
                     }
                 }
             }
+
+            if (spawningBishopNow)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerBishop")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                }
+            }
+
+            if (spawningQueenNow)
+            {
+                foreach (Transform child in gameObject.transform)
+                {
+                    if (child.tag == "PlayerQueen")
+                    {
+                        child.gameObject.SetActive(true);
+                    }
+                }
+            }
         }
 
         mouseOver = true;
@@ -635,6 +831,16 @@ public class GridPiece : MonoBehaviour
                 {
                     child.gameObject.SetActive(false);
                 }
+
+                if (child.tag == "PlayerBishop")
+                {
+                    child.gameObject.SetActive(false);
+                }
+
+                if (child.tag == "PlayerQueen")
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
         }
         
@@ -644,9 +850,9 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
-    public void CheckIfEnemyAttackedPlayer()
+    public void CheckWhoDied()
     {
-        if (playerPieceHere && enemyPieceHere)
+        if (playerPieceHere && enemyPieceHere && !playerTurn)
         {
 
             playerPieceHere = false;        
