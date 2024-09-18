@@ -11,7 +11,7 @@ public class BoardCreator : MonoBehaviour
     int gridX;
 
     int maxXRight;
-    int maxYUp;
+    public int maxYUp;
     int maxXLeft;
     int maxYDown;
 

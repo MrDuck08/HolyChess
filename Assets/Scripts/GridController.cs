@@ -12,6 +12,8 @@ public class GridController : MonoBehaviour
     GameObject moveToTileObject;
     List<GameObject> attackFromTileObjectList = new List<GameObject>();
 
+    BoardCreator boardCreator;
+
     #region Enemy
 
     #region Tower
@@ -94,12 +96,28 @@ public class GridController : MonoBehaviour
 
     #endregion
 
-    #region Player Tower
+    #region Player
+
+    #region Tower
 
     bool breakLoop = false;
     bool foundSomething;
     bool hitSomething = false;
     int numberOfRound = 1;
+
+    #endregion
+
+    #region Pawn
+
+    
+
+    #endregion
+
+    #region Upgrades
+
+
+
+    #endregion
 
     #endregion
 
@@ -112,6 +130,8 @@ public class GridController : MonoBehaviour
 
     private void Start()
     {
+        boardCreator = FindObjectOfType<BoardCreator>();
+
         StartCoroutine(DelayStart());
     }
 
@@ -134,8 +154,17 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.enemyPieceHere == false)
                 {
+                    // maxY Visar en mindre 
+                    if(boardCreator.maxYUp - 1 == currentY + 1)
+                    {
+                        allPieces.anticipatingPlayerQueen = true;
+                    }
+                    else
+                    {
+                        allPieces.anticipatingPlayerPawn = true;
+                    }
+
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerPawn = true;
 
                 }
             }
@@ -158,6 +187,7 @@ public class GridController : MonoBehaviour
 
                 if(allPieces.enemyPieceHere == true)
                 {
+                    
                     allPieces.anticipatePlayerAttack = true;
                     allPieces.anticipatingPlayerPawn = true;
 

@@ -8,7 +8,7 @@ public class SceneLoader : MonoBehaviour
 
     Inventory inventory;
 
-    public void StartMatch()
+    public void StartMatch(GameObject button)
     {
         inventory = FindObjectOfType<Inventory>();
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
@@ -19,6 +19,7 @@ public class SceneLoader : MonoBehaviour
         }
 
         inventory.gameHasStarted = true;
+        button.SetActive(false);
 
     }
 }

@@ -1714,6 +1714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ce95b39bd5417468cf2ba5bd8e4504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxYUp: 0
   maxRandomRange: 5
   minRandomRange: 4
   gridPieceObject: {fileID: 6938364730039044657, guid: c641a7f6d4816074e95acc8cd22c9e99, type: 3}
@@ -1803,10 +1804,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1497192901}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: StartMatch
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1989062389}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
