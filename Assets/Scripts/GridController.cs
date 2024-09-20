@@ -13,6 +13,7 @@ public class GridController : MonoBehaviour
     List<GameObject> attackFromTileObjectList = new List<GameObject>();
 
     BoardCreator boardCreator;
+    SceneLoader sceneLoader;
 
     #region Enemy
 
@@ -124,15 +125,24 @@ public class GridController : MonoBehaviour
     int infoInt = 0;
 
     int testInt;
-    bool testBool;
+    bool testBool = false;
 
     bool didntFindAnytrhingOnce = false;
 
     private void Start()
     {
         boardCreator = FindObjectOfType<BoardCreator>();
+        sceneLoader = FindObjectOfType<SceneLoader>();
 
         StartCoroutine(DelayStart());
+    }
+
+    private void Update()
+    {
+        if (numberOfEnemys == 0 && testBool == true)
+        {
+            sceneLoader.ChangeScene(2);
+        }
     }
 
     #region Player Movment/Attack
@@ -1577,6 +1587,7 @@ public class GridController : MonoBehaviour
         // 4 = Queen
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+        numberOfEnemys--;
 
         if (whatToMove == 0)
         {
@@ -6690,6 +6701,7 @@ public class GridController : MonoBehaviour
      
         }
 
+        testBool = true;
 
         Debug.Log(numberOfEnemys + " Enemys");
         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
