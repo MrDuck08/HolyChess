@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
     GridPiece[] gridPieces;
-    List<GameObject> Shops = new List<GameObject>();
+    [SerializeField] List<GameObject> Shops = new List<GameObject>();
 
     Inventory inventory;
 
@@ -14,7 +14,7 @@ public class SceneLoader : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            int WhatShopToAcive = Random.Range(0, Shops.Count + 1);
+            int WhatShopToAcive = Random.Range(0, Shops.Count);
 
             Shops[WhatShopToAcive].SetActive(true);
         }

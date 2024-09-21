@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour
     GridPiece[] gridPieces;
 
     #region Place Pieces
+
     public void PlacePawn()
     {
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
