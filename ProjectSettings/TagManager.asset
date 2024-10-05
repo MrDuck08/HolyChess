@@ -14,6 +14,7 @@ TagManager:
   - EnemyPawn
   - PlayerBishop
   - PlayerQueen
+  - GeneralUpgrades
   layers:
   - Default
   - TransparentFX

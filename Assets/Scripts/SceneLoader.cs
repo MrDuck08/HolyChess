@@ -5,22 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    GridPiece[] gridPieces;
-    [SerializeField] List<GameObject> Shops = new List<GameObject>();
+    [SerializeField] GameObject[] whatShopButton;
 
+    GridPiece[] gridPieces;
+    Shops shopsScript;
     Inventory inventory;
+    GameManagerSr gameManager;
+
+    int whatShop;
 
     private void Start()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            int WhatShopToAcive = Random.Range(0, Shops.Count);
+        gameManager = FindAnyObjectByType<GameManagerSr>();
 
-            Shops[WhatShopToAcive].SetActive(true);
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            shopsScript = FindAnyObjectByType<Shops>();
+
+            int WhatShopToAcive = Random.Range(0, 6);
+
+            // 0 = General
+            // 1 = Pawn
+            // 2 = Tower
+            // 3 = Bishop
+            // 4 = Queen
+            // 5 = Horse
+
+            whatShopButton[WhatShopToAcive].SetActive(true);
+
+            gameManager.NextSceneWhatShop(WhatShopToAcive);
+
         }
     }
 
-    #region Start Match Game
+    #region Start Match Game And End Round
 
     public void StartMatch(GameObject button)
     {
@@ -37,12 +55,45 @@ public class SceneLoader : MonoBehaviour
 
     }
 
+    public void EndRound()
+    {
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece allPieces in gridPieces)
+        {
+            allPieces.playerTurn = false;
+
+            allPieces.movedOnce = false;
+        }
+
+    }
+
     #endregion
 
     #region Change Scenes
 
     public void ChangeScene(int buildIndex)
     {
+
+        if (buildIndex == 1337)
+        {
+
+            // Gameplay Scene
+            SceneManager.LoadScene(1);
+
+            // Add Coins
+        }
+        else
+        {
+            SceneManager.LoadScene(buildIndex);
+        }
+    }
+
+    public void ChangeSceneToShop(int buildIndex)
+    {
+        
+
         SceneManager.LoadScene(buildIndex);
     }
 

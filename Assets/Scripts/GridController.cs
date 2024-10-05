@@ -3651,8 +3651,6 @@ public class GridController : MonoBehaviour
                     }
                 }
             }
-
-            numberOftimesLookingForPositionHorse++;
         }
 
 
@@ -6425,11 +6423,13 @@ public class GridController : MonoBehaviour
 
                             if (firstTimeSearching)
                             {
+                                // Attack
                                 moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX + 1);
                                 moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY - numberOfRoundsContinuation + 1);
                             }
                             else
                             {
+                                // Player Piece Is One Or More Away From Player So Move Forward
                                 moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
                                 moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
                             }
@@ -6498,11 +6498,13 @@ public class GridController : MonoBehaviour
 
                             if (firstTimeSearching)
                             {
+                                // Attack
                                 moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX - 1);
                                 moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY - numberOfRoundsContinuation + 1);
                             }
                             else
                             {
+                                // Player Piece Is One Or More Away From Player So Move Forward
                                 moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
                                 moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
                             }
@@ -6545,6 +6547,52 @@ public class GridController : MonoBehaviour
                             breakLoop = true;
                         }
                     }
+
+                    if (xPos == posToLookAtX  && yPos == posToLookAtY - numberOfRoundsContinuation)
+                    {
+
+                        if (allPieces.playerPieceHere == true)
+                        {
+
+                            if (firstTimeSearching)
+                            {
+                                Debug.Log("DONT MOVE FORWARD");
+                                foundSomething = true;
+                                breakLoop = true;
+                            }
+                            foundSomething = true;
+
+                            break;
+                        }
+
+                        if (allPieces.enemyPieceHere == true)
+                        {
+
+
+                            if (firstTimeSearching)
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+                            }
+                            foundSomething = true;
+                            break;
+
+                        }
+                        // FIX HERE IT KILLS PLAYER EVEN IF HE IS INFRONT 
+                    }
+                    else
+                    {
+                        if (!foundSomething)
+                        {
+                            Debug.Log("MOVE TO THE END");
+                            numberOfTriesToFindPlayerTower.Add(420);
+
+                            moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                            moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+                        }
+                    }
+
+
                 }
 
                 foundSomething = false;
@@ -6633,7 +6681,6 @@ public class GridController : MonoBehaviour
                 }
             }
 
-            numberOftimesLookingForPositionHorse++;
         }
 
 
