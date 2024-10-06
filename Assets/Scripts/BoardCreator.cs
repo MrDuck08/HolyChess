@@ -13,7 +13,7 @@ public class BoardCreator : MonoBehaviour
     int maxXRight;
     public int maxYUp;
     int maxXLeft;
-    int maxYDown;
+    public int maxYDown;
 
     int whiteOrBlackToSPawn = 1;
 

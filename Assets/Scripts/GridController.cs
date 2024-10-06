@@ -46,6 +46,12 @@ public class GridController : MonoBehaviour
     #region Pawn
 
     bool firstTimeSearching = true;
+    bool enemyPawnNotMoveForward = false;
+
+    List<int> moveToForwardPawnListX = new List<int>();
+    List<int> moveToForwardPawnListY = new List<int>();
+
+    List<int> numberOfTriesForPawnToGoForward = new List<int>();
 
     #endregion
 
@@ -6556,11 +6562,17 @@ public class GridController : MonoBehaviour
 
                             if (firstTimeSearching)
                             {
-                                Debug.Log("DONT MOVE FORWARD");
+
                                 foundSomething = true;
                                 breakLoop = true;
                             }
+                            enemyPawnNotMoveForward = true;
                             foundSomething = true;
+
+                            moveToForwardPawnListX.Clear();
+                            moveToForwardPawnListY.Clear();
+
+                            numberOfTriesForPawnToGoForward.Clear();
 
                             break;
                         }
@@ -6578,17 +6590,25 @@ public class GridController : MonoBehaviour
                             break;
 
                         }
-                        // FIX HERE IT KILLS PLAYER EVEN IF HE IS INFRONT 
+                        else
+                        {
+                            // Empty Board Piece
+                            foundSomething = true;
+                            breakLoop = false;
+
+                        }
+
                     }
                     else
                     {
-                        if (!foundSomething)
+                        if (!foundSomething && !enemyPawnNotMoveForward)
                         {
-                            Debug.Log("MOVE TO THE END");
-                            numberOfTriesToFindPlayerTower.Add(420);
 
-                            moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
-                            moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+                            numberOfTriesForPawnToGoForward.Add(420);
+
+                            moveToForwardPawnListX.Add(posToMoveToAfterFindingPlayerX);
+                            moveToForwardPawnListY.Add(posToMoveToAfterFindingPlayerY);
+
                         }
                     }
 
@@ -6605,7 +6625,19 @@ public class GridController : MonoBehaviour
                     foundSomething = false;
                     breakLoop = false;
 
+                    enemyPawnNotMoveForward = false;
+
                     numberOfRoundsContinuation = 1;
+
+                    moveToLocationAfterEnemyListX.AddRange(moveToForwardPawnListX);
+                    moveToLocationAfterEnemyListY.AddRange(moveToForwardPawnListY);
+
+                    numberOfTriesToFindPlayerTower.AddRange(numberOfTriesForPawnToGoForward);
+
+                    numberOfTriesForPawnToGoForward.Clear();
+
+                    moveToForwardPawnListX.Clear();
+                    moveToForwardPawnListY.Clear();
 
                     break;
                 }
@@ -6700,8 +6732,16 @@ public class GridController : MonoBehaviour
 
                 pieceToMove.GetComponent<GridPiece>().enemyPawnPieceHere = false;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.enemyPawnPieceHere = true;
                 pieceToMoveTo.enemyPieceHere = true;
+
+                if (boardCreator.maxYDown * -1 == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
+                {
+                    pieceToMoveTo.enemyQueenPieceHere = true;
+                }
+                else
+                {
+                    pieceToMoveTo.enemyPawnPieceHere = true;
+                }
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
