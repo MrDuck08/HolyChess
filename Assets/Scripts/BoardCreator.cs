@@ -37,6 +37,8 @@ public class BoardCreator : MonoBehaviour
 
     [SerializeField] GridPiece gridPieceObject;
 
+    List<GridPiece> enemyGridPieceList = new List<GridPiece>();
+
     bool IsThisInteger(float myFloat)
     {
         return Mathf.Approximately(myFloat, Mathf.RoundToInt(myFloat));
@@ -49,8 +51,6 @@ public class BoardCreator : MonoBehaviour
 
         maxXRight = Random.Range(minRandomRange, maxRandomRange);
         maxXLeft = Random.Range(-minRandomRange, -maxRandomRange);
-        //maxXRight = minRandomRange;
-        //maxXLeft = -minRandomRange;
 
 
         boardWidth = maxXRight + -1 * maxXLeft + 1;
@@ -63,8 +63,7 @@ public class BoardCreator : MonoBehaviour
 
         maxYUp = Random.Range(minRandomRange, maxRandomRange);
         maxYDown = Random.Range(-minRandomRange, -maxRandomRange);
-        //maxYUp = minRandomRange;
-        //maxYDown = -minRandomRange;
+
 
         boardHeight = maxYUp + -1 * maxYDown - 1;
         //Debug.Log(boardHeight + " Height");
@@ -112,9 +111,13 @@ public class BoardCreator : MonoBehaviour
 
                 if(whiteOrBlackToSPawn == 0)
                 {
-                    if(playerSpawnLocation > 0)
+
+                    GridPiece spawnedObject = Instantiate(gridPieceObject);
+
+                    if (playerSpawnLocation > 0)
                     {
                         playerOrEnemySpawnPiece = 0;
+                        // 0 = Player
                     }
                     else
                     {
@@ -123,10 +126,11 @@ public class BoardCreator : MonoBehaviour
                     if(enemySpawnLocation < 0)
                     {
                         playerOrEnemySpawnPiece = 1;
+
+                        enemyGridPieceList.Add(spawnedObject);
+
+                        // 1 = Enemy
                     }
-
-
-                    GridPiece spawnedObject = Instantiate(gridPieceObject);
 
                     spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(255, 255, 255, 255), testInt);
 
@@ -144,9 +148,12 @@ public class BoardCreator : MonoBehaviour
 
                         #region Enemy or player spawntile
 
+                        GridPiece spawnedObject = Instantiate(gridPieceObject);
+
                         if (playerSpawnLocation > 0)
                         {
                             playerOrEnemySpawnPiece = 0;
+                            // 0 = Player
                         }
                         else
                         {
@@ -155,12 +162,12 @@ public class BoardCreator : MonoBehaviour
                         if (enemySpawnLocation < 0)
                         {
                             playerOrEnemySpawnPiece = 1;
+
+                            enemyGridPieceList.Add(spawnedObject);
+                            // 1 = Enemy
                         }
 
                         #endregion
-
-
-                        GridPiece spawnedObject = Instantiate(gridPieceObject);
 
                         spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(0, 142, 99, 255), testInt);
 
@@ -188,11 +195,19 @@ public class BoardCreator : MonoBehaviour
 
             if (firstDone)
             {
+                SpawnEnemyPieces();
                 break;
             }
         }
 
         #endregion
+
+    }
+
+    void SpawnEnemyPieces()
+    {
+
+        Debug.Log(enemyGridPieceList.Count + " Amount of enemy gridpieces");
 
     }
 

@@ -17,7 +17,7 @@ public class GridPiece : MonoBehaviour
     bool mouseOver = false;
 
     #region Player Pieces
-
+    // Change To Enum
     public bool playerPawnHere = false;
     public bool playerHorseHere = false;
     public bool playerTowerHere = false;
@@ -85,14 +85,16 @@ public class GridPiece : MonoBehaviour
 
         if(spawnWho == 0)
         {
+            //Player Grid
+
             playerSpawnGrid = true;
         }
         if(spawnWho == 1)
         {
+            //Enemy Grid
+
             enemySpawnGrid = true;
 
-
-            //Change Later
             if(whatEnemyToSpawn == 0)
             {
                 enemyPieceHere = true;

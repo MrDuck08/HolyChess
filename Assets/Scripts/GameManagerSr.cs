@@ -58,6 +58,12 @@ public class GameManagerSr : MonoBehaviour
 
     #endregion
 
+    #region Enemy Difficulty
+
+    float howManyPoints = 15;
+
+    #endregion
+
 
     private void Awake()
     {
@@ -91,6 +97,8 @@ public class GameManagerSr : MonoBehaviour
         Debug.Log("DS2");
 
     }
+
+    #region Shop
 
     public void NextSceneWhatShop(int whatShop)
     {
@@ -149,5 +157,19 @@ public class GameManagerSr : MonoBehaviour
         }
     }
 
-    
+    #endregion
+
+    #region Enemy Geeting Harder
+
+    // Varje Nivå har olika antal poäng att spendera på olika fiender och upgraderingar
+    // 3 Tiers av fiender, Tier 1 (1p): Bonde O Häst, Tier 2 (2p): Löpare O Torn, Tier 3 (3p): Dam
+    // 3 Tiers av upgraderingar, Tier 1 (0.5p), Tier 2 (1p), Tier 3 (1.5p)
+
+    void DistributePoints()
+    {
+
+    }
+
+    #endregion
+
 }
