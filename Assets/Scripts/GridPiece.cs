@@ -76,7 +76,7 @@ public class GridPiece : MonoBehaviour
 
     #region Spawn info
 
-    public void SpawnLocation(int x, int y, int spawnWho, Color32 whatVisualls, int whatEnemyToSpawn)
+    public void SpawnLocation(int x, int y, int spawnWho, Color32 whatVisualls)
     {
         xPos = x;
         yPos = y;
@@ -95,17 +95,52 @@ public class GridPiece : MonoBehaviour
 
             enemySpawnGrid = true;
 
-            if(whatEnemyToSpawn == 0)
-            {
-                enemyPieceHere = true;
-                enemyPawnPieceHere = true;
-            }
-
         }
 
         gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
 
         transform.position = new Vector2 (xPos, yPos);
+    }
+
+    public void SpawnEnemy(int whatEnemyToSpawn)
+    {
+        enemyPieceHere = true;
+
+        switch (whatEnemyToSpawn)
+        {
+
+            case 0:
+
+                enemyPawnPieceHere = true;
+
+            break;
+
+            case 1:
+
+                enemyHorsePieceHere = true;
+
+            break;
+
+            case 2:
+
+                enemyTowerPieceHere = true;
+
+            break;
+
+            case 3:
+
+                enemyBishopPieceHere = true;
+
+            break;
+
+            case 4:
+
+                enemyQueenPieceHere = true;
+
+            break;
+
+        }
+
     }
 
     #endregion
@@ -619,6 +654,12 @@ public class GridPiece : MonoBehaviour
                         foreach (GridPiece allPiece in gridPieces)
                         {
                             allPiece.anticipateMovment = false;
+
+                            allPiece.anticipatingPlayerPawn = false;
+                            allPiece.anticipatingPlayerHorse = false;
+                            allPiece.anticipatingPlayerTower = false;
+                            allPiece.anticipatingPlayerBishop = false;
+                            allPiece.anticipatingPlayerQueen = false;
                         }
 
                     }
@@ -629,6 +670,12 @@ public class GridPiece : MonoBehaviour
                         foreach (GridPiece allPiece in gridPieces)
                         {
                             allPiece.anticipateMovment = false;
+
+                            allPiece.anticipatingPlayerPawn = false;
+                            allPiece.anticipatingPlayerHorse = false;
+                            allPiece.anticipatingPlayerTower = false;
+                            allPiece.anticipatingPlayerBishop = false;
+                            allPiece.anticipatingPlayerQueen = false;
                         }
                     }
                     #endregion

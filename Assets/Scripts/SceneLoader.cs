@@ -12,8 +12,6 @@ public class SceneLoader : MonoBehaviour
     Inventory inventory;
     GameManagerSr gameManager;
 
-    int whatShop;
-
     private void Start()
     {
         gameManager = FindAnyObjectByType<GameManagerSr>();
@@ -66,6 +64,8 @@ public class SceneLoader : MonoBehaviour
 
             allPieces.movedOnce = false;
         }
+
+
 
     }
 

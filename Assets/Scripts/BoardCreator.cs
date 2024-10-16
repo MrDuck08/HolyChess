@@ -39,6 +39,8 @@ public class BoardCreator : MonoBehaviour
 
     List<GridPiece> enemyGridPieceList = new List<GridPiece>();
 
+    GameManagerSr gameManagerSr;
+
     bool IsThisInteger(float myFloat)
     {
         return Mathf.Approximately(myFloat, Mathf.RoundToInt(myFloat));
@@ -78,7 +80,7 @@ public class BoardCreator : MonoBehaviour
 
         while (true)
         {
-            if (IsThisInteger(boardWidth/2))
+            if (IsThisInteger(boardWidth/2)) // Måste Ha Det Här För Annars Blir Det Inte Var Annan Svart Vitt När Man Bytter Rad
             {
 
                 if (whiteOrBlackToSPawn == 0)
@@ -132,7 +134,7 @@ public class BoardCreator : MonoBehaviour
                         // 1 = Enemy
                     }
 
-                    spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(255, 255, 255, 255), testInt);
+                    spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(255, 255, 255, 255));
 
                     if(playerOrEnemySpawnPiece == 1)
                     {
@@ -169,7 +171,7 @@ public class BoardCreator : MonoBehaviour
 
                         #endregion
 
-                        spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(0, 142, 99, 255), testInt);
+                        spawnedObject.SpawnLocation(gridX, maxYDown, playerOrEnemySpawnPiece, new Color32(0, 142, 99, 255));
 
                         if (playerOrEnemySpawnPiece == 1)
                         {
@@ -208,6 +210,28 @@ public class BoardCreator : MonoBehaviour
     {
 
         Debug.Log(enemyGridPieceList.Count + " Amount of enemy gridpieces");
+
+        gameManagerSr = FindObjectOfType<GameManagerSr>();
+
+        while (true)
+        {
+
+            if(gameManagerSr.howManyEnemies <= 0)
+            {
+                Debug.Log("SPAWN ENEMY");
+                int whatGridPieceToPlaceEnemyOn = Random.Range(0, enemyGridPieceList.Count);
+
+                enemyGridPieceList[whatGridPieceToPlaceEnemyOn].SpawnEnemy(gameManagerSr.whatTypeOfEnemyWasBought[gameManagerSr.howManyEnemies]);
+                howManyEnemies--;
+            }
+            else
+            {
+                Debug.Log("NO MORE SPAWN ENEMY");
+
+                break;
+            }
+
+        }
 
     }
 

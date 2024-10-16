@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManagerSr : MonoBehaviour
@@ -14,6 +15,8 @@ public class GameManagerSr : MonoBehaviour
 
     public bool nextSceneShopTrue = false;
     int whatShopNumber;
+    public int howManyEnemies = 0;
+    public List<int> whatTypeOfEnemyWasBought = new List<int>();
 
     [SerializeField] GameObject aktivateShopObject;
 
@@ -60,7 +63,7 @@ public class GameManagerSr : MonoBehaviour
 
     #region Enemy Difficulty
 
-    float howManyPoints = 15;
+    int howManyPointsForEnemys = 15;
 
     #endregion
 
@@ -81,12 +84,16 @@ public class GameManagerSr : MonoBehaviour
             Destroy(gameObject);
 
         }
+        DistributePoints();
+    }
+
+    private void Start()
+    {
 
     }
 
     private void Update()
     {
-        //Debug.Log(nextSceneShop + " nextSceneShop True Or False");
 
     }
 
@@ -162,11 +169,123 @@ public class GameManagerSr : MonoBehaviour
     #region Enemy Geeting Harder
 
     // Varje Nivå har olika antal poäng att spendera på olika fiender och upgraderingar
-    // 3 Tiers av fiender, Tier 1 (1p): Bonde O Häst, Tier 2 (2p): Löpare O Torn, Tier 3 (3p): Dam
+    // 3 Tiers av fiender, Tier 1 (1p): Bonde Och Häst, Tier 2 (2p): Löpare Och Torn, Tier 3 (3p): Dam
     // 3 Tiers av upgraderingar, Tier 1 (0.5p), Tier 2 (1p), Tier 3 (1.5p)
 
     void DistributePoints()
     {
+        int numberOfPointsForUnits = Random.Range(0, howManyPointsForEnemys);
+
+        howManyPointsForEnemys -= numberOfPointsForUnits;
+
+        while (true)
+        {
+            int randomWhatUnitToBuy = Random.Range(0, 3);
+
+            switch (randomWhatUnitToBuy)
+            {
+                case 0:
+
+                    if (numberOfPointsForUnits >= 1) //Buy Pawn Or Horse
+                    {
+                        int pawnOrHorse = Random.Range(0, 2);
+
+                        howManyEnemies++;
+                        whatTypeOfEnemyWasBought.Add(pawnOrHorse);
+                        numberOfPointsForUnits--;
+
+                    }
+
+                break;
+
+
+                case 1:
+
+                    if (numberOfPointsForUnits >= 2) //Buy Bishop Or Tower
+                    {
+                        int bishopOrTower = Random.Range(2, 4);
+
+                        howManyEnemies++;
+                        whatTypeOfEnemyWasBought.Add(bishopOrTower);
+                        numberOfPointsForUnits -= 2;
+
+                    }
+
+                break;
+
+
+                case 2:
+
+                    if (numberOfPointsForUnits >= 3) //Buy Queen
+                    {
+
+                        howManyEnemies++;
+                        whatTypeOfEnemyWasBought.Add(4);
+                        numberOfPointsForUnits -= 3;
+
+                    }
+
+                break;
+            }
+
+            if (numberOfPointsForUnits <= 0)
+            {
+                break;
+            }
+        }
+
+        float howManyPointsToBuyUpgrades = howManyPointsForEnemys;
+
+        while (true)
+        {
+            int randomWhaUpgradeToBuy = Random.Range(0, 3);
+
+            switch (randomWhaUpgradeToBuy)
+            {
+                case 0:
+
+                    if (howManyPointsToBuyUpgrades >= 0.5f)
+                    {
+
+                        //Buy Pawn Or Horse
+
+                        howManyPointsToBuyUpgrades -= 0.5f;
+                    }
+
+                break;
+
+                case 1:
+
+                    if (howManyPointsToBuyUpgrades >= 1)
+                    {
+
+                        //Buy Bishop Or Tower
+
+                        howManyPointsToBuyUpgrades -= 1;
+                    }
+
+                break;
+
+                case 2:
+
+                    if (randomWhaUpgradeToBuy == 2 && howManyPointsToBuyUpgrades >= 1.5f)
+                    {
+
+                        //Buy Pawn Or Horse
+
+                        howManyPointsToBuyUpgrades -= 1.5f;
+                    }
+
+                break;
+            }
+
+
+            if (howManyPointsToBuyUpgrades <= 0)
+            {
+                break;
+            }
+
+        }
 
     }
 
