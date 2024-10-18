@@ -209,19 +209,24 @@ public class BoardCreator : MonoBehaviour
     void SpawnEnemyPieces()
     {
 
-        Debug.Log(enemyGridPieceList.Count + " Amount of enemy gridpieces");
-
         gameManagerSr = FindObjectOfType<GameManagerSr>();
-
+        Debug.Log(gameManagerSr.howManyEnemies + " Amount Of Enemies Brought");
         while (true)
         {
 
-            if(gameManagerSr.howManyEnemies <= 0)
+            if(gameManagerSr.howManyEnemies >= 0)
             {
-                Debug.Log("SPAWN ENEMY");
+                //Debug.Log("SPAWN ENEMY");
                 int whatGridPieceToPlaceEnemyOn = Random.Range(0, enemyGridPieceList.Count);
 
-                enemyGridPieceList[whatGridPieceToPlaceEnemyOn].SpawnEnemy(gameManagerSr.whatTypeOfEnemyWasBought[gameManagerSr.howManyEnemies]);
+                Debug.Log(enemyGridPieceList.Count + " How Many Total");
+                Debug.Log(whatGridPieceToPlaceEnemyOn + " Where To Go");
+                Debug.Log(enemyGridPieceList[whatGridPieceToPlaceEnemyOn].gameObject.name);
+
+
+              enemyGridPieceList[whatGridPieceToPlaceEnemyOn].
+                    SpawnEnemy(gameManagerSr.whatTypeOfEnemyWasBought[gameManagerSr.howManyEnemies]);
+
                 howManyEnemies--;
             }
             else
