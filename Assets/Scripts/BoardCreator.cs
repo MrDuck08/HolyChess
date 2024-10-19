@@ -31,7 +31,6 @@ public class BoardCreator : MonoBehaviour
 
     #endregion
 
-    int howManyEnemies;
     int testInt = 0;
 
 
@@ -210,24 +209,22 @@ public class BoardCreator : MonoBehaviour
     {
 
         gameManagerSr = FindObjectOfType<GameManagerSr>();
-        Debug.Log(gameManagerSr.howManyEnemies + " Amount Of Enemies Brought");
+        Debug.Log(gameManagerSr.howManyEnemiesBought + " Amount Of Enemies Brought");
+
+
         while (true)
         {
+            gameManagerSr.howManyEnemiesBought--;
 
-            if(gameManagerSr.howManyEnemies >= 0)
+            if (gameManagerSr.howManyEnemiesBought >= 0)
             {
-                //Debug.Log("SPAWN ENEMY");
+
                 int whatGridPieceToPlaceEnemyOn = Random.Range(0, enemyGridPieceList.Count);
 
-                Debug.Log(enemyGridPieceList.Count + " How Many Total");
-                Debug.Log(whatGridPieceToPlaceEnemyOn + " Where To Go");
-                Debug.Log(enemyGridPieceList[whatGridPieceToPlaceEnemyOn].gameObject.name);
+                enemyGridPieceList[whatGridPieceToPlaceEnemyOn].SpawnEnemy(gameManagerSr.whatTypeOfEnemyWasBought[gameManagerSr.howManyEnemiesBought]);
 
+                enemyGridPieceList.RemoveAt(whatGridPieceToPlaceEnemyOn);
 
-              enemyGridPieceList[whatGridPieceToPlaceEnemyOn].
-                    SpawnEnemy(gameManagerSr.whatTypeOfEnemyWasBought[gameManagerSr.howManyEnemies]);
-
-                howManyEnemies--;
             }
             else
             {

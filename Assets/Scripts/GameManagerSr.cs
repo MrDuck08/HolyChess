@@ -15,7 +15,7 @@ public class GameManagerSr : MonoBehaviour
 
     public bool nextSceneShopTrue = false;
     int whatShopNumber;
-    public int howManyEnemies = 0;
+    public int howManyEnemiesBought = 0;
     public List<int> whatTypeOfEnemyWasBought = new List<int>();
 
     [SerializeField] GameObject aktivateShopObject;
@@ -190,7 +190,7 @@ public class GameManagerSr : MonoBehaviour
                     {
                         int pawnOrHorse = Random.Range(0, 2);
 
-                        howManyEnemies++;
+                        howManyEnemiesBought++;
                         whatTypeOfEnemyWasBought.Add(pawnOrHorse);
                         numberOfPointsForUnits--;
 
@@ -205,7 +205,7 @@ public class GameManagerSr : MonoBehaviour
                     {
                         int bishopOrTower = Random.Range(2, 4);
 
-                        howManyEnemies++;
+                        howManyEnemiesBought++;
                         whatTypeOfEnemyWasBought.Add(bishopOrTower);
                         numberOfPointsForUnits -= 2;
 
@@ -219,7 +219,7 @@ public class GameManagerSr : MonoBehaviour
                     if (numberOfPointsForUnits >= 3) //Buy Queen
                     {
 
-                        howManyEnemies++;
+                        howManyEnemiesBought++;
                         whatTypeOfEnemyWasBought.Add(4);
                         numberOfPointsForUnits -= 3;
 
