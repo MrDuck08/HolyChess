@@ -4453,7 +4453,7 @@ GameObject:
   - component: {fileID: 1906569052}
   - component: {fileID: 1906569051}
   m_Layer: 5
-  m_Name: 'GeneralShop '
+  m_Name: GeneralShopCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4493,12 +4493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47258e5bc12429f41950f9ca637fc349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iAmBasicShop: 0
-  iAmPawnShop: 0
-  iAmTowerShop: 0
-  iAmBishopShop: 0
-  iAmQueenShop: 0
-  iAmHorseShop: 0
+  typeOfShop: 0
   itemsInShopPosition:
   - {fileID: 87896354}
   - {fileID: 2077583108}

@@ -119,25 +119,25 @@ public class GridPiece : MonoBehaviour
 
                 enemyHorsePieceHere = true;
 
-            break;
+                break;
 
             case 2:
 
                 enemyTowerPieceHere = true;
 
-            break;
+                break;
 
             case 3:
 
                 enemyBishopPieceHere = true;
 
-            break;
+                break;
 
             case 4:
 
                 enemyQueenPieceHere = true;
 
-            break;
+                break;
 
         }
 
@@ -655,11 +655,11 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipateMovment = false;
 
-                            allPiece.anticipatingPlayerPawn = false;
-                            allPiece.anticipatingPlayerHorse = false;
-                            allPiece.anticipatingPlayerTower = false;
-                            allPiece.anticipatingPlayerBishop = false;
-                            allPiece.anticipatingPlayerQueen = false;
+                            //allPiece.anticipatingPlayerPawn = false;
+                            //allPiece.anticipatingPlayerHorse = false;
+                            //allPiece.anticipatingPlayerTower = false;
+                            //allPiece.anticipatingPlayerBishop = false;
+                            //allPiece.anticipatingPlayerQueen = false;
                         }
 
                     }
@@ -671,11 +671,11 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipateMovment = false;
 
-                            allPiece.anticipatingPlayerPawn = false;
-                            allPiece.anticipatingPlayerHorse = false;
-                            allPiece.anticipatingPlayerTower = false;
-                            allPiece.anticipatingPlayerBishop = false;
-                            allPiece.anticipatingPlayerQueen = false;
+                            //allPiece.anticipatingPlayerPawn = false;
+                            //allPiece.anticipatingPlayerHorse = false;
+                            //allPiece.anticipatingPlayerTower = false;
+                            //allPiece.anticipatingPlayerBishop = false;
+                            //allPiece.anticipatingPlayerQueen = false;
                         }
                     }
                     #endregion
@@ -751,8 +751,9 @@ public class GridPiece : MonoBehaviour
 
         #region Enemy Movments
 
-        if (!playerTurn)
+        if (!playerTurn && enemyPieceHere)
         {
+            playerTurn = true;
 
             if (enemyHorsePieceHere)
             {
@@ -777,14 +778,14 @@ public class GridPiece : MonoBehaviour
 
             if (enemyQueenPieceHere)
             {
-
+   
                 controller.EnemyQueenMovmentCall(xPos, yPos, gameObject);
 
             }
 
             if (enemyPawnPieceHere)
             {
-
+  
                 controller.EnemyPawnMovmentCall(xPos, yPos, gameObject);
 
             }

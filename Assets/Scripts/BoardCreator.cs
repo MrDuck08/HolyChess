@@ -209,7 +209,9 @@ public class BoardCreator : MonoBehaviour
     {
 
         gameManagerSr = FindObjectOfType<GameManagerSr>();
-        Debug.Log(gameManagerSr.howManyEnemiesBought + " Amount Of Enemies Brought");
+
+        gameManagerSr.howManyPointsForEnemys += 5;
+        gameManagerSr.DistributePoints();
 
 
         while (true)
@@ -228,7 +230,6 @@ public class BoardCreator : MonoBehaviour
             }
             else
             {
-                Debug.Log("NO MORE SPAWN ENEMY");
 
                 break;
             }

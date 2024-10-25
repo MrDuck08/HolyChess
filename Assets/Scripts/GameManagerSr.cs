@@ -63,7 +63,7 @@ public class GameManagerSr : MonoBehaviour
 
     #region Enemy Difficulty
 
-    int howManyPointsForEnemys = 15;
+    public int howManyPointsForEnemys = 10;
 
     #endregion
 
@@ -84,7 +84,7 @@ public class GameManagerSr : MonoBehaviour
             Destroy(gameObject);
 
         }
-        DistributePoints();
+
     }
 
     private void Start()
@@ -172,7 +172,7 @@ public class GameManagerSr : MonoBehaviour
     // 3 Tiers av fiender, Tier 1 (1p): Bonde Och Häst, Tier 2 (2p): Löpare Och Torn, Tier 3 (3p): Dam
     // 3 Tiers av upgraderingar, Tier 1 (0.5p), Tier 2 (1p), Tier 3 (1.5p)
 
-    void DistributePoints()
+    public void DistributePoints()
     {
         int numberOfPointsForUnits = Random.Range(0, howManyPointsForEnemys);
 
