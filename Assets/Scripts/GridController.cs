@@ -134,7 +134,6 @@ public class GridController : MonoBehaviour
 
     int infoInt = 0;
 
-    int testInt;
     bool testBool = false;
 
     bool didntFindAnytrhingOnce = false;
@@ -209,7 +208,7 @@ public class GridController : MonoBehaviour
                 {
                     
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerPawn = true;
+                    allPieces.anticipatingPlayerAttackPawn = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
                 }
@@ -222,7 +221,7 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerPawn = true;
+                    allPieces.anticipatingPlayerAttackPawn = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
                 }
@@ -247,7 +246,7 @@ public class GridController : MonoBehaviour
             int xPos = allPieces.xPos;
             int yPos = allPieces.yPos;
 
-            #region Upp
+            #region Up
 
             if (xPos == currentX + 1 && yPos == currentY + 2)
             {
@@ -255,7 +254,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -273,7 +272,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -295,7 +294,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -313,7 +312,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -335,7 +334,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -353,7 +352,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -375,7 +374,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -393,7 +392,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.anticipatingPlayerAttackHorse = true;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -441,7 +440,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.anticipatingPlayerAttackTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -510,7 +509,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.anticipatingPlayerAttackTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -579,7 +578,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.anticipatingPlayerAttackTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -648,7 +647,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.anticipatingPlayerAttackTower = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -727,7 +726,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.anticipatingPlayerAttackBishop = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -796,7 +795,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.anticipatingPlayerAttackBishop = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -866,7 +865,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.anticipatingPlayerAttackBishop = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -935,7 +934,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.anticipatingPlayerAttackBishop = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1014,7 +1013,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1083,7 +1082,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1153,7 +1152,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1222,7 +1221,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1292,7 +1291,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1361,7 +1360,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1431,7 +1430,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1500,7 +1499,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.anticipatingPlayerAttackQueen = true;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1551,78 +1550,22 @@ public class GridController : MonoBehaviour
 
     #region General Stuff
 
-    public void movePiece(int whatToMove)
+    public void movePiece()
     {
-        // 0 = Pawn
-        // 1 = Horse
-        // 2 = Tower
-        // 3 = Bishop
-        // 4 = Queen
+
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+        moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = PlayerType.none;
 
-        if (whatToMove == 0)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerPawnHere = false;
-        }
-
-        if(whatToMove == 1)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerHorseHere = false;
-        }
-
-        if (whatToMove == 2)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerTowerHere = false;
-        }
-
-        if (whatToMove == 3)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerBishopHere = false;
-        }
-
-        if (whatToMove == 4)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerQueenHere = false;
-        }
     }
 
-    public void AttackPiece(int whatToMove)
+    public void AttackPiece()
     {
-        // What Piece Is Attacking
-        // 0 = Pawn
-        // 1 = Horse
-        // 2 = Tower
-        // 3 = Bishop
-        // 4 = Queen
+
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+        moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = PlayerType.none;
         numberOfEnemys--;
-
-        if (whatToMove == 0)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerPawnHere = false;
-        }
-
-        if(whatToMove == 1)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerHorseHere = false;
-        }
-
-        if(whatToMove == 2)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerTowerHere = false;
-        }
-
-        if (whatToMove == 3)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerBishopHere = false;
-        }
-
-        if (whatToMove == 4)
-        {
-            moveFromTileObject.GetComponent<GridPiece>().playerQueenHere = false;
-        }
 
     }
 
@@ -1872,6 +1815,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayer = 1;
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
+                    currentAmountOfTries += 1;
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -1896,7 +1840,6 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -1925,7 +1868,6 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -1950,7 +1892,6 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -1978,7 +1919,6 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -2002,7 +1942,6 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -2030,7 +1969,6 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -2054,7 +1992,6 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-
                     numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
@@ -2158,11 +2095,6 @@ public class GridController : MonoBehaviour
     void MoveToLocationHorse(GameObject pieceToMove)
     {
 
-        if (moveToLocationAfterEnemyListX.Count == 0)
-        {
-            return;
-        }
-
         for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
         {
 
@@ -2190,6 +2122,14 @@ public class GridController : MonoBehaviour
 
 
                         }
+                        else
+                        {
+
+                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            moveToLocationAfterEnemyListX.Remove(i);
+                            moveToLocationAfterEnemyListY.Remove(i);
+
+                        }
 
                     }
                 }
@@ -2198,6 +2138,10 @@ public class GridController : MonoBehaviour
             numberOftimesLookingForPositionHorse++;
         }
 
+        if (moveToLocationAfterEnemyListX.Count == 0 || currentXWhereTowerIsGoingToGo == 1337 || towerWithTheLeastTries == 1337)
+        {
+            return;
+        }
 
         foreach (GridPiece pieceToMoveTo in gridPieces)
         {
@@ -2208,9 +2152,9 @@ public class GridController : MonoBehaviour
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
 
-                pieceToMove.GetComponent<GridPiece>().enemyHorsePieceHere = false;
+                pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.enemyHorsePieceHere = true;
+                pieceToMoveTo.currentEnemyType = EnemyType.Horse;
                 pieceToMoveTo.enemyPieceHere = true;
 
                 currentXWhereTowerIsGoingToGo = 1337;
@@ -2228,6 +2172,8 @@ public class GridController : MonoBehaviour
                 currentXOfEnemyList.Clear();
 
                 enemyHorseObjectList.Clear();
+
+                pieceToMoveTo.CheckWhoDied();
 
                 break;
             }
@@ -3116,6 +3062,14 @@ public class GridController : MonoBehaviour
 
 
                         }
+                        else
+                        {
+
+                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            moveToLocationAfterEnemyListX.Remove(i);
+                            moveToLocationAfterEnemyListY.Remove(i);
+
+                        }
 
                     }
                 }
@@ -3123,7 +3077,7 @@ public class GridController : MonoBehaviour
         }
 
 
-        if(moveToLocationAfterEnemyListX.Count == 0)
+        if (moveToLocationAfterEnemyListX.Count == 0 || currentXWhereTowerIsGoingToGo == 1337 || towerWithTheLeastTries == 1337)
         {
             return;
         }
@@ -3137,9 +3091,9 @@ public class GridController : MonoBehaviour
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
 
-                pieceToMove.GetComponent<GridPiece>().enemyTowerPieceHere = false;
+                pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.enemyTowerPieceHere = true;
+                pieceToMoveTo.currentEnemyType = EnemyType.Tower;
                 pieceToMoveTo.enemyPieceHere = true;
 
                 currentXWhereTowerIsGoingToGo = 1337;
@@ -3157,6 +3111,8 @@ public class GridController : MonoBehaviour
                 yOrXMovmentList.Clear();
                 currentYOfEnemyList.Clear();
                 currentXOfEnemyList.Clear();
+
+                pieceToMoveTo.CheckWhoDied();
 
                 break;
             }
@@ -4015,10 +3971,7 @@ public class GridController : MonoBehaviour
     void MoveToLocationBishop(GameObject pieceToMove)
     {
 
-        if(moveToLocationAfterEnemyListX.Count == 0)
-        {
-            return;
-        }
+
 
         for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
         {
@@ -4047,6 +4000,14 @@ public class GridController : MonoBehaviour
 
 
                         }
+                        else
+                        {
+
+                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            moveToLocationAfterEnemyListX.Remove(i);
+                            moveToLocationAfterEnemyListY.Remove(i);
+
+                        }
 
                     }
                 }
@@ -4056,6 +4017,11 @@ public class GridController : MonoBehaviour
         }
 
 
+        if (moveToLocationAfterEnemyListX.Count == 0 || currentXWhereTowerIsGoingToGo == 1337 || towerWithTheLeastTries == 1337)
+        {
+            return;
+        }
+
         foreach (GridPiece pieceToMoveTo in gridPieces)
         {
 
@@ -4064,10 +4030,10 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-                Debug.Log("Move Bishop;");
-                pieceToMove.GetComponent<GridPiece>().enemyBishopPieceHere = false;
+
+                pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.enemyBishopPieceHere = true;
+                pieceToMoveTo.currentEnemyType = EnemyType.Bishop;
                 pieceToMoveTo.enemyPieceHere = true;
 
                 currentXWhereTowerIsGoingToGo = 1337;
@@ -4087,6 +4053,8 @@ public class GridController : MonoBehaviour
                 currentXOfEnemyList.Clear();
 
                 enemyBishopObjectList.Clear();
+
+                pieceToMoveTo.CheckWhoDied();
 
                 break;
             }
@@ -5605,11 +5573,6 @@ public class GridController : MonoBehaviour
     void MoveToLocationQueen(GameObject pieceToMove)
     {
 
-        if (moveToLocationAfterEnemyListX.Count == 0)
-        {
-            return;
-        }
-
         for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
         {
 
@@ -5637,6 +5600,14 @@ public class GridController : MonoBehaviour
 
 
                         }
+                        else
+                        {
+
+                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            moveToLocationAfterEnemyListX.Remove(i);
+                            moveToLocationAfterEnemyListY.Remove(i);
+
+                        }
 
                     }
                 }
@@ -5645,6 +5616,10 @@ public class GridController : MonoBehaviour
             numberOftimesLookingForPositionHorse++;
         }
 
+        if (moveToLocationAfterEnemyListX.Count == 0 || currentXWhereTowerIsGoingToGo == 1337 || towerWithTheLeastTries == 1337)
+        {
+            return;
+        }
 
         foreach (GridPiece pieceToMoveTo in gridPieces)
         {
@@ -5654,10 +5629,10 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-                Debug.Log("Move Queen");
-                pieceToMove.GetComponent<GridPiece>().enemyQueenPieceHere = false;
+
+                pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.enemyQueenPieceHere = true;
+                pieceToMoveTo.currentEnemyType = EnemyType.Queen;
                 pieceToMoveTo.enemyPieceHere = true;
 
                 currentXWhereTowerIsGoingToGo = 1337;
@@ -5677,6 +5652,8 @@ public class GridController : MonoBehaviour
                 yOrXMovmentList.Clear();
                 currentYOfEnemyList.Clear();
                 currentXOfEnemyList.Clear();
+
+                pieceToMoveTo.CheckWhoDied();
 
                 break;
             }
@@ -5816,8 +5793,6 @@ public class GridController : MonoBehaviour
                             currentXOfEnemyListComplete.Clear();
                             currentYOfEnemyList.Clear();
                             currentXOfEnemyList.Clear();
-                            yOrXMovmentListComplete.Clear();
-                            yOrXMovmentList.Clear();
 
                             if (firstTimeSearching)
                             {
@@ -5858,8 +5833,6 @@ public class GridController : MonoBehaviour
                             currentXOfEnemyList.Add(posToLookAtX);
                             currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
 
-                            yOrXMovmentList.Add(0);
-
                         }
                     }
                     else
@@ -5891,8 +5864,6 @@ public class GridController : MonoBehaviour
                             currentXOfEnemyListComplete.Clear();
                             currentYOfEnemyList.Clear();
                             currentXOfEnemyList.Clear();
-                            yOrXMovmentListComplete.Clear();
-                            yOrXMovmentList.Clear();
 
                             if (firstTimeSearching)
                             {
@@ -5933,8 +5904,6 @@ public class GridController : MonoBehaviour
 
                             currentXOfEnemyList.Add(posToLookAtX);
                             currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
-
-                            yOrXMovmentList.Add(0);
 
                         }
                     }
@@ -6051,14 +6020,10 @@ public class GridController : MonoBehaviour
 
         currentXOfEnemyListComplete.Clear();
         currentYOfenemyListComplete.Clear();
-        yOrXMovmentListComplete.Clear();
 
-        yOrXMovmentListComplete.AddRange(yOrXMovmentList);
         currentXOfEnemyListComplete.AddRange(currentXOfEnemyList);
         currentYOfenemyListComplete.AddRange(currentYOfEnemyList);
 
-
-        yOrXMovmentList.Clear();
         currentYOfEnemyList.Clear();
         currentXOfEnemyList.Clear();
 
@@ -6100,6 +6065,14 @@ public class GridController : MonoBehaviour
 
 
                         }
+                        else
+                        {
+
+                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            moveToLocationAfterEnemyListX.RemoveAt(i);
+                            moveToLocationAfterEnemyListY.RemoveAt(i);
+
+                        }
 
                     }
                 }
@@ -6107,8 +6080,7 @@ public class GridController : MonoBehaviour
 
         }
 
-
-        if (moveToLocationAfterEnemyListX.Count == 0)
+        if (moveToLocationAfterEnemyListX.Count == 0 || currentXWhereTowerIsGoingToGo == 1337 || towerWithTheLeastTries == 1337)
         {
             return;
         }
@@ -6121,18 +6093,18 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-                Debug.Log("Move Pawn");
-                pieceToMove.GetComponent<GridPiece>().enemyPawnPieceHere = false;
+
+                pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
                 pieceToMoveTo.enemyPieceHere = true;
 
                 if (boardCreator.maxYDown * -1 == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
                 {
-                    pieceToMoveTo.enemyQueenPieceHere = true;
+                    pieceToMoveTo.currentEnemyType = EnemyType.Queen;
                 }
                 else
                 {
-                    pieceToMoveTo.enemyPawnPieceHere = true;
+                    pieceToMoveTo.currentEnemyType = EnemyType.Pawn;
                 }
 
                 currentXWhereTowerIsGoingToGo = 1337;
@@ -6147,11 +6119,11 @@ public class GridController : MonoBehaviour
 
                 currentXOfEnemyListComplete.Clear();
                 currentYOfenemyListComplete.Clear();
-                yOrXMovmentListComplete.Clear();
 
-                yOrXMovmentList.Clear();
                 currentYOfEnemyList.Clear();
                 currentXOfEnemyList.Clear();
+
+                pieceToMoveTo.CheckWhoDied();
 
                 break;
             }

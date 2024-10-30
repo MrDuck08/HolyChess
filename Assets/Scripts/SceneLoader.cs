@@ -81,6 +81,8 @@ public class SceneLoader : MonoBehaviour
             // Gameplay Scene
             SceneManager.LoadScene(1);
 
+            gameManager.nextSceneShopTrue = false;
+
             // Add Coins
         }
         else

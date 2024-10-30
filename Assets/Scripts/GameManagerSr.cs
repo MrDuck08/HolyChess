@@ -178,6 +178,8 @@ public class GameManagerSr : MonoBehaviour
 
         howManyPointsForEnemys -= numberOfPointsForUnits;
 
+        numberOfPointsForUnits++; // Så det altid finns minnst en fiende
+
         while (true)
         {
             int randomWhatUnitToBuy = Random.Range(0, 3);
