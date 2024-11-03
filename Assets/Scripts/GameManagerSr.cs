@@ -87,24 +87,6 @@ public class GameManagerSr : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-
-    IEnumerator DelayStart()
-    {
-        Debug.Log("DS1");
-        yield return new WaitForSeconds(0.1f);
-        Debug.Log("DS2");
-
-    }
-
     #region Shop
 
     public void NextSceneWhatShop(int whatShop)
@@ -174,11 +156,13 @@ public class GameManagerSr : MonoBehaviour
 
     public void DistributePoints()
     {
-        int numberOfPointsForUnits = Random.Range(0, howManyPointsForEnemys);
+        int numberOfPointsForUnits = Random.Range(0, howManyPointsForEnemys); // Hur mycket poäng till pjäser
 
-        howManyPointsForEnemys -= numberOfPointsForUnits;
+        howManyPointsForEnemys -= numberOfPointsForUnits; // Tar bort antal poäng från pjäser och resten av poängen går till upgraderingar
 
         numberOfPointsForUnits++; // Så det altid finns minnst en fiende
+
+        #region Unit Buy
 
         while (true)
         {
@@ -236,7 +220,11 @@ public class GameManagerSr : MonoBehaviour
             }
         }
 
+        #endregion
+
         float howManyPointsToBuyUpgrades = howManyPointsForEnemys;
+
+        #region Upgrade Buy
 
         while (true)
         {
@@ -288,6 +276,8 @@ public class GameManagerSr : MonoBehaviour
             }
 
         }
+
+        #endregion
 
     }
 

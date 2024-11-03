@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region Enums
+
 public enum PlayerType
 {
     Pawn = 0,
@@ -26,12 +28,50 @@ public enum EnemyType
 
 }
 
+public enum AnticipatePlayerMovmentType
+{
+    Pawn = 0,
+    Tower = 1,
+    Bishop = 2,
+    Queen = 3,
+    Horse = 4,
+    total,
+    none,
+
+}
+
+public enum AnticipatePlayerAttackType
+{
+    Pawn = 0,
+    Tower = 1,
+    Bishop = 2,
+    Queen = 3,
+    Horse = 4,
+    total,
+    none,
+
+}
+
+public enum SpawnType
+{
+    Pawn = 0,
+    Tower = 1,
+    Bishop = 2,
+    Queen = 3,
+    Horse = 4,
+    total,
+    none,
+
+}
+
+#endregion
+
 public class GridPiece : MonoBehaviour
 {
+    [Header("Position")]
 
     public int xPos;
     public int yPos;
-
 
 
     #region bools
@@ -45,10 +85,7 @@ public class GridPiece : MonoBehaviour
 
     [Header("Player")]
 
-
     public PlayerType currentPlayerType;
-
-
     public bool playerPieceHere = false;
 
     #endregion
@@ -62,24 +99,17 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
-    #region Player Movment
+    #region Player Movment & Attack
 
     [Header("Player Movment")]
 
+    public AnticipatePlayerMovmentType currentPlayerMovmentType; 
     public bool anticipateMovment;
+
+    [Header("Player Attack")]
+
+    public AnticipatePlayerAttackType currentPlayerAttackType;
     public bool anticipatePlayerAttack;
-
-    public bool anticipatingPlayerPawn;
-    public bool anticipatingPlayerHorse;
-    public bool anticipatingPlayerTower;
-    public bool anticipatingPlayerBishop;
-    public bool anticipatingPlayerQueen;
-
-    public bool anticipatingPlayerAttackPawn;
-    public bool anticipatingPlayerAttackHorse;
-    public bool anticipatingPlayerAttackTower;
-    public bool anticipatingPlayerAttackBishop;
-    public bool anticipatingPlayerAttackQueen;
 
     public bool movedOnce = false;
 
@@ -89,11 +119,7 @@ public class GridPiece : MonoBehaviour
 
     [Header("Spawn")]
 
-    public bool spawningPawnNow = false;
-    public bool spawningHorseNow = false;
-    public bool spawningTowerNow = false;
-    public bool spawningBishopNow = false;
-    public bool spawningQueenNow = false;
+    public SpawnType currentSpawnType;
 
     public bool gameHasStarted = false;
     public bool placingDownAUnitNow = false;
@@ -110,11 +136,16 @@ public class GridPiece : MonoBehaviour
 
     GridPiece[] gridPieces;
 
+    #region Start & Awake
+
     private void Awake()
     {
 
         currentPlayerType = PlayerType.none;
         currentEnemyType = EnemyType.none;
+        currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
+        currentPlayerAttackType = AnticipatePlayerAttackType.none;
+        currentSpawnType = SpawnType.none;
 
     }
 
@@ -123,6 +154,8 @@ public class GridPiece : MonoBehaviour
         controller = FindObjectOfType<GridController>();
 
     }
+
+    #endregion
 
     #region Spawn info
 
@@ -194,6 +227,8 @@ public class GridPiece : MonoBehaviour
     }
 
     #endregion
+
+    #region Update
 
     private void Update()
     {
@@ -572,7 +607,7 @@ public class GridPiece : MonoBehaviour
 
                     if (playerSpawnGrid && !gameHasStarted)
                     {
-                        if (spawningPawnNow)
+                        if (currentSpawnType == SpawnType.Pawn)
                         {
 
                             playerPieceHere = true;
@@ -582,12 +617,12 @@ public class GridPiece : MonoBehaviour
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
-                                allPiece.spawningPawnNow = false;
+                                allPiece.currentSpawnType = SpawnType.none;
                                 allPiece.placingDownAUnitNow = false;
                             }
                         }
 
-                        if (spawningHorseNow)
+                        if (currentSpawnType == SpawnType.Horse)
                         {
 
                             playerPieceHere = true;
@@ -597,12 +632,12 @@ public class GridPiece : MonoBehaviour
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
-                                allPiece.spawningHorseNow = false;
+                                allPiece.currentSpawnType = SpawnType.none;
                                 allPiece.placingDownAUnitNow = false;
                             }
                         }
 
-                        if (spawningTowerNow)
+                        if (currentSpawnType == SpawnType.Tower)
                         {
 
                             playerPieceHere = true;
@@ -612,12 +647,12 @@ public class GridPiece : MonoBehaviour
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
-                                allPiece.spawningTowerNow = false;
+                                allPiece.currentSpawnType = SpawnType.none;
                                 allPiece.placingDownAUnitNow = false;
                             }
                         }
 
-                        if (spawningBishopNow)
+                        if (currentSpawnType == SpawnType.Bishop)
                         {
 
                             playerPieceHere = true;
@@ -627,12 +662,12 @@ public class GridPiece : MonoBehaviour
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
-                                allPiece.spawningBishopNow = false;
+                                allPiece.currentSpawnType = SpawnType.none;
                                 allPiece.placingDownAUnitNow = false;
                             }
                         }
 
-                        if (spawningQueenNow)
+                        if (currentSpawnType == SpawnType.Queen)
                         {
 
                             playerPieceHere = true;
@@ -642,7 +677,7 @@ public class GridPiece : MonoBehaviour
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
-                                allPiece.spawningQueenNow = false;
+                                allPiece.currentSpawnType = SpawnType.none;
                                 allPiece.placingDownAUnitNow = false;
                             }
                         }
@@ -656,32 +691,32 @@ public class GridPiece : MonoBehaviour
                     {
                         #region Who Is Moving
 
-                        if (anticipatingPlayerPawn)
+                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Pawn)
                         {
                             currentPlayerType = PlayerType.Pawn;
                             controller.movePiece();
                         }
 
-                        if (anticipatingPlayerHorse)
+                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Horse)
                         {
                             currentPlayerType = PlayerType.Horse;
                             controller.movePiece();
                         }
 
 
-                        if (anticipatingPlayerTower)
+                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Tower)
                         {
                             currentPlayerType = PlayerType.Tower;
                             controller.movePiece();
                         }
 
-                        if (anticipatingPlayerBishop)
+                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Bishop)
                         {
                             currentPlayerType = PlayerType.Bishop;
                             controller.movePiece();
                         }
 
-                        if (anticipatingPlayerQueen)
+                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Queen)
                         {
                             currentPlayerType = PlayerType.Queen;
                             controller.movePiece();
@@ -699,11 +734,7 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipateMovment = false;
 
-                            allPiece.anticipatingPlayerPawn = false;
-                            allPiece.anticipatingPlayerHorse = false;
-                            allPiece.anticipatingPlayerTower = false;
-                            allPiece.anticipatingPlayerBishop = false;
-                            allPiece.anticipatingPlayerQueen = false;
+                            allPiece.currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
                         }
 
                     }
@@ -715,11 +746,7 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipateMovment = false;
 
-                            allPiece.anticipatingPlayerPawn = false;
-                            allPiece.anticipatingPlayerHorse = false;
-                            allPiece.anticipatingPlayerTower = false;
-                            allPiece.anticipatingPlayerBishop = false;
-                            allPiece.anticipatingPlayerQueen = false;
+                            allPiece.currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
                         }
                     }
                     #endregion
@@ -731,31 +758,31 @@ public class GridPiece : MonoBehaviour
 
                         #region Who Is Attacking
 
-                        if (anticipatingPlayerAttackPawn)
+                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Pawn)
                         {
                             currentPlayerType = PlayerType.Pawn;
                             controller.AttackPiece();
                         }
 
-                        if (anticipatingPlayerAttackHorse)
+                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Horse)
                         {
                             currentPlayerType = PlayerType.Horse;
                             controller.AttackPiece();
                         }
 
-                        if (anticipatingPlayerAttackTower)
+                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Tower)
                         {
                             currentPlayerType = PlayerType.Tower;
                             controller.AttackPiece();
                         }
 
-                        if (anticipatingPlayerAttackBishop)
+                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Bishop)
                         {
                             currentPlayerType = PlayerType.Bishop;
                             controller.AttackPiece();
                         }
 
-                        if (anticipatingPlayerAttackQueen)
+                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Queen)
                         {
                             currentPlayerType = PlayerType.Queen;   
                             controller.AttackPiece( );
@@ -773,11 +800,7 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipatePlayerAttack = false;
 
-                            allPiece.anticipatingPlayerAttackPawn = false;
-                            allPiece.anticipatingPlayerAttackHorse = false;
-                            allPiece.anticipatingPlayerAttackTower = false;
-                            allPiece.anticipatingPlayerAttackBishop = false;
-                            allPiece.anticipatingPlayerAttackQueen = false;
+                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
                         }
 
                     }
@@ -789,11 +812,7 @@ public class GridPiece : MonoBehaviour
                         {
                             allPiece.anticipatePlayerAttack = false;
 
-                            allPiece.anticipatingPlayerAttackPawn = false;
-                            allPiece.anticipatingPlayerAttackHorse = false;
-                            allPiece.anticipatingPlayerAttackTower = false;
-                            allPiece.anticipatingPlayerAttackBishop = false;
-                            allPiece.anticipatingPlayerAttackQueen = false;
+                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
                         }
                     }
 
@@ -851,13 +870,15 @@ public class GridPiece : MonoBehaviour
         #endregion
     }
 
+    #endregion
+
     #region Mouse Over & Exit
 
     private void OnMouseOver()
     {
         if(playerSpawnGrid && !gameHasStarted && !playerPieceHere)
         {
-            if (spawningPawnNow)
+            if (currentSpawnType == SpawnType.Pawn)
             {
                 foreach (Transform child in gameObject.transform)
                 {
@@ -869,7 +890,7 @@ public class GridPiece : MonoBehaviour
                 }
             }
 
-            if (spawningHorseNow)
+            if (currentSpawnType == SpawnType.Horse)
             {
                 foreach(Transform child in gameObject.transform)
                 {
@@ -880,7 +901,7 @@ public class GridPiece : MonoBehaviour
                 }
             }
 
-            if (spawningTowerNow)
+            if (currentSpawnType == SpawnType.Tower)
             {
                 foreach (Transform child in gameObject.transform)
                 {
@@ -891,7 +912,7 @@ public class GridPiece : MonoBehaviour
                 }
             }
 
-            if (spawningBishopNow)
+            if (currentSpawnType == SpawnType.Bishop)
             {
                 foreach (Transform child in gameObject.transform)
                 {
@@ -902,7 +923,7 @@ public class GridPiece : MonoBehaviour
                 }
             }
 
-            if (spawningQueenNow)
+            if (currentSpawnType == SpawnType.Queen)
             {
                 foreach (Transform child in gameObject.transform)
                 {

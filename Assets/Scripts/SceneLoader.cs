@@ -75,7 +75,7 @@ public class SceneLoader : MonoBehaviour
     public void ChangeScene(int buildIndex)
     {
 
-        if (buildIndex == 1337)
+        if (buildIndex == 1337) // Skip Shop Button
         {
 
             // Gameplay Scene

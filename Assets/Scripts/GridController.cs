@@ -5,13 +5,14 @@ using UnityEngine;
 public class GridController : MonoBehaviour
 {
     GridPiece[] gridPieces;
+    BoardCreator boardCreator;
+    SceneLoader sceneLoader;
+    GameManagerSr gameManager;
 
     GameObject moveFromTileObject;
     GameObject moveToTileObject;
     List<GameObject> attackFromTileObjectList = new List<GameObject>();
 
-    BoardCreator boardCreator;
-    SceneLoader sceneLoader;
 
     #region Enemy
 
@@ -134,7 +135,7 @@ public class GridController : MonoBehaviour
 
     int infoInt = 0;
 
-    bool testBool = false;
+    bool delayStartHasRun = false;
 
     bool didntFindAnytrhingOnce = false;
 
@@ -142,14 +143,17 @@ public class GridController : MonoBehaviour
     {
         boardCreator = FindObjectOfType<BoardCreator>();
         sceneLoader = FindObjectOfType<SceneLoader>();
+        gameManager = FindObjectOfType<GameManagerSr>();
 
         StartCoroutine(DelayStart());
     }
 
     private void Update()
     {
-        if (numberOfEnemys == 0 && testBool == true)
+        if (numberOfEnemys == 0 && delayStartHasRun)
         {
+            gameManager.howManyPointsForEnemys += 5;
+
             sceneLoader.ChangeScene(2);
         }
     }
@@ -176,11 +180,11 @@ public class GridController : MonoBehaviour
                     // maxY Visar en mindre 
                     if(boardCreator.maxYUp - 1 == currentY + 1)
                     {
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
                     }
                     else
                     {
-                        allPieces.anticipatingPlayerPawn = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
                     }
 
                     allPieces.anticipateMovment = true;
@@ -208,7 +212,7 @@ public class GridController : MonoBehaviour
                 {
                     
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackPawn = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
                 }
@@ -221,7 +225,7 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackPawn = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
                 }
@@ -254,7 +258,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -262,7 +266,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -272,7 +276,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -280,7 +284,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -294,7 +298,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -302,7 +306,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -312,7 +316,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -320,7 +324,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -334,7 +338,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -342,7 +346,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -352,7 +356,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -360,7 +364,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -374,7 +378,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -382,7 +386,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -392,7 +396,7 @@ public class GridController : MonoBehaviour
                 {
 
                     allPieces.anticipatePlayerAttack = true;
-                    allPieces.anticipatingPlayerAttackHorse = true;
+                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
 
                     attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -400,7 +404,7 @@ public class GridController : MonoBehaviour
                 else
                 {
                     allPieces.anticipateMovment = true;
-                    allPieces.anticipatingPlayerHorse = true;
+                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
                 }
             }
 
@@ -440,7 +444,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackTower = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -454,7 +458,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Tower;
 
                     }
                 }
@@ -509,7 +513,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackTower = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -523,7 +527,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Tower;
 
                     }
                 }
@@ -578,7 +582,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackTower = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -592,7 +596,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Tower;
 
                     }
                 }
@@ -647,7 +651,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackTower = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower; 
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -661,7 +665,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerTower = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Tower;
 
                     }
                 }
@@ -726,7 +730,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackBishop = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop; 
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -740,7 +744,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Bishop;
 
                     }
                 }
@@ -795,7 +799,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackBishop = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -809,7 +813,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Bishop;
 
                     }
                 }
@@ -865,7 +869,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackBishop = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -879,7 +883,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Bishop;
 
                     }
                 }
@@ -934,7 +938,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackBishop = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -948,7 +952,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerBishop = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Bishop;
 
                     }
                 }
@@ -1013,7 +1017,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1027,7 +1031,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -1082,7 +1086,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen; 
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1096,7 +1100,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -1152,7 +1156,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1166,7 +1170,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -1221,7 +1225,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1235,7 +1239,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -1291,7 +1295,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1305,7 +1309,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -1360,7 +1364,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1374,7 +1378,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -1430,7 +1434,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1444,7 +1448,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -1499,7 +1503,7 @@ public class GridController : MonoBehaviour
                         breakLoop = true;
 
                         allPieces.anticipatePlayerAttack = true;
-                        allPieces.anticipatingPlayerAttackQueen = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
 
                         attackFromTileObjectList.Add(allPieces.gameObject);
 
@@ -1513,7 +1517,7 @@ public class GridController : MonoBehaviour
                         breakLoop = false;
 
                         allPieces.anticipateMovment = true;
-                        allPieces.anticipatingPlayerQueen = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
 
                     }
                 }
@@ -6154,7 +6158,7 @@ public class GridController : MonoBehaviour
      
         }
 
-        testBool = true;
+        delayStartHasRun = true;
 
         Debug.Log(numberOfEnemys + " Enemys");
         numberOfTimesLookingForPlayerLeft = 1;

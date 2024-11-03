@@ -1712,6 +1712,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5499919346294855562, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
+      propertyPath: maxRandomRange
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5499919346294855562, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
+      propertyPath: minRandomRange
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9113246568715937223, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
       propertyPath: m_Name
       value: Scripts

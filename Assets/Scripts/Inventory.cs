@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
-                    allPieces.spawningPawnNow = true;
+                    allPieces.currentSpawnType = SpawnType.Pawn;
                     allPieces.placingDownAUnitNow = true;
                 }
 
@@ -47,7 +47,7 @@ public class Inventory : MonoBehaviour
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
-                    allPieces.spawningHorseNow = true;
+                    allPieces.currentSpawnType = SpawnType.Horse;
                     allPieces.placingDownAUnitNow = true;
                 }
 
@@ -67,7 +67,7 @@ public class Inventory : MonoBehaviour
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
-                    allPieces.spawningTowerNow = true;
+                    allPieces.currentSpawnType = SpawnType.Tower;
                     allPieces.placingDownAUnitNow = true;
                 }
 
@@ -87,7 +87,7 @@ public class Inventory : MonoBehaviour
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
-                    allPieces.spawningBishopNow = true;
+                    allPieces.currentSpawnType = SpawnType.Bishop;
                     allPieces.placingDownAUnitNow = true;
                 }
 
@@ -107,7 +107,7 @@ public class Inventory : MonoBehaviour
 
                 foreach (GridPiece allPieces in gridPieces)
                 {
-                    allPieces.spawningQueenNow = true;
+                    allPieces.currentSpawnType = SpawnType.Queen;
                     allPieces.placingDownAUnitNow = true;
                 }
 

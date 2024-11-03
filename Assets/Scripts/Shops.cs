@@ -30,46 +30,43 @@ public class Shops : MonoBehaviour
     [SerializeField] List<Transform> itemsInShopPosition = new List<Transform>();
     List<GameObject> upgradesObjectsTotal = new List<GameObject>();
 
+    [SerializeField] List<Transform> unitBuyPosition = new List<Transform>();
+    List<Transform> buyUnitButton = new List<Transform>();
+
     [Header("Types Of Upgrades")]
 
     #region General
 
-    List<GameObject> allGeneralUpgradeObjects = new List<GameObject>();
     List<GameObject> generalUpgradeObjects = new List<GameObject>();
 
     #endregion
 
     #region Pawn
 
-    List<GameObject> allPawnUpgradeObjects = new List<GameObject>();
     List<GameObject> pawnUpgradeObjects = new List<GameObject>();
 
     #endregion
 
     #region Horse
 
-    List<GameObject> allHorseUpgradeObjects = new List<GameObject>();
     List<GameObject> horseUpgradeObjects = new List<GameObject>();
 
     #endregion
 
     #region Tower
 
-    List<GameObject> allTowerUpgradeObjects = new List<GameObject>();
     List<GameObject> towerUpgradeObjects = new List<GameObject>();
 
     #endregion
 
     #region Bishop
 
-    List<GameObject> allBishopUpgradeObjects = new List<GameObject>();
     List<GameObject> bishopUpgradeObjects = new List<GameObject>();
 
     #endregion
 
     #region Queen
 
-    List<GameObject> allQueenUpgradeObjects = new List<GameObject>();
     List<GameObject> queenUpgradeObjects = new List<GameObject>();
 
     #endregion
@@ -90,6 +87,10 @@ public class Shops : MonoBehaviour
                 generalUpgradeObjects.Add(child.gameObject);
 
             }
+            else
+            {
+                buyUnitButton.Add(child.transform.Find("BuyGeneralButton"));
+            }
 
         }
 
@@ -100,6 +101,10 @@ public class Shops : MonoBehaviour
             {
                 pawnUpgradeObjects.Add(child.gameObject);
 
+            }
+            else
+            {
+                buyUnitButton.Add(child.transform.Find("BuyPawnButton"));
             }
 
         }
@@ -112,6 +117,10 @@ public class Shops : MonoBehaviour
                 horseUpgradeObjects.Add(child.gameObject);
 
             }
+            else
+            {
+                buyUnitButton.Add(child.transform.Find("BuyHorseButton"));
+            }
 
         }
 
@@ -122,6 +131,10 @@ public class Shops : MonoBehaviour
             {
                 towerUpgradeObjects.Add(child.gameObject);
 
+            }
+            else
+            {
+                buyUnitButton.Add(child.transform.Find("BuyTowerButton"));
             }
 
         }
@@ -134,6 +147,10 @@ public class Shops : MonoBehaviour
                 bishopUpgradeObjects.Add(child.gameObject);
 
             }
+            else
+            {
+                buyUnitButton.Add(child.transform.Find("BuyBishopButton"));
+            }
 
         }
 
@@ -144,6 +161,10 @@ public class Shops : MonoBehaviour
             {
                 queenUpgradeObjects.Add(child.gameObject);
 
+            }
+            else
+            {
+                buyUnitButton.Add(child.transform.Find("BuyQueenButton"));
             }
 
         }
@@ -170,11 +191,19 @@ public class Shops : MonoBehaviour
 
                 if (typeOfShop == ShopType.BasicShop)
                 {
-                    int whatUpgradeToChoce = Random.Range(0, upgradesObjectsTotal.Count);
+                    int whatUpgradeToChoce = Random.Range(0, upgradesObjectsTotal.Count); // Får en slumpmässig upgradering
 
-                    upgradesObjectsTotal[whatUpgradeToChoce].transform.position = itemsInShopPosition[i].transform.position;
-                    upgradesObjectsTotal[whatUpgradeToChoce].SetActive(true);
-                    upgradesObjectsTotal.Remove(upgradesObjectsTotal[whatUpgradeToChoce]);
+                    upgradesObjectsTotal[whatUpgradeToChoce].transform.position = itemsInShopPosition[i].transform.position; // Placerar Upgraderingen
+                    upgradesObjectsTotal[whatUpgradeToChoce].SetActive(true); // Sätter den till true
+                    upgradesObjectsTotal.Remove(upgradesObjectsTotal[whatUpgradeToChoce]); // Tar bort den så den inte kan välas igen
+
+                    for (int j = 0; j < buyUnitButton.Count; j++)
+                    {
+                        if (buyUnitButton[j].name == "null")
+                        {
+
+                        }
+                    }
                 }
 
                 if (typeOfShop == ShopType.PawnShop)
@@ -184,6 +213,16 @@ public class Shops : MonoBehaviour
                     pawnUpgradeObjects[whatUpgradeToChoce].transform.position = itemsInShopPosition[i].transform.position;
                     pawnUpgradeObjects[whatUpgradeToChoce].SetActive(true);
                     pawnUpgradeObjects.Remove(pawnUpgradeObjects[whatUpgradeToChoce]);
+
+                    for (int j = 0; j < buyUnitButton.Count; j++)
+                    {
+                        if (buyUnitButton[j].name == "BuyPawnButton")
+                        {
+                            buyUnitButton[j].transform.position = unitBuyPosition[0].position;
+                            buyUnitButton[j].gameObject.SetActive(true);
+                            buyUnitButton.Remove(buyUnitButton[j]);
+                        }
+                    }
                 }
 
                 if (typeOfShop == ShopType.TowerShop)
@@ -193,6 +232,16 @@ public class Shops : MonoBehaviour
                     towerUpgradeObjects[whatUpgradeToChoce].transform.position = itemsInShopPosition[i].transform.position;
                     towerUpgradeObjects[whatUpgradeToChoce].SetActive(true);
                     towerUpgradeObjects.Remove(towerUpgradeObjects[whatUpgradeToChoce]);
+
+                    for (int j = 0; j < buyUnitButton.Count; j++)
+                    {
+                        if (buyUnitButton[j].name == "BuyTowerButton")
+                        {
+                            buyUnitButton[j].transform.position = unitBuyPosition[0].position;
+                            buyUnitButton[j].gameObject.SetActive(true);
+                            buyUnitButton.Remove(buyUnitButton[j]);
+                        }
+                    }
                 }
 
                 if (typeOfShop == ShopType.BishopShop)
@@ -202,6 +251,16 @@ public class Shops : MonoBehaviour
                     bishopUpgradeObjects[whatUpgradeToChoce].transform.position = itemsInShopPosition[i].transform.position;
                     bishopUpgradeObjects[whatUpgradeToChoce].SetActive(true);
                     bishopUpgradeObjects.Remove(bishopUpgradeObjects[whatUpgradeToChoce]);
+
+                    for (int j = 0; j < buyUnitButton.Count; j++)
+                    {
+                        if (buyUnitButton[j].name == "BuyBishopButton")
+                        {
+                            buyUnitButton[j].transform.position = unitBuyPosition[0].position;
+                            buyUnitButton[j].gameObject.SetActive(true);
+                            buyUnitButton.Remove(buyUnitButton[j]);
+                        }
+                    }
                 }
 
                 if (typeOfShop == ShopType.QueenShop)
@@ -211,6 +270,16 @@ public class Shops : MonoBehaviour
                     queenUpgradeObjects[whatUpgradeToChoce].transform.position = itemsInShopPosition[i].transform.position;
                     queenUpgradeObjects[whatUpgradeToChoce].SetActive(true);
                     queenUpgradeObjects.Remove(queenUpgradeObjects[whatUpgradeToChoce]);
+
+                    for (int j = 0; j < buyUnitButton.Count; j++)
+                    {
+                        if (buyUnitButton[j].name == "BuyQueenButton")
+                        {
+                            buyUnitButton[j].transform.position = unitBuyPosition[0].position;
+                            buyUnitButton[j].gameObject.SetActive(true);
+                            buyUnitButton.Remove(buyUnitButton[j]);
+                        }
+                    }
                 }
 
                 if (typeOfShop == ShopType.HorseShop)
@@ -220,6 +289,16 @@ public class Shops : MonoBehaviour
                     horseUpgradeObjects[whatUpgradeToChoce].transform.position = itemsInShopPosition[i].transform.position;
                     horseUpgradeObjects[whatUpgradeToChoce].SetActive(true);
                     horseUpgradeObjects.Remove(horseUpgradeObjects[whatUpgradeToChoce]);
+
+                    for (int j = 0; j < buyUnitButton.Count; j++)
+                    {
+                        if (buyUnitButton[j].name == "BuyHorseButton")
+                        {
+                            buyUnitButton[j].transform.position = unitBuyPosition[0].position;
+                            buyUnitButton[j].gameObject.SetActive(true);
+                            buyUnitButton.Remove(buyUnitButton[j]);
+                        }
+                    }
                 }
 
                 #endregion
@@ -228,7 +307,7 @@ public class Shops : MonoBehaviour
             else
             {
 
-                if (typeOfShop != ShopType.BasicShop)
+                if (typeOfShop != ShopType.BasicShop) // Efter de första tre upgraderingarna har valts och placerats så väljes slumpmässigt utt resten
                 {
                     upgradesObjectsTotal.AddRange(generalUpgradeObjects);
                     upgradesObjectsTotal.AddRange(pawnUpgradeObjects);
