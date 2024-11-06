@@ -121,7 +121,7 @@ public class GridController : MonoBehaviour
 
     #region Pawn
 
-    
+
 
     #endregion
 
@@ -130,6 +130,10 @@ public class GridController : MonoBehaviour
 
 
     #endregion
+
+    #endregion
+
+    #region Abilitys
 
     #endregion
 
