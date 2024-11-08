@@ -73,8 +73,12 @@ public class Shops : MonoBehaviour
 
     #endregion
 
+    Inventory inventory;
+
     void Start()
     {
+
+        inventory = FindObjectOfType<Inventory>();
 
         #region Add Upgrades
 
@@ -99,7 +103,12 @@ public class Shops : MonoBehaviour
             }
             else
             {
-                buyUnitButton.Add(child.gameObject); // Lägger till knapp så man kan köpa pjäser
+
+                if(inventory.pawnsInInventory < 5) // Om man har mer än 5 ska den inte läggas till
+                {
+                    buyUnitButton.Add(child.gameObject); // Lägger till knapp så man kan köpa pjäser
+                }
+
             }
 
         }
@@ -114,7 +123,12 @@ public class Shops : MonoBehaviour
             }
             else
             {
-                buyUnitButton.Add(child.gameObject);
+
+                if (inventory.horseInInvenory < 5) 
+                {
+                    buyUnitButton.Add(child.gameObject); 
+                }
+
             }
 
         }
@@ -129,7 +143,12 @@ public class Shops : MonoBehaviour
             }
             else
             {
-                buyUnitButton.Add(child.gameObject);
+
+                if (inventory.towersInInventory < 5)
+                {
+                    buyUnitButton.Add(child.gameObject);
+                }
+
             }
 
         }
@@ -144,7 +163,12 @@ public class Shops : MonoBehaviour
             }
             else
             {
-                buyUnitButton.Add(child.gameObject);
+
+                if (inventory.bishopInInventory < 5)
+                {
+                    buyUnitButton.Add(child.gameObject);
+                }
+
             }
 
         }
@@ -159,7 +183,12 @@ public class Shops : MonoBehaviour
             }
             else
             {
-                buyUnitButton.Add(child.gameObject);
+
+                if (inventory.queenInInventory < 5)
+                {
+                    buyUnitButton.Add(child.gameObject);
+                }
+
             }
 
         }
@@ -192,12 +221,6 @@ public class Shops : MonoBehaviour
                     upgradesObjectsTotal[whatUpgradeToChoce].SetActive(true); // Sätter den till true
                     upgradesObjectsTotal.Remove(upgradesObjectsTotal[whatUpgradeToChoce]); // Tar bort den så den inte kan välas igen
 
-                    int whatButtonint = Random.Range(0, buyUnitButton.Count);
-
-                    buyUnitButton[whatButtonint].transform.position = unitBuyPosition[0].position;
-                    buyUnitButton[whatButtonint].gameObject.SetActive(true);
-                    buyUnitButton.Remove(buyUnitButton[whatButtonint]);
-
                 }
 
                 if (typeOfShop == ShopType.PawnShop)
@@ -208,17 +231,29 @@ public class Shops : MonoBehaviour
                     pawnUpgradeObjects[whatUpgradeToChoce].SetActive(true);
                     pawnUpgradeObjects.Remove(pawnUpgradeObjects[whatUpgradeToChoce]);
 
-                    for (int j = 0; j < buyUnitButton.Count; j++)
+                    if(inventory.pawnsInInventory < 5)
                     {
-
-                        if (buyUnitButton[j].name == "BuyPawnButton")
+                        for (int j = 0; j < buyUnitButton.Count; j++)
                         {
-                            buyUnitButton[j].transform.position = unitBuyPosition[0].position;
-                            buyUnitButton[j].gameObject.SetActive(true);
-                            buyUnitButton.Remove(buyUnitButton[j]);
-               
+
+                            if (buyUnitButton[j].name == "BuyPawnButton")
+                            {
+                                buyUnitButton[j].transform.position = unitBuyPosition[0].position;
+                                buyUnitButton[j].gameObject.SetActive(true);
+                                buyUnitButton.Remove(buyUnitButton[j]);
+
+                            }
                         }
                     }
+                    else // Om man har mer än 5 så ska den inte kunna köpa den
+                    {
+                        int whatButtonint = Random.Range(0, buyUnitButton.Count);
+
+                        buyUnitButton[whatButtonint].transform.position = unitBuyPosition[0].position;
+                        buyUnitButton[whatButtonint].gameObject.SetActive(true);
+                        buyUnitButton.Remove(buyUnitButton[whatButtonint]);
+                    }
+
                 }
 
                 if (typeOfShop == ShopType.TowerShop)

@@ -13,6 +13,10 @@ public class GameManagerSr : MonoBehaviour
 
     #endregion
 
+    #region Shop
+
+    [Header("Shop")]
+
     public bool nextSceneShopTrue = false;
     int whatShopNumber;
     public int howManyEnemiesBought = 0;
@@ -20,6 +24,9 @@ public class GameManagerSr : MonoBehaviour
 
     [SerializeField] GameObject aktivateShopObject;
 
+    #endregion
+
+    public int money = 0;
 
     #region Upgrades
 

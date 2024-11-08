@@ -13,6 +13,12 @@ public class Inventory : MonoBehaviour
     public bool gameHasStarted = false;
 
     GridPiece[] gridPieces;
+    GameManagerSr GameManager;
+
+    private void Start()
+    {
+        GameManager = FindAnyObjectByType<GameManagerSr>();
+    }
 
     #region Place Pieces
 
@@ -114,6 +120,84 @@ public class Inventory : MonoBehaviour
                 queenInInventory--;
             }
         }
+    }
+
+    #endregion
+
+    #region Add Pieces
+
+    public void buyWhat(int whatToBuy)
+    {
+
+        switch (whatToBuy)
+        {
+
+            case 0:
+
+                if(GameManager.money >= 2 && pawnsInInventory < 5)
+                {
+
+                    pawnsInInventory++;
+
+                    GameManager.money -= 2;
+
+                }
+
+                break;
+
+            case 1:
+
+                if (GameManager.money >= 5 && towersInInventory < 5)
+                {
+
+                    towersInInventory++;
+
+                    GameManager.money -= 5;
+
+                }
+
+                break;
+
+            case 2:
+
+                if (GameManager.money >= 4 && bishopInInventory < 5)
+                {
+
+                    bishopInInventory++;
+
+                    GameManager.money -= 4;
+
+                }
+
+                break;
+
+            case 3:
+
+                if (GameManager.money >= 7 && queenInInventory < 5)
+                {
+
+                    queenInInventory++;
+
+                    GameManager.money -= 7;
+
+                }
+
+                break;
+
+            case 4:
+
+                if (GameManager.money >= 3 && horseInInvenory < 5)
+                {
+
+                    horseInInvenory++;
+
+                    GameManager.money -= 3;
+
+                }
+
+                break;
+        }
+
     }
 
     #endregion
