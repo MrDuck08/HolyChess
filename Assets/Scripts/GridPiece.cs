@@ -612,7 +612,8 @@ public class GridPiece : MonoBehaviour
 
                             playerPieceHere = true;
                             currentPlayerType = PlayerType.Pawn;
-                           
+                            controller.howManyPlayerPieces++;
+
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
                             foreach (GridPiece allPiece in gridPieces)
@@ -627,6 +628,7 @@ public class GridPiece : MonoBehaviour
 
                             playerPieceHere = true;
                             currentPlayerType = PlayerType.Horse;
+                            controller.howManyPlayerPieces++;
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -642,6 +644,7 @@ public class GridPiece : MonoBehaviour
 
                             playerPieceHere = true;
                             currentPlayerType = PlayerType.Tower;
+                            controller.howManyPlayerPieces++;
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -657,6 +660,7 @@ public class GridPiece : MonoBehaviour
 
                             playerPieceHere = true;
                             currentPlayerType= PlayerType.Bishop;
+                            controller.howManyPlayerPieces++;
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -672,6 +676,7 @@ public class GridPiece : MonoBehaviour
 
                             playerPieceHere = true;
                             currentPlayerType = PlayerType.Queen;
+                            controller.howManyPlayerPieces++;
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -982,6 +987,7 @@ public class GridPiece : MonoBehaviour
         if (playerPieceHere && enemyPieceHere)
         {
 
+            controller.howManyPlayerPieces--;
             playerPieceHere = false;        
 
         }

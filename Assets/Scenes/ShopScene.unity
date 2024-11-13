@@ -494,7 +494,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 72511415}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047394805}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: buyWhatUnit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &72511415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4291,7 +4303,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1730335588}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047394805}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: buyWhatUnit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1730335588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4532,7 +4556,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1780969513}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047394805}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: buyWhatUnit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1780969513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4786,7 +4822,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1831868188}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047394805}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: buyWhatUnit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1831868188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5538,6 +5586,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9096577581404328533, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
+      propertyPath: pawnsInInventory
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9096577581404328533, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
+      propertyPath: bishopInInventory
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9113246568715937223, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
       propertyPath: m_Name
       value: Scripts
@@ -5558,6 +5614,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1022f91c13d7f2c4697cbd02761017c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2047394805 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9096577581404328533, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
+  m_PrefabInstance: {fileID: 2047394803}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95488eae0fb712d44a360a5166688c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2077583107
@@ -5983,7 +6050,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2106670661}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047394805}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: buyWhatUnit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2106670661
 MonoBehaviour:
   m_ObjectHideFlags: 0

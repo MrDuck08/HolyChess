@@ -18,6 +18,12 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         GameManager = FindAnyObjectByType<GameManagerSr>();
+
+        pawnsInInventory = GameManager.pawnsInInventory;
+        towersInInventory = GameManager.towersInInventory;
+        bishopInInventory = GameManager.bishopInInventory;
+        queenInInventory = GameManager.queenInInventory;
+        horseInInvenory = GameManager.horseInInvenory;
     }
 
     #region Place Pieces
@@ -126,7 +132,7 @@ public class Inventory : MonoBehaviour
 
     #region Add Pieces
 
-    public void buyWhat(int whatToBuy)
+    public void buyWhatUnit(int whatToBuy)
     {
 
         switch (whatToBuy)
@@ -138,8 +144,10 @@ public class Inventory : MonoBehaviour
                 {
 
                     pawnsInInventory++;
+                    GameManager.pawnsInInventory++;
 
                     GameManager.money -= 2;
+                    Debug.Log(pawnsInInventory);
 
                 }
 
@@ -151,6 +159,7 @@ public class Inventory : MonoBehaviour
                 {
 
                     towersInInventory++;
+                    GameManager.towersInInventory++;
 
                     GameManager.money -= 5;
 
@@ -164,6 +173,7 @@ public class Inventory : MonoBehaviour
                 {
 
                     bishopInInventory++;
+                    GameManager.bishopInInventory++;
 
                     GameManager.money -= 4;
 
@@ -177,6 +187,7 @@ public class Inventory : MonoBehaviour
                 {
 
                     queenInInventory++;
+                    GameManager.queenInInventory++;
 
                     GameManager.money -= 7;
 
@@ -190,6 +201,7 @@ public class Inventory : MonoBehaviour
                 {
 
                     horseInInvenory++;
+                    GameManager.horseInInvenory++;
 
                     GameManager.money -= 3;
 

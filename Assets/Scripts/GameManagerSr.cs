@@ -26,6 +26,18 @@ public class GameManagerSr : MonoBehaviour
 
     #endregion
 
+    #region Inventory
+
+    [Header("Inventory")]
+
+    public int pawnsInInventory = 0;
+    public int horseInInvenory = 0;
+    public int towersInInventory = 0;
+    public int bishopInInventory = 0;
+    public int queenInInventory = 0;
+
+    #endregion
+
     public int money = 0;
 
     #region Upgrades
@@ -69,6 +81,8 @@ public class GameManagerSr : MonoBehaviour
     #endregion
 
     #region Enemy Difficulty
+
+    [Header("Scaling")]
 
     public int howManyPointsForEnemys = 10;
 
