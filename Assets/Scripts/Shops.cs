@@ -14,7 +14,9 @@ public class Shops : MonoBehaviour
         TowerShop,
         BishopShop,
         QueenShop,
-        HorseShop
+        HorseShop,
+        total,
+        none = 1337
     }
 
     [Header("Who Am I?")]
@@ -73,13 +75,19 @@ public class Shops : MonoBehaviour
 
     #endregion
 
+    [SerializeField] GameObject removeShopButton;
+    [SerializeField] GameObject keepShopButton;
+
     Inventory inventory;
+    GameManagerSr gameManager;
+
     int whatShopInt = 1337;
 
     void Start()
     {
 
         inventory = FindObjectOfType<Inventory>();
+        gameManager = FindObjectOfType<GameManagerSr>();
 
         #region Add Upgrades
 
@@ -464,6 +472,28 @@ public class Shops : MonoBehaviour
         buyUnitButton.Remove(buyUnitButton[whatButtonintGeneral]);
 
         #endregion
+
+    }
+
+    public void RemoveShop()
+    {
+
+        gameManager.forbidenShop = typeOfShop;
+
+        removeShopButton.SetActive(false);
+        keepShopButton.SetActive(false);
+
+    }
+
+    public void GuaranteeShop()
+    {
+
+        // Cost Money
+
+        gameManager.guaranteedShop = typeOfShop;
+
+        removeShopButton.SetActive(false);
+        keepShopButton.SetActive(false);
 
     }
 

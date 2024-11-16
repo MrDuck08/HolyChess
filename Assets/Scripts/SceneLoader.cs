@@ -10,6 +10,8 @@ public class SceneLoader : MonoBehaviour
     Inventory inventory;
     GameManagerSr gameManager;
 
+    int whatShopToActivate;
+
     private void Start()
     {
         gameManager = FindAnyObjectByType<GameManagerSr>();
@@ -18,7 +20,22 @@ public class SceneLoader : MonoBehaviour
         {
             shopsScript = FindAnyObjectByType<Shops>();
 
-            int WhatShopToAcive = Random.Range(0, 6);
+            while (true)
+            {
+                whatShopToActivate = Random.Range(0, (int)Shops.ShopType.total);
+
+                if(whatShopToActivate != (int)gameManager.forbidenShop)
+                {
+                    break;
+                }
+            }
+
+            if(gameManager.guaranteedShop != Shops.ShopType.none)
+            {
+
+                whatShopToActivate = (int)gameManager.guaranteedShop;
+
+            }
 
             // 0 = General
             // 1 = Pawn
@@ -27,9 +44,9 @@ public class SceneLoader : MonoBehaviour
             // 4 = Queen
             // 5 = Horse
 
-            whatShopButton[WhatShopToAcive].SetActive(true);
+            whatShopButton[whatShopToActivate].SetActive(true);
 
-            gameManager.NextSceneWhatShop(WhatShopToAcive);
+            gameManager.NextSceneWhatShop(whatShopToActivate);
 
         }
     }

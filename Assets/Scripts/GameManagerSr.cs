@@ -22,6 +22,9 @@ public class GameManagerSr : MonoBehaviour
     public int howManyEnemiesBought = 0;
     public List<int> whatTypeOfEnemyWasBought = new List<int>();
 
+    public Shops.ShopType forbidenShop = Shops.ShopType.none;
+    public Shops.ShopType guaranteedShop = Shops.ShopType.none;
+
     [SerializeField] GameObject aktivateShopObject;
 
     #endregion
