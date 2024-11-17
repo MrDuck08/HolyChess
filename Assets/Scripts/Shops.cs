@@ -87,7 +87,6 @@ public class Shops : MonoBehaviour
     {
 
         inventory = FindObjectOfType<Inventory>();
-        gameManager = FindObjectOfType<GameManagerSr>();
 
         #region Add Upgrades
 
@@ -478,6 +477,8 @@ public class Shops : MonoBehaviour
     public void RemoveShop()
     {
 
+        gameManager = FindObjectOfType<GameManagerSr>();
+
         gameManager.forbidenShop = typeOfShop;
 
         removeShopButton.SetActive(false);
@@ -489,6 +490,8 @@ public class Shops : MonoBehaviour
     {
 
         // Cost Money
+
+        gameManager = FindObjectOfType<GameManagerSr>();
 
         gameManager.guaranteedShop = typeOfShop;
 

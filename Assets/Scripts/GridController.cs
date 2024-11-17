@@ -96,6 +96,8 @@ public class GridController : MonoBehaviour
 
     public int howManyPlayerPieces = 0;
 
+    public bool firstRoundDone = false;
+
     #region Tower
 
     bool breakLoop = false;
@@ -194,41 +196,47 @@ public class GridController : MonoBehaviour
 
     public void AnticipatePawnAttack(int currentX, int currentY, GameObject callerGameObject)
     {
-        moveFromTileObject = callerGameObject;
 
-        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-        foreach (GridPiece allPieces in gridPieces)
+        if (firstRoundDone)
         {
-            int xPos = allPieces.xPos;
-            int yPos = allPieces.yPos;
 
-            if (xPos == currentX + 1 && yPos == currentY + 1)
+            moveFromTileObject = callerGameObject;
+
+            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+            foreach (GridPiece allPieces in gridPieces)
             {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
 
-                if(allPieces.enemyPieceHere == true)
+                if (xPos == currentX + 1 && yPos == currentY + 1)
                 {
-                    
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+                    }
+
                 }
 
-            }
-
-            if (xPos == currentX - 1 && yPos == currentY + 1)
-            {
-
-                if (allPieces.enemyPieceHere == true)
+                if (xPos == currentX - 1 && yPos == currentY + 1)
                 {
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+                    }
+
                 }
-
             }
+
         }
 
     }
@@ -255,10 +263,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else
@@ -273,10 +286,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else
@@ -295,10 +313,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else
@@ -313,10 +336,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else
@@ -335,10 +363,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else
@@ -353,10 +386,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else
@@ -375,10 +413,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else
@@ -393,10 +436,15 @@ public class GridController : MonoBehaviour
                 if (allPieces.enemyPieceHere == true)
                 {
 
-                    allPieces.anticipatePlayerAttack = true;
-                    allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                    if (firstRoundDone)
+                    {
 
-                    attackFromTileObjectList.Add(allPieces.gameObject);
+                        allPieces.anticipatePlayerAttack = true;
+                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
 
                 }
                 else

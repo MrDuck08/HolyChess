@@ -9,6 +9,7 @@ public class SceneLoader : MonoBehaviour
     Shops shopsScript;
     Inventory inventory;
     GameManagerSr gameManager;
+    GridController gridController;
 
     int whatShopToActivate;
 
@@ -34,8 +35,10 @@ public class SceneLoader : MonoBehaviour
             {
 
                 whatShopToActivate = (int)gameManager.guaranteedShop;
+                gameManager.guaranteedShop = Shops.ShopType.none;
 
             }
+
 
             // 0 = General
             // 1 = Pawn
@@ -72,6 +75,9 @@ public class SceneLoader : MonoBehaviour
     {
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+        gridController = FindObjectOfType<GridController>();
+
+        gridController.firstRoundDone = true;
 
         foreach (GridPiece allPieces in gridPieces)
         {

@@ -5618,8 +5618,8 @@ MonoBehaviour:
   unitBuyPosition:
   - {fileID: 83129620}
   - {fileID: 608408035}
-  removeShopButton: {fileID: 0}
-  keepShopButton: {fileID: 0}
+  removeShopButton: {fileID: 1050065255}
+  keepShopButton: {fileID: 1988630694}
 --- !u!114 &1906569052
 MonoBehaviour:
   m_ObjectHideFlags: 0
