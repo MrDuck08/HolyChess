@@ -215,10 +215,16 @@ public class GridController : MonoBehaviour
                     if (allPieces.enemyPieceHere == true)
                     {
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
                     }
 
                 }
@@ -486,13 +492,20 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+
+                        }
 
                         break;
 
@@ -555,13 +568,20 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+
+                        }
 
                         break;
 
@@ -624,13 +644,20 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+
+                        }
 
                         break;
 
@@ -693,13 +720,20 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower; 
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Tower;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+
+                        }
 
                         break;
 
@@ -772,13 +806,19 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop; 
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -841,13 +881,19 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -911,13 +957,19 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -980,13 +1032,19 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == true)
                     {
+
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Bishop;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1062,10 +1120,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1131,10 +1194,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen; 
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1201,10 +1269,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1270,10 +1343,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1340,10 +1418,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1409,10 +1492,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1479,10 +1567,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
@@ -1548,10 +1641,15 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        if (firstRoundDone)
+                        {
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
 
                         break;
 
