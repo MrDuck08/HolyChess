@@ -6,7 +6,6 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] GameObject[] whatShopButton;
 
     GridPiece[] gridPieces;
-    Shops shopsScript;
     Inventory inventory;
     GameManagerSr gameManager;
     GridController gridController;
@@ -19,7 +18,6 @@ public class SceneLoader : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex == 2)
         {
-            shopsScript = FindAnyObjectByType<Shops>();
 
             while (true)
             {
@@ -102,9 +100,10 @@ public class SceneLoader : MonoBehaviour
         {
 
             // Gameplay Scene
-            SceneManager.LoadScene(1);
-
             gameManager.nextSceneShopTrue = false;
+            gameManager.money += 10;
+
+            SceneManager.LoadScene(1);
 
             // Add Coins
         }

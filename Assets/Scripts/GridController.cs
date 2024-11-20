@@ -11,7 +11,6 @@ public class GridController : MonoBehaviour
     Inventory Inventory;
 
     GameObject moveFromTileObject;
-    GameObject moveToTileObject;
     List<GameObject> attackFromTileObjectList = new List<GameObject>();
 
 
@@ -102,7 +101,6 @@ public class GridController : MonoBehaviour
 
     bool breakLoop = false;
     bool foundSomething;
-    bool hitSomething = false;
     int numberOfRound = 1;
 
     #endregion
@@ -146,6 +144,7 @@ public class GridController : MonoBehaviour
         if (numberOfEnemys == 0 && delayStartHasRun)
         {
             gameManager.howManyPointsForEnemys += 5;
+            gameManager.money += 10;
 
             sceneLoader.ChangeScene(2);
         }

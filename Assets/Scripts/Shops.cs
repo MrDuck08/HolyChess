@@ -213,7 +213,7 @@ public class Shops : MonoBehaviour
             upgradesObjectsTotal.AddRange(bishopUpgradeObjects);
             upgradesObjectsTotal.AddRange(queenUpgradeObjects);
         }
-        Debug.Log(buyUnitButton.Count);
+
         for (int i = 0; i < itemsInShopPosition.Count; i++)
         {
 

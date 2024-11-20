@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManagerSr : MonoBehaviour
 {
@@ -41,7 +42,14 @@ public class GameManagerSr : MonoBehaviour
 
     #endregion
 
+    #region Money
+
+    [Header("Money")]
+
+    [SerializeField] GameObject coinUi;
     public int money = 0;
+
+    #endregion
 
     #region Upgrades
 
@@ -94,6 +102,12 @@ public class GameManagerSr : MonoBehaviour
 
     private void Awake()
     {
+
+        if (!GameObject.Find("CoinUI"))
+        {
+            Instantiate(coinUi);
+        }
+
         int numberOfGameManagers = FindObjectsOfType<GameManagerSr>().Length;
 
         if(instance == null)
@@ -107,6 +121,18 @@ public class GameManagerSr : MonoBehaviour
             Instantiate(aktivateShopObject);
             Destroy(gameObject);
 
+        }
+
+    }
+
+    private void Update()
+    {
+
+        coinUi = GameObject.Find("CoinUI(Clone)"); // Clone För att den är instansiatad
+
+        foreach(Transform text in coinUi.transform)
+        {
+            text.gameObject.GetComponent<TextMeshProUGUI>().text = money.ToString("0");
         }
 
     }

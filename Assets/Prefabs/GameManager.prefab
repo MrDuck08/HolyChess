@@ -47,11 +47,14 @@ MonoBehaviour:
   nextSceneShopTrue: 0
   howManyEnemiesBought: 0
   whatTypeOfEnemyWasBought: 
+  forbidenShop: 1337
+  guaranteedShop: 1337
   aktivateShopObject: {fileID: 2930172546157959254, guid: a4868897b31d6a74b82b2fe83bdd05ac, type: 3}
   pawnsInInventory: 5
   horseInInvenory: 5
   towersInInventory: 5
   bishopInInventory: 5
   queenInInventory: 5
+  coinUi: {fileID: 6305228432708152794, guid: ede94592d2810f64da9d2288fc12ceca, type: 3}
   money: 5
   howManyPointsForEnemys: 10
