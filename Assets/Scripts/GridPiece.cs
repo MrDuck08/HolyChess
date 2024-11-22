@@ -87,6 +87,7 @@ public class GridPiece : MonoBehaviour
 
     public PlayerType currentPlayerType;
     public bool playerPieceHere = false;
+    public bool refreshingTurn = false;
 
     #endregion
 

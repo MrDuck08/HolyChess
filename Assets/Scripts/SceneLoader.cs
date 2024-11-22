@@ -98,7 +98,7 @@ public class SceneLoader : MonoBehaviour
 
         if (buildIndex == 1337) // Skip Shop Button
         {
-
+            gameManager = FindAnyObjectByType<GameManagerSr>();
             // Gameplay Scene
             gameManager.nextSceneShopTrue = false;
             gameManager.money += 10;

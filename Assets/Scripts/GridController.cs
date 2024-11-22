@@ -123,11 +123,21 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    #region MidRoundBuffs
+
+    [SerializeField] List<GameObject> midRoundBuffsButtons = new List<GameObject>();
+
+    [SerializeField] Transform[] buffPos;
+
+    #endregion
+
     int infoInt = 0;
 
     bool delayStartHasRun = false;
 
     bool didntFindAnytrhingOnce = false;
+
+    #region Start & Update
 
     private void Start()
     {
@@ -135,6 +145,23 @@ public class GridController : MonoBehaviour
         sceneLoader = FindObjectOfType<SceneLoader>();
         gameManager = FindObjectOfType<GameManagerSr>();
         Inventory = FindObjectOfType<Inventory>();
+
+        #region Buff Buttons Aktivate
+
+        int whatBuffButtonToAcktivate = Random.Range(0, midRoundBuffsButtons.Count);
+
+        midRoundBuffsButtons[whatBuffButtonToAcktivate].SetActive(true);
+        midRoundBuffsButtons[whatBuffButtonToAcktivate].transform.position = buffPos[0].position;
+
+        midRoundBuffsButtons.RemoveAt(whatBuffButtonToAcktivate);
+
+        whatBuffButtonToAcktivate = Random.Range(0, midRoundBuffsButtons.Count);
+
+        midRoundBuffsButtons[whatBuffButtonToAcktivate].SetActive(true);
+        midRoundBuffsButtons[whatBuffButtonToAcktivate].transform.position = buffPos[1].position;
+
+        #endregion
+
 
         StartCoroutine(DelayStart());
     }
@@ -156,6 +183,8 @@ public class GridController : MonoBehaviour
             sceneLoader.ChangeScene(1);
         }
     }
+
+    #endregion
 
     #region Player Movment/Attack
 
