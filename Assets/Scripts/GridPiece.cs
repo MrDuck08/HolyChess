@@ -564,7 +564,7 @@ public class GridPiece : MonoBehaviour
             if(mouseOver && playerTurn)
             {
 
-                #region Anticipate Movment
+                #region Anticipate Movment && Refresh Turn
 
                 if (gameHasStarted)
                 {
@@ -596,6 +596,21 @@ public class GridPiece : MonoBehaviour
                         {
                             controller.AnticipateQueenMovment(xPos, yPos, gameObject);
                         }
+                    }
+                    else if (refreshingTurn && playerPieceHere)
+                    {
+
+                        movedOnce = false;
+
+                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+
+                            allPiece.refreshingTurn = false;
+
+                        }
+
                     }
                 }
 
@@ -823,6 +838,12 @@ public class GridPiece : MonoBehaviour
                     }
 
                     #endregion
+
+                }
+                else
+                {
+
+
 
                 }
             }

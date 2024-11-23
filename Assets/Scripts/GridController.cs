@@ -129,6 +129,8 @@ public class GridController : MonoBehaviour
 
     [SerializeField] Transform[] buffPos;
 
+    bool aktivateBuffButtons = false;
+
     #endregion
 
     int infoInt = 0;
@@ -145,22 +147,6 @@ public class GridController : MonoBehaviour
         sceneLoader = FindObjectOfType<SceneLoader>();
         gameManager = FindObjectOfType<GameManagerSr>();
         Inventory = FindObjectOfType<Inventory>();
-
-        #region Buff Buttons Aktivate
-
-        int whatBuffButtonToAcktivate = Random.Range(0, midRoundBuffsButtons.Count);
-
-        midRoundBuffsButtons[whatBuffButtonToAcktivate].SetActive(true);
-        midRoundBuffsButtons[whatBuffButtonToAcktivate].transform.position = buffPos[0].position;
-
-        midRoundBuffsButtons.RemoveAt(whatBuffButtonToAcktivate);
-
-        whatBuffButtonToAcktivate = Random.Range(0, midRoundBuffsButtons.Count);
-
-        midRoundBuffsButtons[whatBuffButtonToAcktivate].SetActive(true);
-        midRoundBuffsButtons[whatBuffButtonToAcktivate].transform.position = buffPos[1].position;
-
-        #endregion
 
 
         StartCoroutine(DelayStart());
@@ -181,6 +167,29 @@ public class GridController : MonoBehaviour
             Debug.Log("DED");
 
             sceneLoader.ChangeScene(1);
+        }
+
+        if (!aktivateBuffButtons && firstRoundDone)
+        {
+
+            #region Buff Buttons Aktivate
+
+            int whatBuffButtonToAcktivate = Random.Range(0, midRoundBuffsButtons.Count);
+
+            midRoundBuffsButtons[whatBuffButtonToAcktivate].SetActive(true);
+            midRoundBuffsButtons[whatBuffButtonToAcktivate].transform.position = buffPos[0].position;
+
+            midRoundBuffsButtons.RemoveAt(whatBuffButtonToAcktivate);
+
+            whatBuffButtonToAcktivate = Random.Range(0, midRoundBuffsButtons.Count);
+
+            midRoundBuffsButtons[whatBuffButtonToAcktivate].SetActive(true);
+            midRoundBuffsButtons[whatBuffButtonToAcktivate].transform.position = buffPos[1].position;
+
+            aktivateBuffButtons = true;
+
+            #endregion
+
         }
     }
 
@@ -6285,6 +6294,24 @@ public class GridController : MonoBehaviour
     #endregion
 
     #endregion
+
+    #endregion
+
+    #region Buffs
+
+    public void RefreshTurnBuff()
+    {
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece piece in gridPieces)
+        {
+
+            piece.refreshingTurn = true;
+
+        }
+
+    }
 
     #endregion
 
