@@ -6313,6 +6313,20 @@ public class GridController : MonoBehaviour
 
     }
 
+    public void StunEnemyBuff()
+    {
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece piece in gridPieces)
+        {
+
+            piece.stunningEnemy = true;
+
+        }
+
+    }
+
     #endregion
 
     #region Delay Start

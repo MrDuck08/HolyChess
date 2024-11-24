@@ -95,6 +95,9 @@ public class GridPiece : MonoBehaviour
 
     [Header("Enemy")]
 
+    public bool stunningEnemy = false;
+    bool ignoreNextTurn = false;
+
     public EnemyType currentEnemyType;
     public bool enemyPieceHere = false;
 
@@ -840,12 +843,23 @@ public class GridPiece : MonoBehaviour
                     #endregion
 
                 }
-                else
+
+                if (enemyPieceHere && stunningEnemy)
                 {
 
+                    ignoreNextTurn = true;
 
+                    gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                    foreach (GridPiece allPiece in gridPieces)
+                    {
+
+                        allPiece.stunningEnemy = false;
+
+                    }
 
                 }
+
             }
         }
 
@@ -857,40 +871,47 @@ public class GridPiece : MonoBehaviour
         {
             playerTurn = true;
 
-            if (currentEnemyType == EnemyType.Horse)
+            if (!ignoreNextTurn)
             {
 
-                controller.EnemyHorseMovmentCall(xPos, yPos, gameObject);
+                if (currentEnemyType == EnemyType.Horse)
+                {
+
+                    controller.EnemyHorseMovmentCall(xPos, yPos, gameObject);
+
+                }
+
+                if (currentEnemyType == EnemyType.Tower)
+                {
+
+                    controller.EnemyTowerMovmentCall(xPos, yPos, gameObject);
+
+                }
+
+                if (currentEnemyType == EnemyType.Bishop)
+                {
+
+                    controller.EnemyBishopMovmentCall(xPos, yPos, gameObject);
+
+                }
+
+                if (currentEnemyType == EnemyType.Queen)
+                {
+
+                    controller.EnemyQueenMovmentCall(xPos, yPos, gameObject);
+
+                }
+
+                if (currentEnemyType == EnemyType.Pawn)
+                {
+
+                    controller.EnemyPawnMovmentCall(xPos, yPos, gameObject);
+
+                }
 
             }
 
-            if (currentEnemyType == EnemyType.Tower)
-            {
-
-                controller.EnemyTowerMovmentCall(xPos, yPos, gameObject);
-
-            }
-
-            if (currentEnemyType == EnemyType.Bishop)
-            {
-
-                controller.EnemyBishopMovmentCall(xPos, yPos, gameObject);
-
-            }
-
-            if (currentEnemyType == EnemyType.Queen)
-            {
-   
-                controller.EnemyQueenMovmentCall(xPos, yPos, gameObject);
-
-            }
-
-            if (currentEnemyType == EnemyType.Pawn)
-            {
-  
-                controller.EnemyPawnMovmentCall(xPos, yPos, gameObject);
-
-            }
+            ignoreNextTurn = false;
 
         }
 
