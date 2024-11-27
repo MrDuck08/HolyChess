@@ -96,6 +96,7 @@ public class GameManagerSr : MonoBehaviour
     [Header("Scaling")]
 
     public int howManyPointsForEnemys = 10;
+    public int whatRound = 0;
 
     #endregion
 
@@ -207,6 +208,7 @@ public class GameManagerSr : MonoBehaviour
     public void DistributePoints()
     {
         int numberOfPointsForUnits = Random.Range(0, howManyPointsForEnemys); // Hur mycket poäng till pjäser
+        Debug.Log(numberOfPointsForUnits + " How Many Points");
 
         howManyPointsForEnemys -= numberOfPointsForUnits; // Tar bort antal poäng från pjäser och resten av poängen går till upgraderingar
 

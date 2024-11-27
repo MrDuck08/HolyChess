@@ -134,7 +134,6 @@ public class GridPiece : MonoBehaviour
     #endregion
 
     Color32 anticipateMovemtVisualls;
-    Color32 PieceVisualls;
 
     GridController controller;
 
@@ -168,7 +167,6 @@ public class GridPiece : MonoBehaviour
         xPos = x;
         yPos = y;
         anticipateMovemtVisualls = whatVisualls;
-        PieceVisualls = whatVisualls;
 
         if(spawnWho == 0)
         {
@@ -569,10 +567,32 @@ public class GridPiece : MonoBehaviour
 
                 #region Anticipate Movment && Refresh Turn
 
-                if (gameHasStarted)
+                if (gameHasStarted && playerPieceHere)
                 {
-                    if (!movedOnce)
+                    if (!movedOnce) // Kollar Om Man Har Rört Sig En Gång
                     {
+
+                        #region Stop Antiticating If Clicked On Other Player Piece
+
+                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.anticipateMovment = false;
+
+                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
+                        }
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.anticipatePlayerAttack = false;
+
+                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
+                        }
+
+                        #endregion
+
+                        #region Checking Who Wants To Move
 
                         if (currentPlayerType == PlayerType.Pawn)
                         {
@@ -599,8 +619,11 @@ public class GridPiece : MonoBehaviour
                         {
                             controller.AnticipateQueenMovment(xPos, yPos, gameObject);
                         }
+
+                        #endregion
+
                     }
-                    else if (refreshingTurn && playerPieceHere)
+                    else if (refreshingTurn)
                     {
 
                         movedOnce = false;
@@ -1029,7 +1052,7 @@ public class GridPiece : MonoBehaviour
     {
         if (playerPieceHere && enemyPieceHere)
         {
-
+            
             controller.howManyPlayerPieces--;
             playerPieceHere = false;        
 

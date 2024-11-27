@@ -158,6 +158,18 @@ public class GridController : MonoBehaviour
         {
             gameManager.howManyPointsForEnemys += 5;
             gameManager.money += 10;
+            gameManager.whatRound++;
+
+            switch (gameManager.whatRound)
+            {
+
+                case 13:
+
+                    Debug.Log("WIN");
+
+                break;
+
+            }
 
             sceneLoader.ChangeScene(2);
         }
