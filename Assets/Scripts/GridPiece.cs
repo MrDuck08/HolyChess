@@ -1053,8 +1053,10 @@ public class GridPiece : MonoBehaviour
         if (playerPieceHere && enemyPieceHere)
         {
             
-            controller.howManyPlayerPieces--;
-            playerPieceHere = false;        
+            //controller.howManyPlayerPieces--;
+            //playerPieceHere = false;
+
+            controller.AktivateReviveCanvas(currentPlayerType, gameObject.GetComponent<GridPiece>());
 
         }
     }

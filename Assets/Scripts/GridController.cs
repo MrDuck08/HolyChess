@@ -133,6 +133,10 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    [Header("Revive")]
+
+    [SerializeField] GameObject reviveObject;
+
     int infoInt = 0;
 
     bool delayStartHasRun = false;
@@ -154,6 +158,7 @@ public class GridController : MonoBehaviour
 
     private void Update()
     {
+
         if (numberOfEnemys == 0 && delayStartHasRun)
         {
             gameManager.howManyPointsForEnemys += 5;
@@ -2328,7 +2333,7 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-
+                Debug.Log("MOVE Horse");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
                 pieceToMoveTo.currentEnemyType = EnemyType.Horse;
@@ -3266,7 +3271,7 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-
+                Debug.Log("MOVE TOWER");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
                 pieceToMoveTo.currentEnemyType = EnemyType.Tower;
@@ -4205,7 +4210,7 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-
+                Debug.Log("MOVE Bishop");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
                 pieceToMoveTo.currentEnemyType = EnemyType.Bishop;
@@ -5802,7 +5807,7 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-
+                Debug.Log("MOVE QUEEN");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
                 pieceToMoveTo.currentEnemyType = EnemyType.Queen;
@@ -6266,7 +6271,7 @@ public class GridController : MonoBehaviour
 
             if (xPosToGo == moveToLocationAfterEnemyListX[towerWithTheLeastTries] && yPosToGO == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
             {
-
+                Debug.Log("MOVE Pawn");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
                 pieceToMoveTo.enemyPieceHere = true;
@@ -6363,6 +6368,21 @@ public class GridController : MonoBehaviour
 
         Debug.Log(numberOfEnemys + " Enemys");
         numberOfTimesLookingForPlayerLeft = 1;
+    }
+
+    #endregion
+
+    #region Revive
+
+    public void AktivateReviveCanvas(PlayerType whatUnit, GridPiece whoCalled)
+    {
+
+        Time.timeScale = 0;
+
+        reviveObject.SetActive(true);
+
+        Debug.Log("Dead Canvas Aktivate");
+
     }
 
     #endregion

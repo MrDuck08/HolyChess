@@ -2812,12 +2812,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1708561238}
   m_Layer: 5
-  m_Name: UnitDiedCollection
+  m_Name: ReviveCollection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1708561238
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3395,6 +3395,10 @@ PrefabInstance:
       propertyPath: minRandomRange
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8632607181444065006, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
+      propertyPath: reviveObject
+      value: 
+      objectReference: {fileID: 1708561237}
     - target: {fileID: 8632607181444065006, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
       propertyPath: buffPos.Array.size
       value: 2
