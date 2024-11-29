@@ -108,33 +108,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d877e8968baad34dbd46be8a0330cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pieceVisuals: {fileID: 7761163838643187131, guid: 8ac3d2baf676fda4eaf98c0a16e2f370, type: 3}
   xPos: 0
   yPos: 0
-  playerPawnHere: 0
-  playerHorseHere: 0
-  playerTowerHere: 0
-  playerBishopHere: 0
-  playerQueenHere: 0
+  currentPlayerType: 0
   playerPieceHere: 0
-  enemyHorsePieceHere: 0
-  enemyTowerPieceHere: 0
-  enemyBishopPieceHere: 0
-  enemyQueenPieceHere: 0
-  enemyPawnPieceHere: 0
+  refreshingTurn: 0
+  stunningEnemy: 0
+  currentEnemyType: 0
   enemyPieceHere: 0
+  currentPlayerMovmentType: 0
   anticipateMovment: 0
+  currentPlayerAttackType: 0
   anticipatePlayerAttack: 0
-  anticipatingPlayerPawn: 0
-  anticipatingPlayerHorse: 0
-  anticipatingPlayerTower: 0
-  anticipatingPlayerBishop: 0
-  anticipatingPlayerQueen: 0
   movedOnce: 0
-  spawningPawnNow: 0
-  spawningHorseNow: 0
-  spawningTowerNow: 0
-  spawningBishopNow: 0
-  spawningQueenNow: 0
+  currentSpawnType: 0
   gameHasStarted: 0
   placingDownAUnitNow: 0
   playerTurn: 1

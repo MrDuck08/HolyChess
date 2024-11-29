@@ -21,12 +21,12 @@ public class PieceVisual : MonoBehaviour
 
     }
 
-    public void WhoAmI(PlayerType whatType, Transform pos, bool playerPiece)
+    public void SpawnInfo(PlayerType whatType, Vector2 pos, bool playerPiece)
     {
 
         currenType = whatType;
 
-        transform.position = pos.position;
+        transform.position = pos;
 
         Transform VisualsCollection = transform.Find("VisuallsCollection");
 
@@ -47,6 +47,9 @@ public class PieceVisual : MonoBehaviour
                         {
                             unitVisuals.a = 255;
                         }
+
+                        child.gameObject.SetActive(true);
+
                         child.GetComponent<SpriteRenderer>().color = unitVisuals;
 
                     }
@@ -56,6 +59,81 @@ public class PieceVisual : MonoBehaviour
                 break;
 
             case PlayerType.Tower:
+
+                foreach (Transform child in VisualsCollection)
+                {
+                    if (child.tag == "PlayerTower")
+                    {
+                        if (playerPiece)
+                        {
+                            unitVisuals.a = 144;
+                        }
+                        else
+                        {
+                            unitVisuals.a = 255;
+                        }
+
+                        child.gameObject.SetActive(true);
+
+                        child.GetComponent<SpriteRenderer>().color = unitVisuals;
+
+                    }
+
+                }
+
+            break;
+
+            case PlayerType.Bishop:
+
+                foreach (Transform child in VisualsCollection)
+                {
+                    if (child.tag == "PlayerBishop")
+                    {
+                        if (playerPiece)
+                        {
+                            unitVisuals.a = 144;
+                        }
+                        else
+                        {
+                            unitVisuals.a = 255;
+                        }
+
+                        child.gameObject.SetActive(true);
+
+                        child.GetComponent<SpriteRenderer>().color = unitVisuals;
+
+                    }
+
+                }
+
+            break;
+
+            case PlayerType.Queen:
+
+                foreach (Transform child in VisualsCollection)
+                {
+                    if (child.tag == "PlayerQueen")
+                    {
+                        if (playerPiece)
+                        {
+                            unitVisuals.a = 144;
+                        }
+                        else
+                        {
+                            unitVisuals.a = 255;
+                        }
+
+                        child.gameObject.SetActive(true);
+
+                        child.GetComponent<SpriteRenderer>().color = unitVisuals;
+
+                    }
+
+                }
+
+            break;
+
+            case PlayerType.Horse:
 
                 foreach (Transform child in VisualsCollection)
                 {
@@ -69,13 +147,16 @@ public class PieceVisual : MonoBehaviour
                         {
                             unitVisuals.a = 255;
                         }
+
+                        child.gameObject.SetActive(true);
+
                         child.GetComponent<SpriteRenderer>().color = unitVisuals;
 
                     }
 
                 }
 
-                break;
+            break;
 
         }
 

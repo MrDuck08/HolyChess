@@ -68,6 +68,11 @@ public enum SpawnType
 
 public class GridPiece : MonoBehaviour
 {
+
+    [Header("Piece")]
+
+    [SerializeField] GameObject pieceVisuals;
+ 
     [Header("Position")]
 
     public int xPos;
@@ -242,140 +247,7 @@ public class GridPiece : MonoBehaviour
         if (gameHasStarted)
         {
 
-            #region Pawn
 
-            if (currentPlayerType == PlayerType.Pawn)
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "Pawn")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-
-                }
-            }
-            else
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "Pawn")
-                    {
-                        child.gameObject.SetActive(false);
-                    }
-
-                }
-            }
-
-            #endregion
-
-            #region Tower
-
-            if (currentPlayerType == PlayerType.Tower)
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerTower")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-
-                }
-            }
-            else
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerTower")
-                    {
-                        child.gameObject.SetActive(false);
-                    }
-
-                }
-            }
-
-            #endregion
-
-            #region Horse
-
-            if (currentPlayerType == PlayerType.Horse)
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerHorse")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-
-                }
-            }
-            else
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerHorse")
-                    {
-                        child.gameObject.SetActive(false);
-                    }
-
-                }
-            }
-
-            #endregion
-
-            #region Bishop
-
-            if (currentPlayerType == PlayerType.Bishop)
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerBishop")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-
-                }
-            }
-            else
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerBishop")
-                    {
-                        child.gameObject.SetActive(false);
-                    }
-
-                }
-            }
-
-            #endregion
-
-            #region Queen
-
-            if (currentPlayerType == PlayerType.Queen)
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerQueen")
-                    {
-                        child.gameObject.SetActive(true);
-                    }
-
-                }
-            }
-            else
-            {
-                foreach (Transform child in gameObject.transform)
-                {
-                    if (child.tag == "PlayerQueen")
-                    {
-                        child.gameObject.SetActive(false);
-                    }
-
-                }
-            }
-
-            #endregion
         }
 
         #endregion
@@ -656,7 +528,21 @@ public class GridPiece : MonoBehaviour
                             currentPlayerType = PlayerType.Pawn;
                             controller.howManyPlayerPieces++;
 
+                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+
+                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                            foreach (Transform child in gameObject.transform)
+                            {
+                                if (child.tag == "Pawn")
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
+
+                            }
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
@@ -674,6 +560,24 @@ public class GridPiece : MonoBehaviour
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
+
+                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+
+                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                            foreach (Transform child in gameObject.transform)
+                            {
+                                if (child.tag == "PlayerHorse")
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
+
+                            }
+
+
                             foreach (GridPiece allPiece in gridPieces)
                             {
                                 allPiece.currentSpawnType = SpawnType.none;
@@ -689,6 +593,24 @@ public class GridPiece : MonoBehaviour
                             controller.howManyPlayerPieces++;
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+
+                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                            foreach (Transform child in gameObject.transform)
+                            {
+                                if (child.tag == "PlayerTower")
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
+
+                            }
+
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
@@ -706,6 +628,24 @@ public class GridPiece : MonoBehaviour
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
+
+                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+
+                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                            foreach (Transform child in gameObject.transform)
+                            {
+                                if (child.tag == "PlayerBishop")
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
+
+                            }
+
+
                             foreach (GridPiece allPiece in gridPieces)
                             {
                                 allPiece.currentSpawnType = SpawnType.none;
@@ -721,6 +661,24 @@ public class GridPiece : MonoBehaviour
                             controller.howManyPlayerPieces++;
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+
+                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                            foreach (Transform child in gameObject.transform)
+                            {
+                                if (child.tag == "PlayerQueen")
+                                {
+                                    child.gameObject.SetActive(false);
+                                }
+
+                            }
+
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
