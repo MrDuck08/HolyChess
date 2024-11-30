@@ -72,6 +72,7 @@ public class GridPiece : MonoBehaviour
     [Header("Piece")]
 
     [SerializeField] GameObject pieceVisuals;
+    GameObject currentPieceVisuals;
  
     [Header("Position")]
 
@@ -203,11 +204,19 @@ public class GridPiece : MonoBehaviour
 
                 currentEnemyType = EnemyType.Pawn;
 
+                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentEnemyType, new Vector2(xPos, yPos), false);
+
                 break;
 
             case 1:
 
                 currentEnemyType = EnemyType.Horse;
+
+                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentEnemyType, new Vector2(xPos, yPos), false);
 
                 break;
 
@@ -215,17 +224,29 @@ public class GridPiece : MonoBehaviour
 
                 currentEnemyType = EnemyType.Tower;
 
+                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentEnemyType, new Vector2(xPos, yPos), false);
+
                 break;
 
             case 3:
 
                 currentEnemyType = EnemyType.Bishop;
 
+                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentEnemyType, new Vector2(xPos, yPos), false);
+
                 break;
 
             case 4:
 
                 currentEnemyType = EnemyType.Queen;
+
+                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentEnemyType, new Vector2(xPos, yPos), false);
 
                 break;
 
@@ -239,159 +260,6 @@ public class GridPiece : MonoBehaviour
 
     private void Update()
     {
-
-        #region Pieces Visuals
-
-        #region Player Pieces
-
-        if (gameHasStarted)
-        {
-
-
-        }
-
-        #endregion
-
-        #region Enemy Pieces
-
-        #region Horse
-
-        if (currentEnemyType == EnemyType.Horse)
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyHorse")
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-            }
-        }
-        else
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyHorse")
-                {
-                    child.gameObject.SetActive(false);
-                }
-
-            }
-        }
-
-        #endregion
-
-        #region Tower
-
-        if (currentEnemyType == EnemyType.Tower)
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyTower")
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-            }
-        }
-        else
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyTower")
-                {
-                    child.gameObject.SetActive(false);
-                }
-
-            }
-        }
-
-        #endregion
-
-        #region Bishop
-
-        if (currentEnemyType == EnemyType.Bishop)
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyBishop")
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-            }
-        }
-        else
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyBishop")
-                {
-                    child.gameObject.SetActive(false);
-                }
-
-            }
-        }
-
-        #endregion
-
-        #region Queen
-
-        if (currentEnemyType == EnemyType.Queen)
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyQueen")
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-            }
-        }
-        else
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyQueen")
-                {
-                    child.gameObject.SetActive(false);
-                }
-
-            }
-        }
-
-        #endregion
-
-        #region Pawn
-
-        if (currentEnemyType == EnemyType.Pawn)
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyPawn")
-                {
-                    child.gameObject.SetActive(true);
-                }
-
-            }
-        }
-        else
-        {
-            foreach (Transform child in gameObject.transform)
-            {
-                if (child.tag == "EnemyPawn")
-                {
-                    child.gameObject.SetActive(false);
-                }
-
-            }
-        }
-
-        #endregion
-
-        #endregion
-
-        #endregion
 
         #region Check If Dead
 
@@ -528,9 +396,9 @@ public class GridPiece : MonoBehaviour
                             currentPlayerType = PlayerType.Pawn;
                             controller.howManyPlayerPieces++;
 
-                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+                            currentPieceVisuals = Instantiate(pieceVisuals);
 
-                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -561,9 +429,9 @@ public class GridPiece : MonoBehaviour
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
 
-                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+                            currentPieceVisuals = Instantiate(pieceVisuals);
 
-                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -595,9 +463,9 @@ public class GridPiece : MonoBehaviour
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
 
-                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+                            currentPieceVisuals = Instantiate(pieceVisuals);
 
-                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -629,9 +497,9 @@ public class GridPiece : MonoBehaviour
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
 
-                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+                            currentPieceVisuals = Instantiate(pieceVisuals);
 
-                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -663,9 +531,9 @@ public class GridPiece : MonoBehaviour
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
 
-                            GameObject spawnedPiece = Instantiate(pieceVisuals);
+                            currentPieceVisuals = Instantiate(pieceVisuals);
 
-                            spawnedPiece.GetComponent<PieceVisual>().SpawnInfo(currentPlayerType, new Vector2(xPos, yPos), true);
+                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 

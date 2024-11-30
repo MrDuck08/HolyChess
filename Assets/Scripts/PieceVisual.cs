@@ -5,23 +5,15 @@ using UnityEngine;
 public class PieceVisual : MonoBehaviour
 {
 
-    PlayerType currenType;
+    int currenType;
 
      Color32 unitVisuals;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    float speed = 2;
 
-    }
+    #region Spawn
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void SpawnInfo(PlayerType whatType, Vector2 pos, bool playerPiece)
+    public void SpawnInfo(int whatType, Vector2 pos, bool playerPiece)
     {
 
         currenType = whatType;
@@ -30,10 +22,10 @@ public class PieceVisual : MonoBehaviour
 
         Transform VisualsCollection = transform.Find("VisuallsCollection");
 
-        switch (currenType)
+        switch ((int)currenType)
         {
 
-            case PlayerType.Pawn:
+            case (int)PlayerType.Pawn:
 
                 foreach (Transform child in VisualsCollection)
                 {
@@ -58,7 +50,7 @@ public class PieceVisual : MonoBehaviour
 
                 break;
 
-            case PlayerType.Tower:
+            case (int)PlayerType.Tower:
 
                 foreach (Transform child in VisualsCollection)
                 {
@@ -83,7 +75,7 @@ public class PieceVisual : MonoBehaviour
 
             break;
 
-            case PlayerType.Bishop:
+            case (int)PlayerType.Bishop:
 
                 foreach (Transform child in VisualsCollection)
                 {
@@ -108,7 +100,7 @@ public class PieceVisual : MonoBehaviour
 
             break;
 
-            case PlayerType.Queen:
+            case (int)PlayerType.Queen:
 
                 foreach (Transform child in VisualsCollection)
                 {
@@ -133,7 +125,7 @@ public class PieceVisual : MonoBehaviour
 
             break;
 
-            case PlayerType.Horse:
+            case (int)PlayerType.Horse:
 
                 foreach (Transform child in VisualsCollection)
                 {
@@ -161,4 +153,17 @@ public class PieceVisual : MonoBehaviour
         }
 
     }
+
+    #endregion
+
+    #region Movment
+
+    public void MovePiece(Vector2 posToMoveTo)
+    {
+
+
+
+    }
+
+    #endregion
 }
