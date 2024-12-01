@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class PieceVisual : MonoBehaviour
 {
@@ -10,6 +12,33 @@ public class PieceVisual : MonoBehaviour
      Color32 unitVisuals;
 
     float speed = 2;
+
+    bool startMoving = false;
+
+    GameObject objectToMoveTo;
+
+    PlayerType playerType;
+
+    private void Update()
+    {
+        if (startMoving)
+        {
+
+            transform.position = Vector2.MoveTowards(transform.position, objectToMoveTo.transform.position, speed * Time.deltaTime);
+
+            if(transform.position == objectToMoveTo.transform.position)
+            {
+
+                objectToMoveTo.GetComponent<GridPiece>().playerPieceHere = true;
+                objectToMoveTo.GetComponent<GridPiece>().currentPlayerType = playerType;
+
+                startMoving = false;
+
+            }
+
+        }
+
+    }
 
     #region Spawn
 
@@ -158,10 +187,14 @@ public class PieceVisual : MonoBehaviour
 
     #region Movment
 
-    public void MovePiece(Vector2 posToMoveTo)
+    public void MovePiece(GameObject objectToGoTo, PlayerType type)
     {
 
+        objectToMoveTo = objectToGoTo;
 
+        playerType = type;
+
+        startMoving = true;
 
     }
 

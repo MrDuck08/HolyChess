@@ -72,7 +72,7 @@ public class GridPiece : MonoBehaviour
     [Header("Piece")]
 
     [SerializeField] GameObject pieceVisuals;
-    GameObject currentPieceVisuals;
+    public GameObject currentPieceVisuals;
  
     [Header("Position")]
 
@@ -567,32 +567,33 @@ public class GridPiece : MonoBehaviour
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Pawn)
                         {
                             currentPlayerType = PlayerType.Pawn;
-                            controller.movePiece();
+                            controller.movePiece(currentPlayerType, currentPieceVisuals);
                         }
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Horse)
                         {
                             currentPlayerType = PlayerType.Horse;
-                            controller.movePiece();
+                            controller.movePiece(currentPlayerType, currentPieceVisuals);
                         }
 
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Tower)
                         {
                             currentPlayerType = PlayerType.Tower;
-                            controller.movePiece();
+
+                            controller.movePiece(currentPlayerType, gameObject);
                         }
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Bishop)
                         {
                             currentPlayerType = PlayerType.Bishop;
-                            controller.movePiece();
+                            controller.movePiece(currentPlayerType, currentPieceVisuals);
                         }
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Queen)
                         {
                             currentPlayerType = PlayerType.Queen;
-                            controller.movePiece();
+                            controller.movePiece(currentPlayerType, currentPieceVisuals);
                         }
 
                         #endregion

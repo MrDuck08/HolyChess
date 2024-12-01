@@ -1752,8 +1752,10 @@ public class GridController : MonoBehaviour
 
     #region General Stuff
 
-    public void movePiece()
+    public void movePiece(PlayerType whoCalled, GameObject Visuals)
     {
+        Debug.Log(moveFromTileObject.GetComponent<GridPiece>().currentPlayerType);
+        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(Visuals, moveFromTileObject.GetComponent<GridPiece>().currentPlayerType);
 
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
