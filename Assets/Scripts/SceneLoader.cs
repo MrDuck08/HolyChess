@@ -6,11 +6,14 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] GameObject[] whatShopButton;
 
     GridPiece[] gridPieces;
+    PieceVisual[] pieceVisuals;
     Inventory inventory;
     GameManagerSr gameManager;
     GridController gridController;
 
     int whatShopToActivate;
+
+    bool animationsAreDone;
 
     private void Start()
     {
@@ -73,7 +76,22 @@ public class SceneLoader : MonoBehaviour
     {
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+        pieceVisuals = FindObjectsOfType(typeof(PieceVisual)) as PieceVisual[];
         gridController = FindObjectOfType<GridController>();
+
+        animationsAreDone = true;
+
+        foreach(PieceVisual piece in pieceVisuals)
+        {
+
+            if (piece.animationIsPlaying)
+            {
+
+                return;
+
+            }
+
+        }
 
         gridController.firstRoundDone = true;
 

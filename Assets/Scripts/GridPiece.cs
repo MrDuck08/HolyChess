@@ -83,7 +83,6 @@ public class GridPiece : MonoBehaviour
     #region bools
 
     bool playerSpawnGrid = false;
-    bool enemySpawnGrid = false;
 
     bool mouseOver = false;
 
@@ -179,13 +178,6 @@ public class GridPiece : MonoBehaviour
             //Player Grid
 
             playerSpawnGrid = true;
-        }
-        if(spawnWho == 1)
-        {
-            //Enemy Grid
-
-            enemySpawnGrid = true;
-
         }
 
         gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
@@ -566,41 +558,36 @@ public class GridPiece : MonoBehaviour
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Pawn)
                         {
-                            currentPlayerType = PlayerType.Pawn;
-                            controller.movePiece(currentPlayerType, currentPieceVisuals);
+
+                            controller.movePiece(PlayerType.Pawn, gameObject);
                         }
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Horse)
                         {
-                            currentPlayerType = PlayerType.Horse;
-                            controller.movePiece(currentPlayerType, currentPieceVisuals);
+
+                            controller.movePiece(PlayerType.Horse, gameObject);
                         }
 
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Tower)
                         {
-                            currentPlayerType = PlayerType.Tower;
 
-                            controller.movePiece(currentPlayerType, gameObject);
+                            controller.movePiece(PlayerType.Tower, gameObject);
                         }
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Bishop)
                         {
-                            currentPlayerType = PlayerType.Bishop;
-                            controller.movePiece(currentPlayerType, currentPieceVisuals);
+
+                            controller.movePiece(PlayerType.Bishop, gameObject);
                         }
 
                         if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Queen)
                         {
-                            currentPlayerType = PlayerType.Queen;
-                            controller.movePiece(currentPlayerType, currentPieceVisuals);
+
+                            controller.movePiece(PlayerType.Queen, gameObject);
                         }
 
                         #endregion
-
-                        playerPieceHere = true;
-
-                        movedOnce = true;
 
                         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -634,41 +621,40 @@ public class GridPiece : MonoBehaviour
 
                         if (currentPlayerAttackType == AnticipatePlayerAttackType.Pawn)
                         {
-                            currentPlayerType = PlayerType.Pawn;
-                            controller.AttackPiece();
+
+                            controller.AttackPiece(PlayerType.Pawn, gameObject);
                         }
 
                         if (currentPlayerAttackType == AnticipatePlayerAttackType.Horse)
                         {
-                            currentPlayerType = PlayerType.Horse;
-                            controller.AttackPiece();
+
+                            controller.AttackPiece(PlayerType.Horse, gameObject);
                         }
 
                         if (currentPlayerAttackType == AnticipatePlayerAttackType.Tower)
                         {
-                            currentPlayerType = PlayerType.Tower;
-                            controller.AttackPiece();
+                            Debug.Log("Attack Tower");
+                            controller.AttackPiece(PlayerType.Tower, gameObject);
                         }
 
                         if (currentPlayerAttackType == AnticipatePlayerAttackType.Bishop)
                         {
-                            currentPlayerType = PlayerType.Bishop;
-                            controller.AttackPiece();
+
+                            controller.AttackPiece(PlayerType.Bishop, gameObject);
                         }
 
                         if (currentPlayerAttackType == AnticipatePlayerAttackType.Queen)
                         {
-                            currentPlayerType = PlayerType.Queen;   
-                            controller.AttackPiece( );
+
+                            controller.AttackPiece(PlayerType.Queen, gameObject);
                         }
 
                         #endregion
 
-                        playerPieceHere = true;
-
-                        movedOnce = true;
 
                         enemyPieceHere = false;
+
+
 
                         foreach (GridPiece allPiece in gridPieces)
                         {
@@ -882,6 +868,7 @@ public class GridPiece : MonoBehaviour
             
             //controller.howManyPlayerPieces--;
             //playerPieceHere = false;
+
 
             controller.AktivateReviveCanvas(currentPlayerType, gameObject.GetComponent<GridPiece>());
 
