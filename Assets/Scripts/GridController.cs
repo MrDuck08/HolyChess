@@ -1752,23 +1752,29 @@ public class GridController : MonoBehaviour
 
     #region General Stuff
 
-    public void movePiece(PlayerType whoCalled, GameObject Visuals)
+    public void movePiece(PlayerType whoCalled, GameObject objectToMoveTo)
     {
-        Debug.Log(moveFromTileObject.GetComponent<GridPiece>().currentPlayerType);
-        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(Visuals, moveFromTileObject.GetComponent<GridPiece>().currentPlayerType);
+
+        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, whoCalled, true, EnemyType.none);
 
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+        moveFromTileObject.GetComponent<GridPiece>().movedOnce = true;
         moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = PlayerType.none;
+        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals = null;
 
     }
 
-    public void AttackPiece()
+    public void AttackPiece(PlayerType whoCalled, GameObject objectToMoveTo)
     {
+
+        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, whoCalled, true, EnemyType.none);
 
 
         moveFromTileObject.GetComponent<GridPiece>().playerPieceHere = false;
+        moveFromTileObject.GetComponent<GridPiece>().movedOnce = true;
         moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = PlayerType.none;
+        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals = null;
         numberOfEnemys--;
 
     }
@@ -2338,8 +2344,9 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE Horse");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.currentEnemyType = EnemyType.Horse;
-                pieceToMoveTo.enemyPieceHere = true;
+
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, PlayerType.none, false, EnemyType.Horse);
+
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
@@ -3276,8 +3283,8 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE TOWER");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.currentEnemyType = EnemyType.Tower;
-                pieceToMoveTo.enemyPieceHere = true;
+
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, PlayerType.none, false, EnemyType.Tower);
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
@@ -4215,8 +4222,8 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE Bishop");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.currentEnemyType = EnemyType.Bishop;
-                pieceToMoveTo.enemyPieceHere = true;
+
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, PlayerType.none, false, EnemyType.Bishop);
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
@@ -5812,8 +5819,8 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE QUEEN");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.currentEnemyType = EnemyType.Queen;
-                pieceToMoveTo.enemyPieceHere = true;
+
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, PlayerType.none, false, EnemyType.Queen);
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
@@ -6276,15 +6283,17 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE Pawn");
                 pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                 pieceToMove.GetComponent<GridPiece>().enemyPieceHere = false;
-                pieceToMoveTo.enemyPieceHere = true;
+
 
                 if (boardCreator.maxYDown * -1 == moveToLocationAfterEnemyListY[towerWithTheLeastTries])
                 {
-                    pieceToMoveTo.currentEnemyType = EnemyType.Queen;
+
+                    pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, PlayerType.none, false, EnemyType.Queen);
                 }
                 else
                 {
-                    pieceToMoveTo.currentEnemyType = EnemyType.Pawn;
+
+                    pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, PlayerType.none, false, EnemyType.Pawn);
                 }
 
                 currentXWhereTowerIsGoingToGo = 1337;

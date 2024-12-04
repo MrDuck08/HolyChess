@@ -9,15 +9,18 @@ public class PieceVisual : MonoBehaviour
 
     int currenType;
 
-     Color32 unitVisuals;
-
-    float speed = 2;
+    float speed = 3;
 
     bool startMoving = false;
+    bool isPlayerMoving;
+    public bool animationIsPlaying = false;
 
     GameObject objectToMoveTo;
 
+    Color32 unitVisuals;
+
     PlayerType playerType;
+    EnemyType enemyType;
 
     private void Update()
     {
@@ -29,10 +32,28 @@ public class PieceVisual : MonoBehaviour
             if(transform.position == objectToMoveTo.transform.position)
             {
 
-                objectToMoveTo.GetComponent<GridPiece>().playerPieceHere = true;
-                objectToMoveTo.GetComponent<GridPiece>().currentPlayerType = playerType;
 
+                if (isPlayerMoving)
+                {
+
+                    objectToMoveTo.GetComponent<GridPiece>().playerPieceHere = true;
+                    objectToMoveTo.GetComponent<GridPiece>().currentPlayerType = playerType;
+                    objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals = gameObject;
+
+                    objectToMoveTo.GetComponent<GridPiece>().movedOnce = true;
+
+                }
+                else
+                {
+
+                    objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
+                    objectToMoveTo.GetComponent<GridPiece>().currentEnemyType = enemyType;
+                    objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals = gameObject;
+
+                }
+             
                 startMoving = false;
+                animationIsPlaying = false;
 
             }
 
@@ -187,14 +208,17 @@ public class PieceVisual : MonoBehaviour
 
     #region Movment
 
-    public void MovePiece(GameObject objectToGoTo, PlayerType type)
+    public void MovePiece(GameObject objectToGoTo, PlayerType typePlayer, bool playerMoving, EnemyType typeEnemy)
     {
 
         objectToMoveTo = objectToGoTo;
 
-        playerType = type;
+        playerType = typePlayer;
+        enemyType = typeEnemy;
 
         startMoving = true;
+        animationIsPlaying = true;
+        isPlayerMoving = playerMoving; 
 
     }
 
