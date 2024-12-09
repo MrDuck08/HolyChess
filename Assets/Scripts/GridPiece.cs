@@ -871,7 +871,7 @@ public class GridPiece : MonoBehaviour
 
 
             controller.AktivateReviveCanvas(currentPlayerType, gameObject.GetComponent<GridPiece>());
-
+            Debug.Log("Player Piece Dies");
         }
     }
 

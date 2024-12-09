@@ -12,15 +12,20 @@ public class PieceVisual : MonoBehaviour
     float speed = 3;
 
     bool startMoving = false;
-    bool isPlayerMoving;
+    bool startMovingBack = false;
+    bool isItPlayer;
+    bool isPlayerAttacking;
     public bool animationIsPlaying = false;
 
     GameObject objectToMoveTo;
+    GameObject objectToMoveFrom;
 
     Color32 unitVisuals;
 
     PlayerType playerType;
     EnemyType enemyType;
+
+    GridController gridController;
 
     private void Update()
     {
@@ -33,8 +38,21 @@ public class PieceVisual : MonoBehaviour
             {
 
 
-                if (isPlayerMoving)
+                if (isItPlayer)
                 {
+
+                    if (isPlayerAttacking)
+                    {
+
+                        objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = false;
+                        objectToMoveTo.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
+                        Destroy(objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals);
+
+                        gridController = FindObjectOfType<GridController>();
+
+                        gridController.numberOfEnemys--;
+
+                    }
 
                     objectToMoveTo.GetComponent<GridPiece>().playerPieceHere = true;
                     objectToMoveTo.GetComponent<GridPiece>().currentPlayerType = playerType;
@@ -49,6 +67,7 @@ public class PieceVisual : MonoBehaviour
                     objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
                     objectToMoveTo.GetComponent<GridPiece>().currentEnemyType = enemyType;
                     objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals = gameObject;
+                    objectToMoveTo.GetComponent<GridPiece>().CheckWhoDied();
 
                 }
              
@@ -208,17 +227,30 @@ public class PieceVisual : MonoBehaviour
 
     #region Movment
 
-    public void MovePiece(GameObject objectToGoTo, PlayerType typePlayer, bool playerMoving, EnemyType typeEnemy)
+    public void MovePiece(GameObject objectToGoTo, bool playerMoving, bool isPlayerAttack, GameObject originalGameobject)
     {
 
         objectToMoveTo = objectToGoTo;
+        objectToMoveFrom = originalGameobject;
 
-        playerType = typePlayer;
-        enemyType = typeEnemy;
+        playerType = objectToMoveFrom.GetComponent<GridPiece>().currentPlayerType;
+        enemyType = objectToMoveFrom.GetComponent<GridPiece>().currentEnemyType;
+
+        Debug.Log(playerType);
 
         startMoving = true;
         animationIsPlaying = true;
-        isPlayerMoving = playerMoving; 
+        isItPlayer = playerMoving;
+        isPlayerAttacking = isPlayerAttack;
+
+    }
+
+    public void GoBack()
+    {
+
+        objectToMoveTo = objectToMoveFrom;
+
+        startMoving = true;
 
     }
 
