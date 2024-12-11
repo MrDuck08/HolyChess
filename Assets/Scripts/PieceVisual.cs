@@ -19,6 +19,7 @@ public class PieceVisual : MonoBehaviour
 
     GameObject objectToMoveTo;
     GameObject objectToMoveFrom;
+    GameObject objectToMoveToBack;
 
     Color32 unitVisuals;
 
@@ -45,7 +46,6 @@ public class PieceVisual : MonoBehaviour
                     {
 
                         objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = false;
-                        objectToMoveTo.GetComponent<GridPiece>().currentEnemyType = EnemyType.none;
                         Destroy(objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals);
 
                         gridController = FindObjectOfType<GridController>();
@@ -60,19 +60,55 @@ public class PieceVisual : MonoBehaviour
 
                     objectToMoveTo.GetComponent<GridPiece>().movedOnce = true;
 
+
+                    objectToMoveFrom.GetComponent<GridPiece>().playerPieceHere = false;
+                    objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = null;
+
                 }
                 else
                 {
 
-                    objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
-                    objectToMoveTo.GetComponent<GridPiece>().currentEnemyType = enemyType;
-                    objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals = gameObject;
-                    objectToMoveTo.GetComponent<GridPiece>().CheckWhoDied();
+                    gridController = FindObjectOfType<GridController>();
+
+                    objectToMoveTo.GetComponent<GridPiece>().CheckWhoDied(objectToMoveFrom.GetComponent<GridPiece>());
+
+
+                    if(startMovingBack == true) // Om den rör sig tillbacka ska den här koden köras
+                    {
+
+                        objectToMoveFrom.GetComponent<GridPiece>().enemyPieceHere = true;
+                        objectToMoveFrom.GetComponent<GridPiece>().currentEnemyType = enemyType;
+                        objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = gameObject;
+
+                        objectToMoveToBack.GetComponent<GridPiece>().enemyPieceHere = false;
+
+                        startMoving = false;
+                        startMovingBack = false;
+                        animationIsPlaying = false;
+                        startMoving = false;
+
+                        return;
+
+                    }
+
+                    if (gridController.reviveHappened && startMovingBack == false || objectToMoveTo.GetComponent<GridPiece>().playerPieceHere == false) // Om ingen spelare är vart man ska gå körs det här som vanligt men om det finns en spelare där kollas om spelaren har använt sin revive
+                    {
+
+                        objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
+                        objectToMoveTo.GetComponent<GridPiece>().currentEnemyType = enemyType;
+                        Destroy(objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals);
+                        objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals = gameObject;
+
+                        objectToMoveFrom.GetComponent<GridPiece>().enemyPieceHere = false;
+                        objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = null;
+
+                    }
 
                 }
-             
+
                 startMoving = false;
                 animationIsPlaying = false;
+                startMoving = false;
 
             }
 
@@ -236,8 +272,6 @@ public class PieceVisual : MonoBehaviour
         playerType = objectToMoveFrom.GetComponent<GridPiece>().currentPlayerType;
         enemyType = objectToMoveFrom.GetComponent<GridPiece>().currentEnemyType;
 
-        Debug.Log(playerType);
-
         startMoving = true;
         animationIsPlaying = true;
         isItPlayer = playerMoving;
@@ -247,10 +281,12 @@ public class PieceVisual : MonoBehaviour
 
     public void GoBack()
     {
-
+        objectToMoveToBack = objectToMoveTo;
         objectToMoveTo = objectToMoveFrom;
 
         startMoving = true;
+        startMovingBack = true;
+        animationIsPlaying = true;
 
     }
 

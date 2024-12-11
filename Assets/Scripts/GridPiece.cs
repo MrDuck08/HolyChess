@@ -861,17 +861,26 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
-    public void CheckWhoDied()
+    public void CheckWhoDied(GridPiece whoCalled)
     {
-        if (playerPieceHere && enemyPieceHere)
+        if (playerPieceHere)
         {
-            
-            //controller.howManyPlayerPieces--;
-            //playerPieceHere = false;
+
+            if (controller.reviveHappened)
+            {
+
+                controller.howManyPlayerPieces--;
+                playerPieceHere = false;
+
+            }
+            else
+            {
+
+                controller.AktivateReviveCanvas(whoCalled);
+
+            }
 
 
-            controller.AktivateReviveCanvas(currentPlayerType, gameObject.GetComponent<GridPiece>());
-            Debug.Log("Player Piece Dies");
         }
     }
 
