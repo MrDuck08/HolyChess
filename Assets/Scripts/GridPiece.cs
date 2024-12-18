@@ -258,12 +258,30 @@ public class GridPiece : MonoBehaviour
         if (!playerPieceHere)
         {
             currentPlayerType = PlayerType.none;
+            //Destroy(currentPieceVisuals);
+        }
+        else if (currentPieceVisuals == null)
+        {
+
+            //currentPieceVisuals = Instantiate(pieceVisuals);
+
+            //currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), false);
+
         }
 
         if (!enemyPieceHere)
         {
 
             currentEnemyType = EnemyType.none;
+            //Destroy(currentPieceVisuals);
+
+        }
+        else if (currentPieceVisuals == null && currentEnemyType != EnemyType.none)
+        {
+            Debug.Log("Spawn Enemy Visuals");
+            currentPieceVisuals = Instantiate(pieceVisuals);
+
+            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentEnemyType, new Vector2(xPos, yPos), false);
 
         }
 

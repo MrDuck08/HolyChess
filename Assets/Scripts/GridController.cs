@@ -234,9 +234,11 @@ public class GridController : MonoBehaviour
             {
                 if (allPieces.enemyPieceHere == false)
                 {
+
                     // maxY Visar en mindre 
-                    if(boardCreator.maxYUp - 1 == currentY + 1)
+                    if (boardCreator.topPosY - 1 == currentY + 1)
                     {
+
                         allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
                     }
                     else
@@ -2309,6 +2311,14 @@ public class GridController : MonoBehaviour
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
+                            // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
+                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            {
+
+                                break;
+
+                            }
+
                         }
 
                     }
@@ -3246,6 +3256,14 @@ public class GridController : MonoBehaviour
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
+                            // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
+                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            {
+
+                                break;
+
+                            }
+
                         }
 
                     }
@@ -4180,6 +4198,13 @@ public class GridController : MonoBehaviour
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
+                            // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
+                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            {
+
+                                break;
+
+                            }
                         }
 
                     }
@@ -5775,6 +5800,14 @@ public class GridController : MonoBehaviour
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
+                            // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
+                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            {
+
+                                break;
+
+                            }
+
                         }
 
                     }
@@ -5938,6 +5971,8 @@ public class GridController : MonoBehaviour
                     int xPos = allPieces.xPos;
                     int yPos = allPieces.yPos;
 
+                    #region Right Player Search
+
                     if (xPos == posToLookAtX + 1 && yPos == posToLookAtY - numberOfRoundsContinuation)
                     {
 
@@ -6008,6 +6043,9 @@ public class GridController : MonoBehaviour
                         }
                     }
 
+                    #endregion
+
+                    #region Left Player Search
 
                     if (xPos == posToLookAtX - 1 && yPos == posToLookAtY - numberOfRoundsContinuation)
                     {
@@ -6080,13 +6118,17 @@ public class GridController : MonoBehaviour
                         }
                     }
 
+                    #endregion
+
+                    #region Down End Search
+
                     if (xPos == posToLookAtX  && yPos == posToLookAtY - numberOfRoundsContinuation)
                     {
 
                         if (allPieces.playerPieceHere == true)
                         {
-
-                            if (firstTimeSearching)
+                            // Spelare där
+                            if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
                             {
 
                                 foundSomething = true;
@@ -6106,8 +6148,8 @@ public class GridController : MonoBehaviour
                         if (allPieces.enemyPieceHere == true)
                         {
 
-
-                            if (firstTimeSearching)
+                            // Fiende Där
+                            if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
                             {
                                 foundSomething = true;
                                 breakLoop = true;
@@ -6138,6 +6180,7 @@ public class GridController : MonoBehaviour
                         }
                     }
 
+                    #endregion
 
                 }
 
@@ -6237,6 +6280,14 @@ public class GridController : MonoBehaviour
                             moveToLocationAfterEnemyListX.RemoveAt(i);
                             moveToLocationAfterEnemyListY.RemoveAt(i);
 
+                            // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
+                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            {
+
+                                break;
+
+                            }
+
                         }
 
                     }
@@ -6262,9 +6313,11 @@ public class GridController : MonoBehaviour
 
                 pieceToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
 
-                if (boardCreator.maxYDown * -1 == moveToLocationAfterEnemyListY[towerWithTheLeastTries]) // Kollar om det är längst ner (alltså om man ska förvandla sig själv till en drottning)
+                if (boardCreator.bottomPosY == moveToLocationAfterEnemyListY[towerWithTheLeastTries]) // Kollar om det är längst ner (alltså om man ska förvandla sig själv till en drottning)
                 {
-                    pieceToMoveTo.currentEnemyType = EnemyType.Queen;
+
+                    //pieceToMoveTo.currentEnemyType = EnemyType.Queen;
+                    pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.Queen;
 
                     pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove);
                 }
@@ -6382,6 +6435,8 @@ public class GridController : MonoBehaviour
         whoCalledForRevive.GetComponent<GridPiece>().playerPieceHere = false;
 
         howManyPlayerPieces--;
+
+        whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().DentRevive();
 
         reviveObject.SetActive(false);
 

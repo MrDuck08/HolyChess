@@ -11,9 +11,11 @@ public class BoardCreator : MonoBehaviour
     int gridX;
 
     int maxXRight;
-    public int maxYUp;
+    int maxYUp;
     int maxXLeft;
-    public int maxYDown;
+    int maxYDown;
+    public int topPosY;
+    public int bottomPosY;
 
     int whiteOrBlackToSPawn = 1;
 
@@ -64,7 +66,8 @@ public class BoardCreator : MonoBehaviour
 
         maxYUp = Random.Range(minRandomRange, maxRandomRange);
         maxYDown = Random.Range(-minRandomRange, -maxRandomRange);
-
+        bottomPosY = maxYDown;
+        topPosY = maxYUp;
 
         boardHeight = maxYUp + -1 * maxYDown - 1;
         //Debug.Log(boardHeight + " Height");

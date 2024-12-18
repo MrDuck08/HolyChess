@@ -39,7 +39,7 @@ public class PieceVisual : MonoBehaviour
             {
 
 
-                if (isItPlayer)
+                if (isItPlayer) // Spelare
                 {
 
                     if (isPlayerAttacking)
@@ -64,8 +64,10 @@ public class PieceVisual : MonoBehaviour
                     objectToMoveFrom.GetComponent<GridPiece>().playerPieceHere = false;
                     objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = null;
 
+                    SpawnInfo((int)playerType, transform.position, true);
+
                 }
-                else
+                else // Fiende Som Rör På Sig
                 {
 
                     gridController = FindObjectOfType<GridController>();
@@ -103,6 +105,8 @@ public class PieceVisual : MonoBehaviour
                         objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = null;
 
                     }
+
+                    SpawnInfo((int)enemyType, transform.position, false);
 
                 }
 
@@ -150,6 +154,12 @@ public class PieceVisual : MonoBehaviour
                         child.GetComponent<SpriteRenderer>().color = unitVisuals;
 
                     }
+                    else
+                    {
+
+                        child.gameObject.SetActive(false);
+
+                    }
 
                 }
 
@@ -173,6 +183,12 @@ public class PieceVisual : MonoBehaviour
                         child.gameObject.SetActive(true);
 
                         child.GetComponent<SpriteRenderer>().color = unitVisuals;
+
+                    }
+                    else
+                    {
+
+                        child.gameObject.SetActive(false);
 
                     }
 
@@ -200,6 +216,12 @@ public class PieceVisual : MonoBehaviour
                         child.GetComponent<SpriteRenderer>().color = unitVisuals;
 
                     }
+                    else
+                    {
+
+                        child.gameObject.SetActive(false);
+
+                    }
 
                 }
 
@@ -225,6 +247,12 @@ public class PieceVisual : MonoBehaviour
                         child.GetComponent<SpriteRenderer>().color = unitVisuals;
 
                     }
+                    else
+                    {
+
+                        child.gameObject.SetActive(false);
+
+                    }
 
                 }
 
@@ -248,6 +276,12 @@ public class PieceVisual : MonoBehaviour
                         child.gameObject.SetActive(true);
 
                         child.GetComponent<SpriteRenderer>().color = unitVisuals;
+
+                    }
+                    else
+                    {
+
+                        child.gameObject.SetActive(false);
 
                     }
 
@@ -291,4 +325,19 @@ public class PieceVisual : MonoBehaviour
     }
 
     #endregion
+
+    public void DentRevive()
+    {
+
+        objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
+        objectToMoveTo.GetComponent<GridPiece>().currentEnemyType = enemyType;
+        Destroy(objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals);
+        objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals = gameObject;
+
+        objectToMoveTo.GetComponent<GridPiece>().playerPieceHere = false;
+
+        objectToMoveFrom.GetComponent<GridPiece>().enemyPieceHere = false;
+        objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = null;
+
+    }
 }
