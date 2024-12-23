@@ -114,15 +114,79 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    #endregion
+
     #region Upgrades
 
+    #region Player
+
+    #region Pawn
+
+    int howManyExtraSteeps = 0;
+    int maxHowManyExtraSteeps = 0;
+
+
+    #endregion
+
+    #region Horse
+
+
+
+    #endregion
+
+    #region Tower
+
+
+
+    #endregion
+
+    #region Bishop
+
+
+
+    #endregion
+
+    #region Queen
+
 
 
     #endregion
 
     #endregion
 
-    #region Abilitys
+    #region Enemy
+
+    #region Pawn
+
+
+
+    #endregion
+
+    #region Horse
+
+
+
+    #endregion
+
+    #region Tower
+
+
+
+    #endregion
+
+    #region Bishop
+
+
+
+    #endregion
+
+    #region Queen
+
+
+
+    #endregion
+
+    #endregion
 
     #endregion
 
@@ -154,6 +218,12 @@ public class GridController : MonoBehaviour
         sceneLoader = FindObjectOfType<SceneLoader>();
         gameManager = FindObjectOfType<GameManagerSr>();
         Inventory = FindObjectOfType<Inventory>();
+
+        #region Upgrades
+
+        howManyExtraSteeps = maxHowManyExtraSteeps;
+
+        #endregion
 
 
         StartCoroutine(DelayStart());
@@ -225,30 +295,47 @@ public class GridController : MonoBehaviour
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
-        foreach (GridPiece allPieces in gridPieces)
+        while (true)
         {
-            int xPos = allPieces.xPos;
-            int yPos = allPieces.yPos;
 
-            if (xPos == currentX && yPos == currentY + 1)
+            foreach (GridPiece allPieces in gridPieces)
             {
-                if (allPieces.enemyPieceHere == false)
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                if (xPos == currentX && yPos == currentY + 1 + howManyExtraSteeps)
                 {
 
-                    // maxY Visar en mindre 
-                    if (boardCreator.topPosY - 1 == currentY + 1)
+                    if (allPieces.enemyPieceHere == false)
                     {
+                        Debug.Log("Ran");
 
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
+                        // maxY Visar en mindre 
+                        if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                        {
+
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
+                            Debug.Log("Ran Queen");
+                        }
+                        else
+                        {
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
+                            Debug.Log("Ran Pawn");
+                        }
+
+                        allPieces.anticipateMovment = true;
+
                     }
-                    else
-                    {
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
-                    }
-
-                    allPieces.anticipateMovment = true;
-
                 }
+            }
+
+            howManyExtraSteeps--;
+
+            if(howManyExtraSteeps < 0)
+            {
+                howManyExtraSteeps = maxHowManyExtraSteeps;
+                break;
+
             }
         }
     }
@@ -1759,7 +1846,7 @@ public class GridController : MonoBehaviour
 
     public void movePiece(PlayerType whoCalled, GameObject objectToMoveTo)
     {
-
+        moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = whoCalled; // I movePiece() Säts den falsk efter
         moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, false, moveFromTileObject);
 
     }
@@ -1767,6 +1854,7 @@ public class GridController : MonoBehaviour
     public void AttackPiece(PlayerType whoCalled, GameObject objectToMoveTo)
     {
 
+        moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = whoCalled;
         moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, true, moveFromTileObject);
 
     }

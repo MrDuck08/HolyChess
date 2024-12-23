@@ -57,7 +57,41 @@ public class GameManagerSr : MonoBehaviour
 
     #region Pawn
 
-    int howManyExtraSteeps = 0;
+    int howManyExtraSteepsPawn = 0;
+
+
+
+    #endregion
+
+    #region Horse
+
+
+
+    #endregion
+
+    #region Tower
+
+
+
+    #endregion
+
+    #region Bishop
+
+
+
+    #endregion
+
+    #region Queen
+
+
+
+    #endregion
+
+    #endregion
+
+    #region Enemy
+
+    #region Pawn
 
 
 
@@ -195,6 +229,33 @@ public class GameManagerSr : MonoBehaviour
                 nextSceneShopTrue = false;
             
         }
+    }
+
+    #endregion
+
+    #region Upgrade Buttons
+
+    public void BuyUpgrade(string whatUpgrade)
+    {
+
+        switch (whatUpgrade)
+        {
+
+            case "PawnExtraMovement":
+
+                if(money == 2)
+                {
+
+                    howManyExtraSteepsPawn++;
+
+                    money -= 2;
+
+                }
+
+                break;
+
+        }
+
     }
 
     #endregion
