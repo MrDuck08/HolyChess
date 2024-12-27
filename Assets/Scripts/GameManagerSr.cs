@@ -14,14 +14,21 @@ public class GameManagerSr : MonoBehaviour
 
     #endregion
 
+    #region Enemy Spawn
+
+    [Header("Enemy Spawn")]
+
+    public int howManyEnemiesBought = 0;
+    public List<int> whatTypeOfEnemyWasBought = new List<int>();
+
+    #endregion
+
     #region Shop
 
     [Header("Shop")]
 
     public bool nextSceneShopTrue = false;
     int whatShopNumber;
-    public int howManyEnemiesBought = 0;
-    public List<int> whatTypeOfEnemyWasBought = new List<int>();
 
     public Shops.ShopType forbidenShop = Shops.ShopType.none;
     public Shops.ShopType guaranteedShop = Shops.ShopType.none;
@@ -53,19 +60,28 @@ public class GameManagerSr : MonoBehaviour
 
     #region Upgrades
 
+    [Header("Upgrades")]
+
+    [Header("Player Upgrades")]
+
     #region Player
+
+    [Header("Pawn Upgrades")]
 
     #region Pawn
 
-    int howManyExtraSteepsPawn = 0;
+    public int howManyExtraSteepsPawn = 0;
 
-
+    public bool pawmMoveAllDirections = false;
+    public bool pawnMoveWhereAttack = false;
 
     #endregion
 
+    [Header("Horse Upgrades")]
+
     #region Horse
 
-
+    public bool canMoveWhereHeJumpsOver = false;
 
     #endregion
 
@@ -241,6 +257,8 @@ public class GameManagerSr : MonoBehaviour
         switch (whatUpgrade)
         {
 
+            #region Pawn
+
             case "PawnExtraMovement":
 
                 if(money == 2)
@@ -253,6 +271,51 @@ public class GameManagerSr : MonoBehaviour
                 }
 
                 break;
+
+            case "PawnMoveAllDirections":
+
+                if (money == 4)
+                {
+
+                    pawmMoveAllDirections = true;
+
+                    money -= 4;
+
+                }
+
+                break;
+
+            case "PawnMoveWhereAttack":
+
+                if (money == 3)
+                {
+
+                    pawnMoveWhereAttack = true;
+
+                    money -= 3;
+
+                }
+
+                break;
+
+            #endregion
+
+            #region Horse
+
+            case "horseArialStrike":
+
+                if (money == 6)
+                {
+
+                    canMoveWhereHeJumpsOver = true;
+
+                    money -= 6;
+
+                }
+
+                break;
+
+                #endregion
 
         }
 

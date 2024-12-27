@@ -278,7 +278,7 @@ public class GridPiece : MonoBehaviour
         }
         else if (currentPieceVisuals == null && currentEnemyType != EnemyType.none)
         {
-            Debug.Log("Spawn Enemy Visuals");
+
             currentPieceVisuals = Instantiate(pieceVisuals);
 
             currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentEnemyType, new Vector2(xPos, yPos), false);
@@ -319,7 +319,7 @@ public class GridPiece : MonoBehaviour
 
                 if (gameHasStarted && playerPieceHere)
                 {
-                    if (!movedOnce) // Kollar Om Man Har Rört Sig En Gång
+                    if (!movedOnce) // Kollar om man har rört sig en gång så man inte kan gå 2 gånger i rad
                     {
 
                         #region Stop Antiticating If Clicked On Other Player Piece

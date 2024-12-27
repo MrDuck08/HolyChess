@@ -125,12 +125,17 @@ public class GridController : MonoBehaviour
     int howManyExtraSteeps = 0;
     int maxHowManyExtraSteeps = 0;
 
+    bool pawnMoveAllDirections = false;
+    bool pawnMoveWhereAttack = false;
 
     #endregion
 
     #region Horse
 
+    bool horseCanMoveWhereHeJumpsOver = false;
 
+    int twoMovementInDirectionHorse = 0;
+    int oneMovementInDirectionHorse = 0;
 
     #endregion
 
@@ -219,11 +224,7 @@ public class GridController : MonoBehaviour
         gameManager = FindObjectOfType<GameManagerSr>();
         Inventory = FindObjectOfType<Inventory>();
 
-        #region Upgrades
-
-        howManyExtraSteeps = maxHowManyExtraSteeps;
-
-        #endregion
+        ReciveUpgrades(); 
 
 
         StartCoroutine(DelayStart());
@@ -308,25 +309,69 @@ public class GridController : MonoBehaviour
 
                     if (allPieces.enemyPieceHere == false)
                     {
-                        Debug.Log("Ran");
 
                         // maxY Visar en mindre 
                         if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
                         {
 
                             allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
-                            Debug.Log("Ran Queen");
                         }
                         else
                         {
                             allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
-                            Debug.Log("Ran Pawn");
                         }
 
                         allPieces.anticipateMovment = true;
 
                     }
                 }
+
+                #region Move All Directions Upgrade
+
+                if (pawnMoveAllDirections)
+                {
+
+                    if (xPos == currentX && yPos == currentY - 1 - howManyExtraSteeps) // Search Down
+                    {
+
+                        if (allPieces.enemyPieceHere == false)
+                        {
+
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
+                            allPieces.anticipateMovment = true;
+
+                        }
+                    }
+
+                    if (xPos == currentX - 1 - howManyExtraSteeps && yPos == currentY) // Search Left
+                    {
+
+                        if (allPieces.enemyPieceHere == false)
+                        {
+
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
+                            allPieces.anticipateMovment = true;
+
+                        }
+                    }
+
+                    if (xPos == currentX + 1 + howManyExtraSteeps && yPos == currentY) // Search Right
+                    {
+
+                        if (allPieces.enemyPieceHere == false)
+                        {
+
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
+                            allPieces.anticipateMovment = true;
+
+                        }
+                    }
+
+
+                }
+
+                    #endregion
+
             }
 
             howManyExtraSteeps--;
@@ -343,53 +388,109 @@ public class GridController : MonoBehaviour
     public void AnticipatePawnAttack(int currentX, int currentY, GameObject callerGameObject)
     {
 
-        if (firstRoundDone)
+        moveFromTileObject = callerGameObject;
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        foreach (GridPiece allPieces in gridPieces)
         {
+            int xPos = allPieces.xPos;
+            int yPos = allPieces.yPos;
 
-            moveFromTileObject = callerGameObject;
-
-            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-            foreach (GridPiece allPieces in gridPieces)
+            if (xPos == currentX + 1 && yPos == currentY + 1)
             {
-                int xPos = allPieces.xPos;
-                int yPos = allPieces.yPos;
 
-                if (xPos == currentX + 1 && yPos == currentY + 1)
+                if (allPieces.enemyPieceHere == true)
                 {
 
-                    if (allPieces.enemyPieceHere == true)
+                    if (firstRoundDone)
                     {
 
-                        if (firstRoundDone)
+                        allPieces.anticipatePlayerAttack = true;
+                        if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        }
+                        else
+                        {
                             allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
-
-                            attackFromTileObjectList.Add(allPieces.gameObject);
-
                         }
 
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
                     }
 
                 }
-
-                if (xPos == currentX - 1 && yPos == currentY + 1)
+                else if (allPieces.playerPieceHere == false && pawnMoveWhereAttack)
                 {
 
-                    if (allPieces.enemyPieceHere == true)
-                    {
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
+                    allPieces.anticipateMovment = true;
 
-                        attackFromTileObjectList.Add(allPieces.gameObject);
+                    // maxY Visar en mindre 
+                    if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                    {
+
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
+                    }
+                    else
+                    {
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
                     }
 
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
                 }
+
             }
 
+            if (xPos == currentX - 1 && yPos == currentY + 1)
+            {
+
+                if (allPieces.enemyPieceHere == true)
+                {
+                    if (firstRoundDone)
+                    {
+
+                        allPieces.anticipatePlayerAttack = true;
+
+                        if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                        {
+
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
+                        }
+                        else
+                        {
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Pawn;
+                        }
+
+                        attackFromTileObjectList.Add(allPieces.gameObject);
+
+                    }
+                }
+                else if (allPieces.playerPieceHere == false && pawnMoveWhereAttack)
+                {
+
+                    allPieces.anticipateMovment = true;
+                    // maxY Visar en mindre 
+                    if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                    {
+
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
+                    }
+                    else
+                    {
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Pawn;
+                    }
+
+                    attackFromTileObjectList.Add(allPieces.gameObject);
+
+                }
+
+            }
         }
+
+
 
     }
 
@@ -403,211 +504,259 @@ public class GridController : MonoBehaviour
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
-        foreach (GridPiece allPieces in gridPieces)
+        if (!horseCanMoveWhereHeJumpsOver)
         {
-            int xPos = allPieces.xPos;
-            int yPos = allPieces.yPos;
 
-            #region Up
+            twoMovementInDirectionHorse = 2;
+            oneMovementInDirectionHorse = 1;
 
-            if (xPos == currentX + 1 && yPos == currentY + 2)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            if (xPos == currentX - 1 && yPos == currentY + 2)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            #endregion
-
-            #region Down
-
-            if (xPos == currentX + 1 && yPos == currentY - 2)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            if (xPos == currentX - 1 && yPos == currentY - 2)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            #endregion
-
-            #region Right
-
-            if (xPos == currentX + 2 && yPos == currentY + 1)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            if (xPos == currentX + 2 && yPos == currentY - 1)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            #endregion
-
-            #region Left
-
-            if (xPos == currentX - 2 && yPos == currentY + 1)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            if (xPos == currentX - 2 && yPos == currentY - 1)
-            {
-                if (allPieces.enemyPieceHere == true)
-                {
-
-                    if (firstRoundDone)
-                    {
-
-                        allPieces.anticipatePlayerAttack = true;
-                        allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
-
-                        attackFromTileObjectList.Add(allPieces.gameObject);
-
-                    }
-
-                }
-                else
-                {
-                    allPieces.anticipateMovment = true;
-                    allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
-                }
-            }
-
-            #endregion
         }
+        else
+        {
+
+            twoMovementInDirectionHorse = 0;
+            oneMovementInDirectionHorse = 0;
+
+        }
+
+        while (true)
+        {
+
+            foreach (GridPiece allPieces in gridPieces)
+            {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
+
+                #region Up
+
+                if (xPos == currentX + oneMovementInDirectionHorse && yPos == currentY + twoMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                if (xPos == currentX - oneMovementInDirectionHorse && yPos == currentY + twoMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                #endregion
+
+                #region Down
+
+                if (xPos == currentX + oneMovementInDirectionHorse && yPos == currentY - twoMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                if (xPos == currentX - oneMovementInDirectionHorse && yPos == currentY - twoMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                #endregion
+
+                #region Right
+
+                if (xPos == currentX + twoMovementInDirectionHorse && yPos == currentY + oneMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                if (xPos == currentX + twoMovementInDirectionHorse && yPos == currentY - oneMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                #endregion
+
+                #region Left
+
+                if (xPos == currentX - twoMovementInDirectionHorse && yPos == currentY + oneMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                if (xPos == currentX - twoMovementInDirectionHorse && yPos == currentY - oneMovementInDirectionHorse)
+                {
+                    if (allPieces.enemyPieceHere == true)
+                    {
+
+                        if (firstRoundDone)
+                        {
+
+                            allPieces.anticipatePlayerAttack = true;
+                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+
+                    }
+                    else
+                    {
+                        allPieces.anticipateMovment = true;
+                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                    }
+                }
+
+                #endregion
+            }
+
+
+            if (!horseCanMoveWhereHeJumpsOver)
+            {
+
+                break;
+
+            }
+            else if(oneMovementInDirectionHorse == 1)
+            {
+
+                break;
+
+            }
+
+            if(twoMovementInDirectionHorse != 2)
+            {
+
+                twoMovementInDirectionHorse++;
+
+            }
+            else
+            {
+
+                oneMovementInDirectionHorse++;
+
+            }
+
+        }
+
     }
 
     #endregion
@@ -6544,5 +6693,17 @@ public class GridController : MonoBehaviour
     }
 
     #endregion
+
+    void ReciveUpgrades() // Går till gamemanager och får alla upgraderingar 
+    {
+
+        maxHowManyExtraSteeps = gameManager.howManyExtraSteepsPawn;
+        howManyExtraSteeps = maxHowManyExtraSteeps;
+        pawnMoveAllDirections = gameManager.pawmMoveAllDirections;
+        pawnMoveWhereAttack = gameManager.pawnMoveWhereAttack;
+
+        horseCanMoveWhereHeJumpsOver = gameManager.canMoveWhereHeJumpsOver;
+
+    }
 
 }
