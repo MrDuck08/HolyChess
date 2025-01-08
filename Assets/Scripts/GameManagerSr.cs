@@ -81,13 +81,17 @@ public class GameManagerSr : MonoBehaviour
 
     #region Horse
 
-    public bool canMoveWhereHeJumpsOver = false;
+    public bool horseCanMoveWhereHeJumpsOver = false;
+    public bool horseCanAttackWhereHeJumpsOver = false;
+    public bool horseAerialStrike = false;
 
     #endregion
 
+    [Header("Tower Upgrades")]
+
     #region Tower
 
-
+    public bool towerArtillery = false;
 
     #endregion
 
@@ -302,14 +306,57 @@ public class GameManagerSr : MonoBehaviour
 
             #region Horse
 
-            case "horseArialStrike":
+            case "HorseMoveWhereHeJumpsOver":
 
                 if (money == 6)
                 {
 
-                    canMoveWhereHeJumpsOver = true;
+                    horseCanMoveWhereHeJumpsOver = true;
 
                     money -= 6;
+
+                }
+
+                break;
+
+            case "HorseAttackWhereHeJumpsOver":
+
+                if (money == 4)
+                {
+
+                    horseCanAttackWhereHeJumpsOver = true;
+
+                    money -= 4;
+
+                }
+
+                break;
+
+            case "HorseAerialStrike":
+
+                if (money == 7)
+                {
+
+                    horseAerialStrike = true;
+
+                    money -= 7;
+
+                }
+
+                break;
+
+            #endregion
+
+            #region Tower
+
+            case "TowerArtillery":
+
+                if(money < 2)
+                {
+
+                    towerArtillery = true;
+
+                    money -= 2;
 
                 }
 

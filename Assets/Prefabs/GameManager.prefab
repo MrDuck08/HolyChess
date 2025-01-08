@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b90a3783108724e90d8ec4374ff442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneShopTrue: 0
   howManyEnemiesBought: 0
   whatTypeOfEnemyWasBought: 
+  nextSceneShopTrue: 0
   forbidenShop: 1337
   guaranteedShop: 1337
   aktivateShopObject: {fileID: 2930172546157959254, guid: a4868897b31d6a74b82b2fe83bdd05ac, type: 3}
@@ -57,4 +57,9 @@ MonoBehaviour:
   queenInInventory: 5
   coinUi: {fileID: 6305228432708152794, guid: ede94592d2810f64da9d2288fc12ceca, type: 3}
   money: 5
+  howManyExtraSteepsPawn: 0
+  pawmMoveAllDirections: 0
+  pawnMoveWhereAttack: 0
+  canMoveWhereHeJumpsOver: 0
   howManyPointsForEnemys: 10
+  whatRound: 0

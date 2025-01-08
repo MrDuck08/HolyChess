@@ -133,15 +133,19 @@ public class GridController : MonoBehaviour
     #region Horse
 
     bool horseCanMoveWhereHeJumpsOver = false;
+    bool horseCanAttackWhereHeJumpsOver = false;
+    bool horseAerialStrike = false;
 
     int twoMovementInDirectionHorse = 0;
     int oneMovementInDirectionHorse = 0;
+    int xDifference;
+    int yDifference;
 
     #endregion
 
     #region Tower
 
-
+    bool towerArtillery = false;
 
     #endregion
 
@@ -504,18 +508,16 @@ public class GridController : MonoBehaviour
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
-        if (!horseCanMoveWhereHeJumpsOver)
+        firstTimeSearching = true;
+
+        twoMovementInDirectionHorse = 2;
+        oneMovementInDirectionHorse = 1;
+
+        if (!horseCanMoveWhereHeJumpsOver && !horseCanAttackWhereHeJumpsOver)
         {
 
             twoMovementInDirectionHorse = 2;
             oneMovementInDirectionHorse = 1;
-
-        }
-        else
-        {
-
-            twoMovementInDirectionHorse = 0;
-            oneMovementInDirectionHorse = 0;
 
         }
 
@@ -537,18 +539,48 @@ public class GridController : MonoBehaviour
                         if (firstRoundDone)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
@@ -560,18 +592,48 @@ public class GridController : MonoBehaviour
                         if (firstRoundDone)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
@@ -587,18 +649,48 @@ public class GridController : MonoBehaviour
                         if (firstRoundDone)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
@@ -610,18 +702,48 @@ public class GridController : MonoBehaviour
                         if (firstRoundDone)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
@@ -637,18 +759,48 @@ public class GridController : MonoBehaviour
                         if (firstRoundDone)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
@@ -660,18 +812,48 @@ public class GridController : MonoBehaviour
                         if (firstRoundDone)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
@@ -684,21 +866,52 @@ public class GridController : MonoBehaviour
                     if (allPieces.enemyPieceHere == true)
                     {
 
-                        if (firstRoundDone)
+                        if (firstRoundDone) // So Not Kill Anybody
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
@@ -710,48 +923,80 @@ public class GridController : MonoBehaviour
                         if (firstRoundDone)
                         {
 
-                            allPieces.anticipatePlayerAttack = true;
-                            allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+                            if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                            {
 
-                            attackFromTileObjectList.Add(allPieces.gameObject);
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
+                            else if (horseCanAttackWhereHeJumpsOver) // Så han kan attackera där han håppar över
+                            {
+
+                                allPieces.anticipatePlayerAttack = true;
+                                allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Horse;
+
+                                attackFromTileObjectList.Add(allPieces.gameObject);
+
+                            }
 
                         }
 
                     }
                     else
                     {
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+                        if (firstTimeSearching) // Så den kollar bara efter fiender på sista platsen du går
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
+                        else if (horseCanMoveWhereHeJumpsOver) // Så han kan Gå där han håppar över
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Horse;
+
+                            attackFromTileObjectList.Add(allPieces.gameObject);
+
+                        }
                     }
                 }
 
                 #endregion
             }
 
+            firstTimeSearching = false;
 
-            if (!horseCanMoveWhereHeJumpsOver)
+            if (!horseCanMoveWhereHeJumpsOver && !horseCanAttackWhereHeJumpsOver)
             {
-
-                break;
-
-            }
-            else if(oneMovementInDirectionHorse == 1)
-            {
-
+                firstTimeSearching = true;
                 break;
 
             }
 
-            if(twoMovementInDirectionHorse != 2)
+            if(twoMovementInDirectionHorse == 1)
+            {
+                firstTimeSearching = true;
+                break;
+
+            }
+
+            if(oneMovementInDirectionHorse == 1)
             {
 
-                twoMovementInDirectionHorse++;
+                oneMovementInDirectionHorse--;
 
             }
             else
             {
 
-                oneMovementInDirectionHorse++;
+                twoMovementInDirectionHorse--;
 
             }
 
@@ -943,7 +1188,7 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = true;
 
-                        if (firstRoundDone)
+                        if (firstRoundDone && !towerArtillery)
                         {
 
                             allPieces.anticipatePlayerAttack = true;
@@ -1039,8 +1284,13 @@ public class GridController : MonoBehaviour
                         foundSomething = true;
                         breakLoop = false;
 
-                        allPieces.anticipateMovment = true;
-                        allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Tower;
+                        if (!towerArtillery)
+                        {
+
+                            allPieces.anticipateMovment = true;
+                            allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Tower;
+
+                        }
 
                     }
                 }
@@ -1995,6 +2245,145 @@ public class GridController : MonoBehaviour
 
     public void movePiece(PlayerType whoCalled, GameObject objectToMoveTo)
     {
+
+        #region Upgrades
+
+        switch (whoCalled)
+        {
+
+
+            case PlayerType.Horse:
+
+                if (horseAerialStrike)
+                {
+
+                    xDifference = objectToMoveTo.GetComponent<GridPiece>().xPos - moveFromTileObject.GetComponent<GridPiece>().xPos;
+                    yDifference = objectToMoveTo.GetComponent<GridPiece>().yPos - moveFromTileObject.GetComponent<GridPiece>().yPos;
+
+
+                    if(xDifference == 1 ||  yDifference == -1)
+                    {
+
+                        #region Up & Down
+
+                        while (true)
+                        {
+
+                            foreach (GridPiece allPieces in gridPieces)
+                            {
+                                int xPos = allPieces.xPos;
+                                int yPos = allPieces.yPos;
+
+
+                                if (xPos == moveFromTileObject.GetComponent<GridPiece>().xPos + xDifference && yPos == moveFromTileObject.GetComponent<GridPiece>().yPos + yDifference)
+                                {
+
+                                    if(allPieces.GetComponent<GridPiece>().enemyPieceHere == true)
+                                    {
+
+                                        allPieces.GetComponent<GridPiece>().enemyPieceHere = false;
+                                        Destroy(allPieces.GetComponent<GridPiece>().currentPieceVisuals);
+
+
+                                        numberOfEnemys--;
+
+                                    }
+
+                                }
+
+                            }
+
+                            if(xDifference != 0)
+                            {
+
+                                xDifference = 0;
+
+                            }
+                            else
+                            {
+
+                                yDifference--;
+
+                            }
+
+                            if(yDifference == 0)
+                            {
+
+                                break;
+
+                            }
+
+                        }
+
+                        #endregion
+
+                    }
+                    else
+                    {
+
+                        #region Left & Right
+
+                        while (true)
+                        {
+
+                            foreach (GridPiece allPieces in gridPieces)
+                            {
+                                int xPos = allPieces.xPos;
+                                int yPos = allPieces.yPos;
+
+
+                                if (xPos == moveFromTileObject.GetComponent<GridPiece>().xPos + xDifference && yPos == moveFromTileObject.GetComponent<GridPiece>().yPos + yDifference)
+                                {
+
+                                    if (allPieces.GetComponent<GridPiece>().enemyPieceHere == true)
+                                    {
+
+                                        allPieces.GetComponent<GridPiece>().enemyPieceHere = false;
+                                        Destroy(allPieces.GetComponent<GridPiece>().currentPieceVisuals);
+
+
+                                        numberOfEnemys--;
+
+                                    }
+
+                                }
+
+                            }
+
+                            if (yDifference != 0)
+                            {
+
+                                yDifference = 0;
+
+                            }
+                            else
+                            {
+
+                                xDifference--;
+
+                            }
+
+                            if (xDifference == 0)
+                            {
+                                break;
+
+                            }
+
+                        }
+
+                        #endregion
+
+                    }
+
+                }
+
+                break;
+
+
+        }
+
+        #endregion
+
         moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = whoCalled; // I movePiece() Säts den falsk efter
         moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, false, moveFromTileObject);
 
@@ -2002,6 +2391,40 @@ public class GridController : MonoBehaviour
 
     public void AttackPiece(PlayerType whoCalled, GameObject objectToMoveTo)
     {
+
+        #region Upgrades
+
+        switch (whoCalled)
+        {
+
+            case PlayerType.Tower:
+
+                if (towerArtillery)
+                {
+
+                    yDifference = objectToMoveTo.GetComponent<GridPiece>().yPos - moveFromTileObject.GetComponent<GridPiece>().yPos;
+
+                    if(yDifference > 0) // Över den alltså 1 eller större
+                    {
+
+                        objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = false;
+                        Destroy(objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals);
+
+                        moveFromTileObject.GetComponent<GridPiece>().movedOnce = true;
+
+                        numberOfEnemys--;
+
+                        return;
+
+                    }
+
+                }
+
+                break;
+
+        }
+
+        #endregion
 
         moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = whoCalled;
         moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, true, moveFromTileObject);
@@ -6694,6 +7117,8 @@ public class GridController : MonoBehaviour
 
     #endregion
 
+    #region Recive Upgrades
+
     void ReciveUpgrades() // Går till gamemanager och får alla upgraderingar 
     {
 
@@ -6702,8 +7127,14 @@ public class GridController : MonoBehaviour
         pawnMoveAllDirections = gameManager.pawmMoveAllDirections;
         pawnMoveWhereAttack = gameManager.pawnMoveWhereAttack;
 
-        horseCanMoveWhereHeJumpsOver = gameManager.canMoveWhereHeJumpsOver;
+        horseCanMoveWhereHeJumpsOver = gameManager.horseCanMoveWhereHeJumpsOver;
+        horseCanAttackWhereHeJumpsOver = gameManager.horseCanAttackWhereHeJumpsOver;
+        horseAerialStrike = gameManager.horseAerialStrike;
+
+        towerArtillery = gameManager.towerArtillery;
 
     }
+
+    #endregion
 
 }
