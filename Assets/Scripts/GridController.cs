@@ -22,7 +22,7 @@ public class GridController : MonoBehaviour
 
     List<GameObject> enemyTowerObjectList = new List<GameObject>();
 
-    List<int> numberOfTriesToFindPlayerTower = new List<int>();
+    List<int> numberOfTriesToFindPlayer = new List<int>();
     List<int> yOrXMovmentList = new List<int>();
     List<int> yOrXMovmentListComplete = new List<int>();
 
@@ -122,8 +122,8 @@ public class GridController : MonoBehaviour
 
     #region Pawn
 
-    int howManyExtraSteeps = 0;
-    int maxHowManyExtraSteeps = 0;
+    int pawnHowManyExtraSteeps = 0;
+    int pawnMaxHowManyExtraSteeps = 0;
 
     bool pawnMoveAllDirections = false;
     bool pawnMoveWhereAttack = false;
@@ -167,7 +167,11 @@ public class GridController : MonoBehaviour
 
     #region Pawn
 
+    int enemyPawnHowManyExtraSteeps = 0;
+    int enemyPawnMaxHowManyExtraSteeps = 1;
 
+    bool enemyPawnMoveAllDirections = true;
+    bool enemyPawnMoveWhereAttack = false;
 
     #endregion
 
@@ -308,14 +312,14 @@ public class GridController : MonoBehaviour
                 int xPos = allPieces.xPos;
                 int yPos = allPieces.yPos;
 
-                if (xPos == currentX && yPos == currentY + 1 + howManyExtraSteeps)
+                if (xPos == currentX && yPos == currentY + 1 + pawnHowManyExtraSteeps)
                 {
 
                     if (allPieces.enemyPieceHere == false)
                     {
 
                         // maxY Visar en mindre 
-                        if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                        if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
                         {
 
                             allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
@@ -335,7 +339,7 @@ public class GridController : MonoBehaviour
                 if (pawnMoveAllDirections)
                 {
 
-                    if (xPos == currentX && yPos == currentY - 1 - howManyExtraSteeps) // Search Down
+                    if (xPos == currentX && yPos == currentY - 1 - pawnHowManyExtraSteeps) // Search Down
                     {
 
                         if (allPieces.enemyPieceHere == false)
@@ -347,7 +351,7 @@ public class GridController : MonoBehaviour
                         }
                     }
 
-                    if (xPos == currentX - 1 - howManyExtraSteeps && yPos == currentY) // Search Left
+                    if (xPos == currentX - 1 - pawnHowManyExtraSteeps && yPos == currentY) // Search Left
                     {
 
                         if (allPieces.enemyPieceHere == false)
@@ -359,7 +363,7 @@ public class GridController : MonoBehaviour
                         }
                     }
 
-                    if (xPos == currentX + 1 + howManyExtraSteeps && yPos == currentY) // Search Right
+                    if (xPos == currentX + 1 + pawnHowManyExtraSteeps && yPos == currentY) // Search Right
                     {
 
                         if (allPieces.enemyPieceHere == false)
@@ -378,11 +382,11 @@ public class GridController : MonoBehaviour
 
             }
 
-            howManyExtraSteeps--;
+            pawnHowManyExtraSteeps--;
 
-            if(howManyExtraSteeps < 0)
+            if(pawnHowManyExtraSteeps < 0)
             {
-                howManyExtraSteeps = maxHowManyExtraSteeps;
+                pawnHowManyExtraSteeps = pawnMaxHowManyExtraSteeps;
                 break;
 
             }
@@ -411,7 +415,7 @@ public class GridController : MonoBehaviour
                     {
 
                         allPieces.anticipatePlayerAttack = true;
-                        if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                        if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
                         {
 
                             allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
@@ -432,7 +436,7 @@ public class GridController : MonoBehaviour
                     allPieces.anticipateMovment = true;
 
                     // maxY Visar en mindre 
-                    if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                    if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
                     {
 
                         allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
@@ -458,7 +462,7 @@ public class GridController : MonoBehaviour
 
                         allPieces.anticipatePlayerAttack = true;
 
-                        if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                        if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
                         {
 
                             allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
@@ -477,7 +481,7 @@ public class GridController : MonoBehaviour
 
                     allPieces.anticipateMovment = true;
                     // maxY Visar en mindre 
-                    if (boardCreator.topPosY - 1 == currentY + 1 + howManyExtraSteeps)
+                    if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
                     {
 
                         allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
@@ -2631,7 +2635,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
 
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2658,7 +2662,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2682,7 +2686,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2710,7 +2714,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2734,7 +2738,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2761,7 +2765,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2784,7 +2788,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2811,7 +2815,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2834,7 +2838,7 @@ public class GridController : MonoBehaviour
                     numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                     currentAmountOfTries += 1;
-                    numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                    numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                     currentAmountOfTries = 0;
 
                     currentYOfenemyListComplete.Clear();
@@ -2937,10 +2941,10 @@ public class GridController : MonoBehaviour
     void MoveToLocationHorse(GameObject pieceToMove)
     {
 
-        for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
+        for (int i = 0; i < numberOfTriesToFindPlayer.Count; i++)
         {
 
-            if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
+            if (numberOfTriesToFindPlayer[i] < currentXWhereTowerIsGoingToGo)
             {
 
                 foreach (GridPiece pieceToMoveTo in gridPieces)
@@ -2957,7 +2961,7 @@ public class GridController : MonoBehaviour
 
 
                             //Kollar Om Hur Försöken Är Högre Eller Mindre
-                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
+                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayer[i];
 
                             //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
                             towerWithTheLeastTries = i;
@@ -2967,12 +2971,12 @@ public class GridController : MonoBehaviour
                         else
                         {
 
-                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            numberOfTriesToFindPlayer.RemoveAt(i);
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
                             // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
-                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            if (i >= numberOfTriesToFindPlayer.Count)
                             {
 
                                 break;
@@ -3010,7 +3014,7 @@ public class GridController : MonoBehaviour
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
 
-                numberOfTriesToFindPlayerTower.Clear();
+                numberOfTriesToFindPlayer.Clear();
 
                 moveToLocationAfterEnemyListX.Clear();
                 moveToLocationAfterEnemyListY.Clear();
@@ -3393,7 +3397,7 @@ public class GridController : MonoBehaviour
                         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
 
-                        numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                        numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                         currentAmountOfTries = 0;
 
                         currentYOfenemyListComplete.Clear();
@@ -3443,7 +3447,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -3540,7 +3544,7 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -3640,7 +3644,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -3737,7 +3741,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -3883,11 +3887,11 @@ public class GridController : MonoBehaviour
     void MoveToLocationTower(GameObject pieceToMove)
     {
 
-        for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
+        for (int i = 0; i < numberOfTriesToFindPlayer.Count; i++)
         {
 
 
-            if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
+            if (numberOfTriesToFindPlayer[i] < currentXWhereTowerIsGoingToGo)
             {
 
                 foreach (GridPiece pieceToMoveTo in gridPieces)
@@ -3903,7 +3907,7 @@ public class GridController : MonoBehaviour
                         {
 
                             //Kollar Om Hur Försöken Är Hägre Eller Mindre
-                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
+                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayer[i];
                             //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
                             towerWithTheLeastTries = i;
 
@@ -3912,12 +3916,12 @@ public class GridController : MonoBehaviour
                         else
                         {
 
-                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            numberOfTriesToFindPlayer.RemoveAt(i);
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
                             // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
-                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            if (i >= numberOfTriesToFindPlayer.Count)
                             {
 
                                 break;
@@ -3953,7 +3957,7 @@ public class GridController : MonoBehaviour
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
 
-                numberOfTriesToFindPlayerTower.Clear();
+                numberOfTriesToFindPlayer.Clear();
 
                 moveToLocationAfterEnemyListX.Clear();
                 moveToLocationAfterEnemyListY.Clear();
@@ -4334,7 +4338,7 @@ public class GridController : MonoBehaviour
                         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
 
-                        numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                        numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                         currentAmountOfTries = 0;
 
                         currentYOfenemyListComplete.Clear();
@@ -4382,7 +4386,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -4477,7 +4481,7 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                                 currentAmountOfTries += 1;
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -4576,7 +4580,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -4670,7 +4674,7 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                                 currentAmountOfTries += 1;
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -4824,10 +4828,10 @@ public class GridController : MonoBehaviour
 
 
 
-        for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
+        for (int i = 0; i < numberOfTriesToFindPlayer.Count; i++)
         {
 
-            if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
+            if (numberOfTriesToFindPlayer[i] < currentXWhereTowerIsGoingToGo)
             {
 
                 foreach (GridPiece pieceToMoveTo in gridPieces)
@@ -4844,7 +4848,7 @@ public class GridController : MonoBehaviour
 
 
                             //Kollar Om Hur Försöken Är Högre Eller Mindre
-                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
+                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayer[i];
 
                             //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
                             towerWithTheLeastTries = i;
@@ -4854,12 +4858,12 @@ public class GridController : MonoBehaviour
                         else
                         {
 
-                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            numberOfTriesToFindPlayer.RemoveAt(i);
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
                             // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
-                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            if (i >= numberOfTriesToFindPlayer.Count)
                             {
 
                                 break;
@@ -4896,7 +4900,7 @@ public class GridController : MonoBehaviour
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
 
-                numberOfTriesToFindPlayerTower.Clear();
+                numberOfTriesToFindPlayer.Clear();
 
                 moveToLocationAfterEnemyListX.Clear();
                 moveToLocationAfterEnemyListY.Clear();
@@ -5553,7 +5557,7 @@ public class GridController : MonoBehaviour
                         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
 
-                        numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                        numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                         currentAmountOfTries = 0;
 
                         currentYOfenemyListComplete.Clear();
@@ -5600,7 +5604,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -5695,7 +5699,7 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                                 currentAmountOfTries += 1;
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -5791,7 +5795,7 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                                 currentAmountOfTries += 1;
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -5887,7 +5891,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -5986,7 +5990,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -6081,7 +6085,7 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                                 currentAmountOfTries += 1;
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -6178,7 +6182,7 @@ public class GridController : MonoBehaviour
                                 numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
 
                                 currentAmountOfTries += 1;
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -6273,7 +6277,7 @@ public class GridController : MonoBehaviour
 
                                 currentAmountOfTries += 1;
 
-                                numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                                numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                                 currentAmountOfTries = 0;
 
                                 currentYOfenemyListComplete.Clear();
@@ -6426,10 +6430,10 @@ public class GridController : MonoBehaviour
     void MoveToLocationQueen(GameObject pieceToMove)
     {
 
-        for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
+        for (int i = 0; i < numberOfTriesToFindPlayer.Count; i++)
         {
 
-            if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
+            if (numberOfTriesToFindPlayer[i] < currentXWhereTowerIsGoingToGo)
             {
 
                 foreach (GridPiece pieceToMoveTo in gridPieces)
@@ -6446,7 +6450,7 @@ public class GridController : MonoBehaviour
 
 
                             //Kollar Om Hur Försöken Är Högre Eller Mindre
-                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
+                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayer[i];
 
                             //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
                             towerWithTheLeastTries = i;
@@ -6456,12 +6460,12 @@ public class GridController : MonoBehaviour
                         else
                         {
 
-                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            numberOfTriesToFindPlayer.RemoveAt(i);
                             moveToLocationAfterEnemyListX.Remove(i);
                             moveToLocationAfterEnemyListY.Remove(i);
 
                             // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
-                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            if (i >= numberOfTriesToFindPlayer.Count)
                             {
 
                                 break;
@@ -6500,7 +6504,7 @@ public class GridController : MonoBehaviour
 
                 enemyQueenObjectList.Clear();
 
-                numberOfTriesToFindPlayerTower.Clear();
+                numberOfTriesToFindPlayer.Clear();
 
                 moveToLocationAfterEnemyListX.Clear();
                 moveToLocationAfterEnemyListY.Clear();
@@ -6581,6 +6585,37 @@ public class GridController : MonoBehaviour
                 }
             }
 
+            if (enemyPawnMoveAllDirections)
+            {
+
+                foreach (GridPiece allPieces in gridPieces)
+                {
+                    int xPos = allPieces.xPos;
+                    int yPos = allPieces.yPos;
+
+                    if (xPos == currentX && yPos == currentY + 1)
+                    {
+
+                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i], false);
+                        Debug.Log(enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1);
+                    }
+
+                    if (xPos == currentX + 1 && yPos == currentY)
+                    {
+
+                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
+
+                    }
+
+                    if (xPos == currentX - 1 && yPos == currentY)
+                    {
+
+                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
+
+                    }
+                }
+
+            }
 
             #endregion
 
@@ -6646,7 +6681,7 @@ public class GridController : MonoBehaviour
 
                             currentAmountOfTries += 1;
 
-                            numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                            numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                             currentAmountOfTries = 0;
 
                             currentYOfenemyListComplete.Clear();
@@ -6720,7 +6755,7 @@ public class GridController : MonoBehaviour
 
                             currentAmountOfTries += 1;
 
-                            numberOfTriesToFindPlayerTower.Add(currentAmountOfTries);
+                            numberOfTriesToFindPlayer.Add(currentAmountOfTries);
                             currentAmountOfTries = 0;
 
                             currentYOfenemyListComplete.Clear();
@@ -6832,10 +6867,10 @@ public class GridController : MonoBehaviour
                         if (!foundSomething && !enemyPawnNotMoveForward)
                         {
 
-                            numberOfTriesForPawnToGoForward.Add(420);
+                            numberOfTriesForPawnToGoForward.Add(420 - enemyPawnHowManyExtraSteeps); // Gör Så Att om den kan gå fram extra steg så tar den prio
 
-                            moveToForwardPawnListX.Add(posToMoveToAfterFindingPlayerX);
-                            moveToForwardPawnListY.Add(posToMoveToAfterFindingPlayerY);
+                            moveToForwardPawnListX.Add(posToMoveToAfterFindingPlayerX); 
+                            moveToForwardPawnListY.Add(posToMoveToAfterFindingPlayerY - enemyPawnHowManyExtraSteeps); // Lägger till ett extra steg(Den startar på 0)
 
                         }
                     }
@@ -6849,6 +6884,13 @@ public class GridController : MonoBehaviour
 
                 numberOfRoundsContinuation++;
 
+                if(enemyPawnMaxHowManyExtraSteeps > enemyPawnHowManyExtraSteeps)
+                {
+
+                    enemyPawnHowManyExtraSteeps++;
+
+                }
+
                 if (breakLoop || enemyFoundPlayer)
                 {
                     foundSomething = false;
@@ -6857,11 +6899,12 @@ public class GridController : MonoBehaviour
                     enemyPawnNotMoveForward = false;
 
                     numberOfRoundsContinuation = 1;
+                    enemyPawnHowManyExtraSteeps = 0;
 
                     moveToLocationAfterEnemyListX.AddRange(moveToForwardPawnListX);
                     moveToLocationAfterEnemyListY.AddRange(moveToForwardPawnListY);
 
-                    numberOfTriesToFindPlayerTower.AddRange(numberOfTriesForPawnToGoForward);
+                    numberOfTriesToFindPlayer.AddRange(numberOfTriesForPawnToGoForward);
 
                     numberOfTriesForPawnToGoForward.Clear();
 
@@ -6906,11 +6949,11 @@ public class GridController : MonoBehaviour
     void MoveToLocationPawn(GameObject pieceToMove)
     {
 
-        for (int i = 0; i < numberOfTriesToFindPlayerTower.Count; i++)
+        for (int i = 0; i < numberOfTriesToFindPlayer.Count; i++)
         {
 
 
-            if (numberOfTriesToFindPlayerTower[i] < currentXWhereTowerIsGoingToGo)
+            if (numberOfTriesToFindPlayer[i] < currentXWhereTowerIsGoingToGo)
             {
 
                 foreach (GridPiece pieceToMoveTo in gridPieces)
@@ -6927,7 +6970,7 @@ public class GridController : MonoBehaviour
 
 
                             //Kollar Om Hur Försöken Är Hägre Eller Mindre
-                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayerTower[i];
+                            currentXWhereTowerIsGoingToGo = numberOfTriesToFindPlayer[i];
                             //När Man Väl Ska Flytta Spelaren Så Behöver Jag Veta Vilken i Den Var På
                             towerWithTheLeastTries = i;
 
@@ -6936,12 +6979,12 @@ public class GridController : MonoBehaviour
                         else
                         {
 
-                            numberOfTriesToFindPlayerTower.RemoveAt(i);
+                            numberOfTriesToFindPlayer.RemoveAt(i);
                             moveToLocationAfterEnemyListX.RemoveAt(i);
                             moveToLocationAfterEnemyListY.RemoveAt(i);
 
                             // Eftersom jag tar bort från listan måste jag kolla om jag ska sluta söka så jag inte söker med i som är högre än listorna
-                            if (i >= numberOfTriesToFindPlayerTower.Count)
+                            if (i >= numberOfTriesToFindPlayer.Count)
                             {
 
                                 break;
@@ -6990,7 +7033,7 @@ public class GridController : MonoBehaviour
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
 
-                numberOfTriesToFindPlayerTower.Clear();
+                numberOfTriesToFindPlayer.Clear();
 
                 enemyPawnObjectList.Clear();
 
@@ -7122,8 +7165,8 @@ public class GridController : MonoBehaviour
     void ReciveUpgrades() // Går till gamemanager och får alla upgraderingar 
     {
 
-        maxHowManyExtraSteeps = gameManager.howManyExtraSteepsPawn;
-        howManyExtraSteeps = maxHowManyExtraSteeps;
+        pawnMaxHowManyExtraSteeps = gameManager.howManyExtraSteepsPawn;
+        pawnHowManyExtraSteeps = pawnMaxHowManyExtraSteeps;
         pawnMoveAllDirections = gameManager.pawmMoveAllDirections;
         pawnMoveWhereAttack = gameManager.pawnMoveWhereAttack;
 
@@ -7132,6 +7175,26 @@ public class GridController : MonoBehaviour
         horseAerialStrike = gameManager.horseAerialStrike;
 
         towerArtillery = gameManager.towerArtillery;
+
+    }
+
+    public void ReciveEnemyUpgrades(int whatUpgradeToTrue)
+    {
+
+        switch (whatUpgradeToTrue)
+        {
+            #region Pawn
+
+            case 0:
+
+                enemyPawnMaxHowManyExtraSteeps++;
+
+                break;
+
+
+
+                #endregion
+        }
 
     }
 
