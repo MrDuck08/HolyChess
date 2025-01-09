@@ -154,6 +154,14 @@ public class GameManagerSr : MonoBehaviour
 
     #endregion
 
+    #region ShowInfo
+
+    [Header("Show Info")]
+
+    [SerializeField] GameObject infoObject;
+
+    #endregion
+
 
     private void Awake()
     {
@@ -501,6 +509,63 @@ public class GameManagerSr : MonoBehaviour
         }
 
         #endregion
+
+    }
+
+    #endregion
+
+    #region Show Info
+
+    public void ShowInfo(GameObject whoCalled)
+    {
+
+        GridPiece piece = gameObject.GetComponent<GridPiece>();
+        
+        if(piece.playerPieceHere == true) // Spelare
+        {
+
+
+
+        }
+        else // Fiende
+        {
+
+            switch (piece.currentEnemyType)
+            {
+
+                case EnemyType.Pawn:
+
+
+
+                    break;
+
+                case EnemyType.Tower:
+
+
+
+                    break;
+
+                case EnemyType.Bishop:
+
+
+
+                    break;
+
+                case EnemyType.Queen:
+
+
+
+                    break;
+
+                case EnemyType.Horse:
+
+
+
+                    break;
+
+            }
+
+        }
 
     }
 

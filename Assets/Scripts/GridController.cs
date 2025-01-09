@@ -173,6 +173,8 @@ public class GridController : MonoBehaviour
     bool enemyPawnMoveAllDirections = true;
     bool enemyPawnMoveWhereAttack = false;
 
+    bool enemymoveEverywhereFirstTurnUp = false;
+
     #endregion
 
     #region Horse
@@ -6593,25 +6595,26 @@ public class GridController : MonoBehaviour
                     int xPos = allPieces.xPos;
                     int yPos = allPieces.yPos;
 
-                    if (xPos == currentX && yPos == currentY + 1)
-                    {
-
-                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i], false);
-                        Debug.Log(enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1);
-                    }
-
                     if (xPos == currentX + 1 && yPos == currentY)
                     {
-
+                        Debug.Log("Go Right");
                         FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
 
                     }
 
                     if (xPos == currentX - 1 && yPos == currentY)
                     {
-
+                        Debug.Log("Go Left");
                         FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
 
+                    }
+
+                    if (xPos == currentX && yPos == currentY + 1)
+                    {
+                        Debug.Log("Go Up");
+                        enemymoveEverywhereFirstTurnUp = true;
+                        Debug.Log(enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1 + " Y Where Pawn Is LOoking From");
+                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i], false);
                     }
                 }
 
@@ -6670,10 +6673,11 @@ public class GridController : MonoBehaviour
 
                     if (xPos == posToLookAtX + 1 && yPos == posToLookAtY - numberOfRoundsContinuation)
                     {
+                        Debug.Log(numberOfRoundsContinuation + " Rounds OF COntinuation");
 
                         if (allPieces.playerPieceHere == true)
                         {
-
+                            Debug.Log("Found Player ON RIght");
                             enemyFoundPlayer = true;
 
                             numberOfTimesLookingForPlayer = 1;
@@ -6747,7 +6751,7 @@ public class GridController : MonoBehaviour
 
                         if (allPieces.playerPieceHere == true)
                         {
-
+                            Debug.Log("Found Player ON Left So Break");
                             enemyFoundPlayer = true;
 
                             numberOfTimesLookingForPlayer = 1;
@@ -6786,7 +6790,7 @@ public class GridController : MonoBehaviour
                         {
                             foundSomething = true;
                             breakLoop = true;
-
+                            Debug.Log("Found Enemy ON Left So Break");
 
                             break;
 
@@ -6836,21 +6840,26 @@ public class GridController : MonoBehaviour
                             moveToForwardPawnListY.Clear();
 
                             numberOfTriesForPawnToGoForward.Clear();
-
+                            Debug.Log("Found Player ON Down So Break");
                             break;
                         }
 
                         if (allPieces.enemyPieceHere == true)
                         {
-
-                            // Fiende Där
-                            if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
+                            if (!enemymoveEverywhereFirstTurnUp) // Upgraderingen som kollar ett steg upp körn så den inte avbryter för den upptcäker sin dåtida position
                             {
+                                // Fiende Där
+                                if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
+                                {
+                                    foundSomething = true;
+                                    breakLoop = true;
+                                }
                                 foundSomething = true;
-                                breakLoop = true;
+                                Debug.Log("Found Enemy ON Down So Break");
+                                break;
+
                             }
-                            foundSomething = true;
-                            break;
+
 
                         }
                         else
@@ -6881,7 +6890,7 @@ public class GridController : MonoBehaviour
 
                 foundSomething = false;
                 firstTimeSearching = false;
-
+                enemymoveEverywhereFirstTurnUp = false;
                 numberOfRoundsContinuation++;
 
                 if(enemyPawnMaxHowManyExtraSteeps > enemyPawnHowManyExtraSteeps)
