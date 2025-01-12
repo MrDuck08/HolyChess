@@ -79,9 +79,6 @@ public class GridPiece : MonoBehaviour
     public int xPos;
     public int yPos;
 
-
-    #region bools
-
     bool playerSpawnGrid = false;
 
     bool mouseOver = false;
@@ -136,11 +133,17 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
+    #region Info
+
+    bool infoIsHere = false;
+    bool noLongerShowInfo = false;
+
     #endregion
 
     Color32 anticipateMovemtVisualls;
 
     GridController controller;
+    GameManagerSr gameManagerSr;
 
     GridPiece[] gridPieces;
 
@@ -312,403 +315,436 @@ public class GridPiece : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            if(mouseOver && playerTurn)
+
+            if (mouseOver)
             {
 
-                #region Anticipate Movment && Refresh Turn
-
-                if (gameHasStarted && playerPieceHere)
+                if (infoIsHere)
                 {
-                    if (!movedOnce) // Kollar om man har rört sig en gång så man inte kan gå 2 gånger i rad
-                    {
+                    gameManagerSr = FindAnyObjectByType<GameManagerSr>();
 
-                        #region Stop Antiticating If Clicked On Other Player Piece
-
-                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                        foreach (GridPiece allPiece in gridPieces)
-                        {
-                            allPiece.anticipateMovment = false;
-
-                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
-                        }
-
-                        foreach (GridPiece allPiece in gridPieces)
-                        {
-                            allPiece.anticipatePlayerAttack = false;
-
-                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
-                        }
-
-                        #endregion
-
-                        #region Checking Who Wants To Move
-
-                        if (currentPlayerType == PlayerType.Pawn)
-                        {
-                            controller.AnticipatePawnMovment(xPos, yPos, gameObject);
-                            controller.AnticipatePawnAttack(xPos, yPos, gameObject);
-                        }
-
-                        if (currentPlayerType == PlayerType.Horse)
-                        {
-                            controller.AnticipateHorseMovment(xPos, yPos, gameObject);
-                        }
-
-                        if (currentPlayerType == PlayerType.Tower)
-                        {
-                            controller.AnticipateTowerMovment(xPos, yPos, gameObject);
-                        }
-
-                        if (currentPlayerType == PlayerType.Bishop)
-                        {
-                            controller.AnticipateBishopMovment(xPos, yPos, gameObject);
-                        }
-
-                        if (currentPlayerType == PlayerType.Queen)
-                        {
-                            controller.AnticipateQueenMovment(xPos, yPos, gameObject);
-                        }
-
-                        #endregion
-
-                    }
-                    else if (refreshingTurn)
-                    {
-
-                        movedOnce = false;
-
-                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                        foreach (GridPiece allPiece in gridPieces)
-                        {
-
-                            allPiece.refreshingTurn = false;
-
-                        }
-
-                    }
+                    gameManagerSr.StopShowingInfo();
+                    // Jag sätter inte att det inte längre är info här för att lura programet att inte direkt aktivera den
+                    noLongerShowInfo = true;
                 }
 
-                #endregion
-
-                if (!playerPieceHere)
+                if (playerTurn)
                 {
 
-                    #region Start Spawn
+                    #region Anticipate Movment && Refresh Turn
 
-                    if (playerSpawnGrid && !gameHasStarted)
+                    if (gameHasStarted && playerPieceHere)
                     {
-                        if (currentSpawnType == SpawnType.Pawn)
+                        if (!movedOnce) // Kollar om man har rört sig en gång så man inte kan gå 2 gånger i rad
                         {
+                            bool animationIsPlaying = false;
 
-                            playerPieceHere = true;
-                            currentPlayerType = PlayerType.Pawn;
-                            controller.howManyPlayerPieces++;
+                            PieceVisual[] allPieceVisuals = FindObjectsOfType(typeof(PieceVisual)) as PieceVisual[];
 
-                            currentPieceVisuals = Instantiate(pieceVisuals);
-
-                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            foreach (Transform child in gameObject.transform)
+                            foreach (var pieceVisual in allPieceVisuals)
                             {
-                                if (child.tag == "Pawn")
+
+                                if(pieceVisual.isItPlayer == false && pieceVisual.animationIsPlaying)
                                 {
-                                    child.gameObject.SetActive(false);
+                                    animationIsPlaying = true;
                                 }
 
                             }
 
-                            foreach (GridPiece allPiece in gridPieces)
+                            if (!animationIsPlaying)
                             {
-                                allPiece.currentSpawnType = SpawnType.none;
-                                allPiece.placingDownAUnitNow = false;
+
+                                #region Stop Antiticating If Clicked On Other Player Piece
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                                foreach (GridPiece allPiece in gridPieces)
+                                {
+                                    allPiece.anticipateMovment = false;
+
+                                    allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
+                                }
+
+                                foreach (GridPiece allPiece in gridPieces)
+                                {
+                                    allPiece.anticipatePlayerAttack = false;
+
+                                    allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
+                                }
+
+                                #endregion
+
+                                #region Checking Who Wants To Move
+
+                                if (currentPlayerType == PlayerType.Pawn)
+                                {
+                                    controller.AnticipatePawnMovment(xPos, yPos, gameObject);
+                                    controller.AnticipatePawnAttack(xPos, yPos, gameObject);
+                                }
+
+                                if (currentPlayerType == PlayerType.Horse)
+                                {
+                                    controller.AnticipateHorseMovment(xPos, yPos, gameObject);
+                                }
+
+                                if (currentPlayerType == PlayerType.Tower)
+                                {
+                                    controller.AnticipateTowerMovment(xPos, yPos, gameObject);
+                                }
+
+                                if (currentPlayerType == PlayerType.Bishop)
+                                {
+                                    controller.AnticipateBishopMovment(xPos, yPos, gameObject);
+                                }
+
+                                if (currentPlayerType == PlayerType.Queen)
+                                {
+                                    controller.AnticipateQueenMovment(xPos, yPos, gameObject);
+                                }
+
+                                #endregion
+
                             }
+
                         }
-
-                        if (currentSpawnType == SpawnType.Horse)
+                        else if (refreshingTurn)
                         {
 
-                            playerPieceHere = true;
-                            currentPlayerType = PlayerType.Horse;
-                            controller.howManyPlayerPieces++;
+                            movedOnce = false;
 
                             gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            currentPieceVisuals = Instantiate(pieceVisuals);
-
-                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            foreach (Transform child in gameObject.transform)
-                            {
-                                if (child.tag == "PlayerHorse")
-                                {
-                                    child.gameObject.SetActive(false);
-                                }
-
-                            }
-
 
                             foreach (GridPiece allPiece in gridPieces)
                             {
-                                allPiece.currentSpawnType = SpawnType.none;
-                                allPiece.placingDownAUnitNow = false;
-                            }
-                        }
 
-                        if (currentSpawnType == SpawnType.Tower)
-                        {
-
-                            playerPieceHere = true;
-                            currentPlayerType = PlayerType.Tower;
-                            controller.howManyPlayerPieces++;
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            currentPieceVisuals = Instantiate(pieceVisuals);
-
-                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            foreach (Transform child in gameObject.transform)
-                            {
-                                if (child.tag == "PlayerTower")
-                                {
-                                    child.gameObject.SetActive(false);
-                                }
+                                allPiece.refreshingTurn = false;
 
                             }
 
-
-                            foreach (GridPiece allPiece in gridPieces)
-                            {
-                                allPiece.currentSpawnType = SpawnType.none;
-                                allPiece.placingDownAUnitNow = false;
-                            }
-                        }
-
-                        if (currentSpawnType == SpawnType.Bishop)
-                        {
-
-                            playerPieceHere = true;
-                            currentPlayerType= PlayerType.Bishop;
-                            controller.howManyPlayerPieces++;
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            currentPieceVisuals = Instantiate(pieceVisuals);
-
-                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            foreach (Transform child in gameObject.transform)
-                            {
-                                if (child.tag == "PlayerBishop")
-                                {
-                                    child.gameObject.SetActive(false);
-                                }
-
-                            }
-
-
-                            foreach (GridPiece allPiece in gridPieces)
-                            {
-                                allPiece.currentSpawnType = SpawnType.none;
-                                allPiece.placingDownAUnitNow = false;
-                            }
-                        }
-
-                        if (currentSpawnType == SpawnType.Queen)
-                        {
-
-                            playerPieceHere = true;
-                            currentPlayerType = PlayerType.Queen;
-                            controller.howManyPlayerPieces++;
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            currentPieceVisuals = Instantiate(pieceVisuals);
-
-                            currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
-
-                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-
-                            foreach (Transform child in gameObject.transform)
-                            {
-                                if (child.tag == "PlayerQueen")
-                                {
-                                    child.gameObject.SetActive(false);
-                                }
-
-                            }
-
-
-                            foreach (GridPiece allPiece in gridPieces)
-                            {
-                                allPiece.currentSpawnType = SpawnType.none;
-                                allPiece.placingDownAUnitNow = false;
-                            }
                         }
                     }
 
                     #endregion
 
-                    #region Movment
-
-                    if (anticipateMovment)
+                    if (!playerPieceHere)
                     {
-                        #region Who Is Moving
 
-                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Pawn)
+                        #region Start Spawn
+
+                        if (playerSpawnGrid && !gameHasStarted)
                         {
+                            if (currentSpawnType == SpawnType.Pawn)
+                            {
 
-                            controller.movePiece(PlayerType.Pawn, gameObject);
-                        }
+                                playerPieceHere = true;
+                                currentPlayerType = PlayerType.Pawn;
+                                controller.howManyPlayerPieces++;
 
-                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Horse)
-                        {
+                                currentPieceVisuals = Instantiate(pieceVisuals);
 
-                            controller.movePiece(PlayerType.Horse, gameObject);
-                        }
+                                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
 
-                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Tower)
-                        {
+                                foreach (Transform child in gameObject.transform)
+                                {
+                                    if (child.tag == "Pawn")
+                                    {
+                                        child.gameObject.SetActive(false);
+                                    }
 
-                            controller.movePiece(PlayerType.Tower, gameObject);
-                        }
+                                }
 
-                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Bishop)
-                        {
+                                foreach (GridPiece allPiece in gridPieces)
+                                {
+                                    allPiece.currentSpawnType = SpawnType.none;
+                                    allPiece.placingDownAUnitNow = false;
+                                }
+                            }
 
-                            controller.movePiece(PlayerType.Bishop, gameObject);
-                        }
+                            if (currentSpawnType == SpawnType.Horse)
+                            {
 
-                        if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Queen)
-                        {
+                                playerPieceHere = true;
+                                currentPlayerType = PlayerType.Horse;
+                                controller.howManyPlayerPieces++;
 
-                            controller.movePiece(PlayerType.Queen, gameObject);
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                foreach (Transform child in gameObject.transform)
+                                {
+                                    if (child.tag == "PlayerHorse")
+                                    {
+                                        child.gameObject.SetActive(false);
+                                    }
+
+                                }
+
+
+                                foreach (GridPiece allPiece in gridPieces)
+                                {
+                                    allPiece.currentSpawnType = SpawnType.none;
+                                    allPiece.placingDownAUnitNow = false;
+                                }
+                            }
+
+                            if (currentSpawnType == SpawnType.Tower)
+                            {
+
+                                playerPieceHere = true;
+                                currentPlayerType = PlayerType.Tower;
+                                controller.howManyPlayerPieces++;
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                foreach (Transform child in gameObject.transform)
+                                {
+                                    if (child.tag == "PlayerTower")
+                                    {
+                                        child.gameObject.SetActive(false);
+                                    }
+
+                                }
+
+
+                                foreach (GridPiece allPiece in gridPieces)
+                                {
+                                    allPiece.currentSpawnType = SpawnType.none;
+                                    allPiece.placingDownAUnitNow = false;
+                                }
+                            }
+
+                            if (currentSpawnType == SpawnType.Bishop)
+                            {
+
+                                playerPieceHere = true;
+                                currentPlayerType = PlayerType.Bishop;
+                                controller.howManyPlayerPieces++;
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                foreach (Transform child in gameObject.transform)
+                                {
+                                    if (child.tag == "PlayerBishop")
+                                    {
+                                        child.gameObject.SetActive(false);
+                                    }
+
+                                }
+
+
+                                foreach (GridPiece allPiece in gridPieces)
+                                {
+                                    allPiece.currentSpawnType = SpawnType.none;
+                                    allPiece.placingDownAUnitNow = false;
+                                }
+                            }
+
+                            if (currentSpawnType == SpawnType.Queen)
+                            {
+
+                                playerPieceHere = true;
+                                currentPlayerType = PlayerType.Queen;
+                                controller.howManyPlayerPieces++;
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                currentPieceVisuals = Instantiate(pieceVisuals);
+
+                                currentPieceVisuals.GetComponent<PieceVisual>().SpawnInfo((int)currentPlayerType, new Vector2(xPos, yPos), true);
+
+                                gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+
+                                foreach (Transform child in gameObject.transform)
+                                {
+                                    if (child.tag == "PlayerQueen")
+                                    {
+                                        child.gameObject.SetActive(false);
+                                    }
+
+                                }
+
+
+                                foreach (GridPiece allPiece in gridPieces)
+                                {
+                                    allPiece.currentSpawnType = SpawnType.none;
+                                    allPiece.placingDownAUnitNow = false;
+                                }
+                            }
                         }
 
                         #endregion
 
-                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+                        #region Movment
 
-                        foreach (GridPiece allPiece in gridPieces)
+                        if (anticipateMovment)
                         {
-                            allPiece.anticipateMovment = false;
+                            #region Who Is Moving
 
-                            allPiece.currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
+                            if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Pawn)
+                            {
+
+                                controller.movePiece(PlayerType.Pawn, gameObject);
+                            }
+
+                            if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Horse)
+                            {
+
+                                controller.movePiece(PlayerType.Horse, gameObject);
+                            }
+
+
+                            if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Tower)
+                            {
+
+                                controller.movePiece(PlayerType.Tower, gameObject);
+                            }
+
+                            if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Bishop)
+                            {
+
+                                controller.movePiece(PlayerType.Bishop, gameObject);
+                            }
+
+                            if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Queen)
+                            {
+
+                                controller.movePiece(PlayerType.Queen, gameObject);
+                            }
+
+                            #endregion
+
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.anticipateMovment = false;
+
+                                allPiece.currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
+                            }
+
                         }
-
-                    }
-                    else
-                    {
-                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                        foreach (GridPiece allPiece in gridPieces)
+                        else
                         {
-                            allPiece.anticipateMovment = false;
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
-                            allPiece.currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.anticipateMovment = false;
+
+                                allPiece.currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
+                            }
                         }
-                    }
-                    #endregion
-    
-                    #region Attacking
+                        #endregion
 
-                    if (anticipatePlayerAttack)
-                    {
+                        #region Attacking
 
-                        #region Who Is Attacking
-
-                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Pawn)
+                        if (anticipatePlayerAttack)
                         {
 
-                            controller.AttackPiece(PlayerType.Pawn, gameObject);
+                            #region Who Is Attacking
+
+                            if (currentPlayerAttackType == AnticipatePlayerAttackType.Pawn)
+                            {
+
+                                controller.AttackPiece(PlayerType.Pawn, gameObject);
+                            }
+
+                            if (currentPlayerAttackType == AnticipatePlayerAttackType.Horse)
+                            {
+
+                                controller.AttackPiece(PlayerType.Horse, gameObject);
+                            }
+
+                            if (currentPlayerAttackType == AnticipatePlayerAttackType.Tower)
+                            {
+                                Debug.Log("Attack Tower");
+                                controller.AttackPiece(PlayerType.Tower, gameObject);
+                            }
+
+                            if (currentPlayerAttackType == AnticipatePlayerAttackType.Bishop)
+                            {
+
+                                controller.AttackPiece(PlayerType.Bishop, gameObject);
+                            }
+
+                            if (currentPlayerAttackType == AnticipatePlayerAttackType.Queen)
+                            {
+
+                                controller.AttackPiece(PlayerType.Queen, gameObject);
+                            }
+
+                            #endregion
+
+
+                            enemyPieceHere = false;
+
+
+
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.anticipatePlayerAttack = false;
+
+                                allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
+                            }
+
                         }
-
-                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Horse)
+                        else
                         {
+                            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
-                            controller.AttackPiece(PlayerType.Horse, gameObject);
-                        }
+                            foreach (GridPiece allPiece in gridPieces)
+                            {
+                                allPiece.anticipatePlayerAttack = false;
 
-                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Tower)
-                        {
-                            Debug.Log("Attack Tower");
-                            controller.AttackPiece(PlayerType.Tower, gameObject);
-                        }
-
-                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Bishop)
-                        {
-
-                            controller.AttackPiece(PlayerType.Bishop, gameObject);
-                        }
-
-                        if (currentPlayerAttackType == AnticipatePlayerAttackType.Queen)
-                        {
-
-                            controller.AttackPiece(PlayerType.Queen, gameObject);
+                                allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
+                            }
                         }
 
                         #endregion
 
-
-                        enemyPieceHere = false;
-
-
-
-                        foreach (GridPiece allPiece in gridPieces)
-                        {
-                            allPiece.anticipatePlayerAttack = false;
-
-                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
-                        }
-
                     }
-                    else
+
+                    if (enemyPieceHere && stunningEnemy)
                     {
+
+                        ignoreNextTurn = true;
+
                         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
                         foreach (GridPiece allPiece in gridPieces)
                         {
-                            allPiece.anticipatePlayerAttack = false;
 
-                            allPiece.currentPlayerAttackType = AnticipatePlayerAttackType.none;
+                            allPiece.stunningEnemy = false;
+
                         }
-                    }
-
-                    #endregion
-
-                }
-
-                if (enemyPieceHere && stunningEnemy)
-                {
-
-                    ignoreNextTurn = true;
-
-                    gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-                    foreach (GridPiece allPiece in gridPieces)
-                    {
-
-                        allPiece.stunningEnemy = false;
 
                     }
 
@@ -778,7 +814,9 @@ public class GridPiece : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if(playerSpawnGrid && !gameHasStarted && !playerPieceHere)
+        #region Spawning
+
+        if (playerSpawnGrid && !gameHasStarted && !playerPieceHere)
         {
             if (currentSpawnType == SpawnType.Pawn)
             {
@@ -837,6 +875,23 @@ public class GridPiece : MonoBehaviour
             }
         }
 
+        #endregion
+
+        if (gameHasStarted && !noLongerShowInfo && !infoIsHere)
+        {
+            if(playerPieceHere || enemyPieceHere)
+            {
+
+                infoIsHere = true;
+
+                gameManagerSr = FindAnyObjectByType<GameManagerSr>();
+
+                gameManagerSr.ShowInfo(gameObject);
+
+            }
+
+        }
+
         mouseOver = true;
     }
 
@@ -872,7 +927,18 @@ public class GridPiece : MonoBehaviour
                 }
             }
         }
-        
+
+        if (infoIsHere)
+        {
+            
+            gameManagerSr = FindAnyObjectByType<GameManagerSr>();
+
+            gameManagerSr.StopShowingInfo();
+
+            infoIsHere = false;
+            noLongerShowInfo = false;
+
+        }
 
         mouseOver = false;
     }
@@ -894,7 +960,14 @@ public class GridPiece : MonoBehaviour
             else
             {
 
-                controller.AktivateReviveCanvas(whoCalled);
+                gameManagerSr = FindAnyObjectByType<GameManagerSr>();
+
+                if(gameManagerSr.money >= 3)
+                {
+
+                    controller.AktivateReviveCanvas(whoCalled);
+
+                }
 
             }
 

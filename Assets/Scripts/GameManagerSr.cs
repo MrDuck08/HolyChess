@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UIElements;
 
 public class GameManagerSr : MonoBehaviour
 {
     #region Scripts
 
     GridPiece[] gridPieces;
+    GridController gridController;
     Shops shops;
 
     static GameManagerSr instance;
@@ -109,11 +111,17 @@ public class GameManagerSr : MonoBehaviour
 
     #endregion
 
+    [Header("Enemy Upgrades")]
+
     #region Enemy
+
+    [Header("Pawn Upgrades")]
 
     #region Pawn
 
+    public int enemyPawnHowManyExtraSteeps = 0; // Tier 1
 
+    public bool enemyPawnMoveAllDirections = false; // Tier 2
 
     #endregion
 
@@ -171,6 +179,11 @@ public class GameManagerSr : MonoBehaviour
             Instantiate(coinUi);
         }
 
+        if (infoObject != null)
+        {
+            infoObject.SetActive(false);
+        }
+
         int numberOfGameManagers = FindObjectsOfType<GameManagerSr>().Length;
 
         if(instance == null)
@@ -185,6 +198,12 @@ public class GameManagerSr : MonoBehaviour
             Destroy(gameObject);
 
         }
+
+    }
+
+    private void Start()
+    {
+
 
     }
 
@@ -273,7 +292,7 @@ public class GameManagerSr : MonoBehaviour
 
             case "PawnExtraMovement":
 
-                if(money == 2)
+                if(money >= 2)
                 {
 
                     howManyExtraSteepsPawn++;
@@ -286,7 +305,7 @@ public class GameManagerSr : MonoBehaviour
 
             case "PawnMoveAllDirections":
 
-                if (money == 4)
+                if (money >= 4)
                 {
 
                     pawmMoveAllDirections = true;
@@ -299,7 +318,7 @@ public class GameManagerSr : MonoBehaviour
 
             case "PawnMoveWhereAttack":
 
-                if (money == 3)
+                if (money >= 3)
                 {
 
                     pawnMoveWhereAttack = true;
@@ -316,7 +335,7 @@ public class GameManagerSr : MonoBehaviour
 
             case "HorseMoveWhereHeJumpsOver":
 
-                if (money == 6)
+                if (money >= 6)
                 {
 
                     horseCanMoveWhereHeJumpsOver = true;
@@ -329,7 +348,7 @@ public class GameManagerSr : MonoBehaviour
 
             case "HorseAttackWhereHeJumpsOver":
 
-                if (money == 4)
+                if (money >= 4)
                 {
 
                     horseCanAttackWhereHeJumpsOver = true;
@@ -342,7 +361,7 @@ public class GameManagerSr : MonoBehaviour
 
             case "HorseAerialStrike":
 
-                if (money == 7)
+                if (money >= 7)
                 {
 
                     horseAerialStrike = true;
@@ -359,7 +378,7 @@ public class GameManagerSr : MonoBehaviour
 
             case "TowerArtillery":
 
-                if(money < 2)
+                if(money >= 2)
                 {
 
                     towerArtillery = true;
@@ -468,7 +487,9 @@ public class GameManagerSr : MonoBehaviour
                     if (howManyPointsToBuyUpgrades >= 0.5f)
                     {
 
-                        //Buy Pawn Or Horse
+                        //Buy Tier 1 upgrade
+
+                        enemyPawnHowManyExtraSteeps++; // NEED TO CHANGE TO BETTER SYSTEM
 
                         howManyPointsToBuyUpgrades -= 0.5f;
                     }
@@ -480,7 +501,9 @@ public class GameManagerSr : MonoBehaviour
                     if (howManyPointsToBuyUpgrades >= 1)
                     {
 
-                        //Buy Bishop Or Tower
+                        //Buy Tier 2 upgrade
+
+                        enemyPawnMoveAllDirections = true;  // NEED TO CHANGE TO BETTER SYSTEM
 
                         howManyPointsToBuyUpgrades -= 1;
                     }
@@ -492,7 +515,7 @@ public class GameManagerSr : MonoBehaviour
                     if (randomWhaUpgradeToBuy == 2 && howManyPointsToBuyUpgrades >= 1.5f)
                     {
 
-                        //Buy Pawn Or Horse
+                        //Buy Tier 3 upgrade
 
                         howManyPointsToBuyUpgrades -= 1.5f;
                     }
@@ -508,6 +531,10 @@ public class GameManagerSr : MonoBehaviour
 
         }
 
+        gridController = FindAnyObjectByType<GridController>();
+
+        gridController.ReciveEnemyUpgrades();
+
         #endregion
 
     }
@@ -519,16 +546,110 @@ public class GameManagerSr : MonoBehaviour
     public void ShowInfo(GameObject whoCalled)
     {
 
-        GridPiece piece = gameObject.GetComponent<GridPiece>();
-        
-        if(piece.playerPieceHere == true) // Spelare
+        GridPiece piece = whoCalled.GetComponent<GridPiece>();
+
+        if (infoObject == null)
         {
 
+            infoObject = GameObject.Find("ShowInfoCollection");
+            infoObject = infoObject.transform.GetChild(0).gameObject;
 
+        }
+
+        infoObject.transform.position = whoCalled.transform.position + new Vector3(5, 2);
+        infoObject.SetActive(true);
+
+        TextMeshProUGUI showcaseText = infoObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        int numberOfUpgrades = 0;
+
+        if (piece.playerPieceHere == true) // Spelare
+        {
+            #region Player
+
+            switch (piece.currentPlayerType)
+            {
+
+                case PlayerType.Pawn:
+
+                    if (pawmMoveAllDirections)
+                    {
+                        showcaseText.text += "\nPawn move all directions";
+
+                        numberOfUpgrades++;
+                    }
+                    if (pawnMoveWhereAttack)
+                    {
+                        showcaseText.text += "\nPawn move where attack";
+
+                        numberOfUpgrades++;
+                    }
+                    if(howManyExtraSteepsPawn > 0)
+                    {
+                        showcaseText.text += "\n" + howManyExtraSteepsPawn.ToString() + " How many extra steps";
+
+                        numberOfUpgrades++;
+                    }
+
+
+
+                    break;
+
+                case PlayerType.Tower:
+
+                    if (towerArtillery)
+                    {
+                        showcaseText.text += "\nTower artillery";
+
+                        numberOfUpgrades++;
+                    }
+
+                    break;
+
+                case PlayerType.Bishop:
+
+
+
+                    break;
+
+                case PlayerType.Queen:
+
+
+
+                    break;
+
+                case PlayerType.Horse:
+
+                    if (horseAerialStrike)
+                    {
+                        showcaseText.text += "\nHorse aerial strike";
+
+                        numberOfUpgrades++;
+                    }
+                    if (horseCanAttackWhereHeJumpsOver)
+                    {
+                        showcaseText.text += "\nHorse can attack where he jumps over";
+
+                        numberOfUpgrades++;
+                    }
+                    if (horseCanMoveWhereHeJumpsOver)
+                    {
+                        showcaseText.text += "\nHorse can move where he jumps over";
+
+                        numberOfUpgrades++;
+                    }
+
+                    break;
+
+            }
+
+            #endregion
 
         }
         else // Fiende
         {
+
+            #region Enemy
 
             switch (piece.currentEnemyType)
             {
@@ -536,6 +657,18 @@ public class GameManagerSr : MonoBehaviour
                 case EnemyType.Pawn:
 
 
+                    if (enemyPawnMoveAllDirections)
+                    {
+                        showcaseText.text += "\n-Pawn move all directions";
+
+                        numberOfUpgrades++;
+                    }
+                    if (enemyPawnHowManyExtraSteeps > 0)
+                    {
+                        showcaseText.text += "\n-" + enemyPawnHowManyExtraSteeps.ToString() + " How many extra steps";
+
+                        numberOfUpgrades++;
+                    }
 
                     break;
 
@@ -565,7 +698,27 @@ public class GameManagerSr : MonoBehaviour
 
             }
 
+            #endregion
+
         }
+
+        if (numberOfUpgrades == 0)
+        {
+
+            showcaseText.text = " \nNo Upgrades";
+
+        }
+
+    }
+
+    public void StopShowingInfo()
+    {
+
+        TextMeshProUGUI showcaseText = infoObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        showcaseText.text = "";
+
+        infoObject.SetActive(false);
 
     }
 

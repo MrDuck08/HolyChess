@@ -13,7 +13,7 @@ public class PieceVisual : MonoBehaviour
 
     bool startMoving = false;
     bool startMovingBack = false;
-    bool isItPlayer;
+    public bool isItPlayer;
     bool isPlayerAttacking;
     public bool animationIsPlaying = false;
 

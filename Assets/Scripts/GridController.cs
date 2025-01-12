@@ -168,9 +168,9 @@ public class GridController : MonoBehaviour
     #region Pawn
 
     int enemyPawnHowManyExtraSteeps = 0;
-    int enemyPawnMaxHowManyExtraSteeps = 1;
+    int enemyPawnMaxHowManyExtraSteeps = 0;
 
-    bool enemyPawnMoveAllDirections = true;
+    bool enemyPawnMoveAllDirections = false;
     bool enemyPawnMoveWhereAttack = false;
 
     bool enemymoveEverywhereFirstTurnUp = false;
@@ -245,19 +245,22 @@ public class GridController : MonoBehaviour
 
         if (numberOfEnemys == 0 && delayStartHasRun)
         {
+            gameManager = FindAnyObjectByType<GameManagerSr>();
+
             gameManager.howManyPointsForEnemys += 5;
             gameManager.money += 10;
             gameManager.whatRound++;
 
-            switch (gameManager.whatRound)
+            if(gameManager.whatRound >= 6)
             {
+                gameManager.whatRound = 0;
+                gameManager.money = 5;
+                gameManager.howManyPointsForEnemys = 7;
 
-                case 13:
+                Debug.Log("WIN");
+                sceneLoader.ChangeScene(0);
 
-                    Debug.Log("WIN");
-
-                break;
-
+                return;
             }
 
             sceneLoader.ChangeScene(2);
@@ -267,7 +270,13 @@ public class GridController : MonoBehaviour
         {
             Debug.Log("DED");
 
-            sceneLoader.ChangeScene(1);
+            gameManager = FindAnyObjectByType<GameManagerSr>();
+
+            gameManager.whatRound = 0;
+            gameManager.money = 5;
+            gameManager.howManyPointsForEnemys = 7;
+
+            sceneLoader.ChangeScene(0);
         }
 
         if (!aktivateBuffButtons && firstRoundDone)
@@ -302,6 +311,8 @@ public class GridController : MonoBehaviour
 
     public void AnticipatePawnMovment(int currentX, int currentY, GameObject callerGameObject)
     {
+        ReciveUpgrades();
+
         moveFromTileObject = callerGameObject;
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
@@ -511,6 +522,8 @@ public class GridController : MonoBehaviour
     public void AnticipateHorseMovment(int currentX, int currentY, GameObject callerGameObject)
     {
         moveFromTileObject = callerGameObject;
+
+        ReciveUpgrades();
 
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
 
@@ -1017,6 +1030,8 @@ public class GridController : MonoBehaviour
     public void AnticipateTowerMovment(int currentX, int currentY, GameObject callerGameObject)
     {
         moveFromTileObject = callerGameObject;
+
+        ReciveUpgrades();
 
         #region Left
 
@@ -6546,6 +6561,8 @@ public class GridController : MonoBehaviour
         currentXOfPiece = currentX;
         currentYOfPiece = currentY;
 
+        ReciveEnemyUpgrades();
+
         #region Search For Player
 
         for (int i = 0; i < enemyPawnObjectList.Count; i++)
@@ -6582,10 +6599,14 @@ public class GridController : MonoBehaviour
                 if (xPos == currentX && yPos == currentY - 1)
                 {
 
-                    FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
+                    FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], true);
 
                 }
             }
+
+            #endregion
+
+            #region Move all directions
 
             if (enemyPawnMoveAllDirections)
             {
@@ -6597,23 +6618,19 @@ public class GridController : MonoBehaviour
 
                     if (xPos == currentX + 1 && yPos == currentY)
                     {
-                        Debug.Log("Go Right");
                         FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
 
                     }
 
                     if (xPos == currentX - 1 && yPos == currentY)
                     {
-                        Debug.Log("Go Left");
                         FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
 
                     }
 
                     if (xPos == currentX && yPos == currentY + 1)
                     {
-                        Debug.Log("Go Up");
                         enemymoveEverywhereFirstTurnUp = true;
-                        Debug.Log(enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1 + " Y Where Pawn Is LOoking From");
                         FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i], false);
                     }
                 }
@@ -6648,292 +6665,320 @@ public class GridController : MonoBehaviour
 
     #region Searching For PLayer Loop
 
-    public void FindPlayerPawn(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY, int posToLookAtX, int posToLookAtY, GameObject pieceToMove, bool lastMovment)
+    public void FindPlayerPawn(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY, int posToLookAtX, int posToLookAtY, GameObject pieceToMove, bool moveDown)
     {
-        if (!lastMovment)
+        enemyFoundPlayer = false;
+
+
+        #region Search For Player
+
+        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+        #region Down
+
+        while (true)
         {
-            enemyFoundPlayer = false;
 
-
-            #region Search For Player
-
-            gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
-
-            #region Down
-
-            while (true)
+            foreach (GridPiece allPieces in gridPieces)
             {
+                int xPos = allPieces.xPos;
+                int yPos = allPieces.yPos;
 
-                foreach (GridPiece allPieces in gridPieces)
+                #region Right Player Search
+
+                if (xPos == posToLookAtX + 1 && yPos == posToLookAtY - numberOfRoundsContinuation)
                 {
-                    int xPos = allPieces.xPos;
-                    int yPos = allPieces.yPos;
 
-                    #region Right Player Search
-
-                    if (xPos == posToLookAtX + 1 && yPos == posToLookAtY - numberOfRoundsContinuation)
-                    {
-                        Debug.Log(numberOfRoundsContinuation + " Rounds OF COntinuation");
-
-                        if (allPieces.playerPieceHere == true)
-                        {
-                            Debug.Log("Found Player ON RIght");
-                            enemyFoundPlayer = true;
-
-                            numberOfTimesLookingForPlayer = 1;
-                            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
-
-                            currentAmountOfTries += 1;
-
-                            numberOfTriesToFindPlayer.Add(currentAmountOfTries);
-                            currentAmountOfTries = 0;
-
-                            currentYOfenemyListComplete.Clear();
-                            currentXOfEnemyListComplete.Clear();
-                            currentYOfEnemyList.Clear();
-                            currentXOfEnemyList.Clear();
-
-                            if (firstTimeSearching)
-                            {
-                                // Attack
-                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX + 1);
-                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY - numberOfRoundsContinuation + 1);
-                            }
-                            else
-                            {
-                                // Player Piece Is One Or More Away From Player So Move Forward
-                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
-                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
-                            }
-
-                            foundSomething = true;
-                            breakLoop = true;
-
-                            break;
-                        }
-
-                        if (allPieces.enemyPieceHere == true)
-                        {
-                            foundSomething = true;
-                            breakLoop = true;
-
-
-                            break;
-
-                        }
-
-                        if (allPieces.enemyPieceHere == false)
-                        {
-                            foundSomething = true;
-                            breakLoop = false;
-
-                            didntFindAnytrhingOnce = false;
-
-                            currentXOfEnemyList.Add(posToLookAtX);
-                            currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
-
-                        }
-                    }
-                    else
-                    {
-                        if (!foundSomething)
-                        {
-                            breakLoop = true;
-                        }
-                    }
-
-                    #endregion
-
-                    #region Left Player Search
-
-                    if (xPos == posToLookAtX - 1 && yPos == posToLookAtY - numberOfRoundsContinuation)
+                    if (allPieces.playerPieceHere == true)
                     {
 
-                        if (allPieces.playerPieceHere == true)
+                        enemyFoundPlayer = true;
+
+                        numberOfTimesLookingForPlayer = 1;
+                        numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                        currentAmountOfTries += 1;
+
+                        numberOfTriesToFindPlayer.Add(currentAmountOfTries);
+                        currentAmountOfTries = 0;
+
+                        currentYOfenemyListComplete.Clear();
+                        currentXOfEnemyListComplete.Clear();
+                        currentYOfEnemyList.Clear();
+                        currentXOfEnemyList.Clear();
+
+                        if (firstTimeSearching)
                         {
-                            Debug.Log("Found Player ON Left So Break");
-                            enemyFoundPlayer = true;
-
-                            numberOfTimesLookingForPlayer = 1;
-                            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
-
-                            currentAmountOfTries += 1;
-
-                            numberOfTriesToFindPlayer.Add(currentAmountOfTries);
-                            currentAmountOfTries = 0;
-
-                            currentYOfenemyListComplete.Clear();
-                            currentXOfEnemyListComplete.Clear();
-                            currentYOfEnemyList.Clear();
-                            currentXOfEnemyList.Clear();
-
-                            if (firstTimeSearching)
-                            {
-                                // Attack
-                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX - 1);
-                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY - numberOfRoundsContinuation + 1);
-                            }
-                            else
-                            {
-                                // Player Piece Is One Or More Away From Player So Move Forward
-                                moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
-                                moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
-                            }
-
-                            foundSomething = true;
-                            breakLoop = true;
-
-                            break;
-                        }
-
-                        if (allPieces.enemyPieceHere == true)
-                        {
-                            foundSomething = true;
-                            breakLoop = true;
-                            Debug.Log("Found Enemy ON Left So Break");
-
-                            break;
-
-                        }
-
-                        if (allPieces.enemyPieceHere == false)
-                        {
-                            foundSomething = true;
-                            breakLoop = false;
-
-                            didntFindAnytrhingOnce = false;
-                            //Debug.Log("Found Normal Piece");
-
-                            currentXOfEnemyList.Add(posToLookAtX);
-                            currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
-
-                        }
-                    }
-                    else
-                    {
-                        if (!foundSomething)
-                        {
-                            breakLoop = true;
-                        }
-                    }
-
-                    #endregion
-
-                    #region Down End Search
-
-                    if (xPos == posToLookAtX  && yPos == posToLookAtY - numberOfRoundsContinuation)
-                    {
-
-                        if (allPieces.playerPieceHere == true)
-                        {
-                            // Spelare där
-                            if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
-                            {
-
-                                foundSomething = true;
-                                breakLoop = true;
-                            }
-                            enemyPawnNotMoveForward = true;
-                            foundSomething = true;
-
-                            moveToForwardPawnListX.Clear();
-                            moveToForwardPawnListY.Clear();
-
-                            numberOfTriesForPawnToGoForward.Clear();
-                            Debug.Log("Found Player ON Down So Break");
-                            break;
-                        }
-
-                        if (allPieces.enemyPieceHere == true)
-                        {
-                            if (!enemymoveEverywhereFirstTurnUp) // Upgraderingen som kollar ett steg upp körn så den inte avbryter för den upptcäker sin dåtida position
-                            {
-                                // Fiende Där
-                                if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
-                                {
-                                    foundSomething = true;
-                                    breakLoop = true;
-                                }
-                                foundSomething = true;
-                                Debug.Log("Found Enemy ON Down So Break");
-                                break;
-
-                            }
-
-
+                            // Attack
+                            moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX + 1);
+                            moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY - numberOfRoundsContinuation + 1);
                         }
                         else
                         {
-                            // Empty Board Piece
+                            // Player Piece Is One Or More Away From Player So Move Forward
+                            moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                            moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+                        }
+
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        didntFindAnytrhingOnce = false;
+
+                        currentXOfEnemyList.Add(posToLookAtX);
+                        currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+
+                #endregion
+
+                #region Left Player Search
+
+                if (xPos == posToLookAtX - 1 && yPos == posToLookAtY - numberOfRoundsContinuation)
+                {
+
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        enemyFoundPlayer = true;
+
+                        numberOfTimesLookingForPlayer = 1;
+                        numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
+
+                        currentAmountOfTries += 1;
+
+                        numberOfTriesToFindPlayer.Add(currentAmountOfTries);
+                        currentAmountOfTries = 0;
+
+                        currentYOfenemyListComplete.Clear();
+                        currentXOfEnemyListComplete.Clear();
+                        currentYOfEnemyList.Clear();
+                        currentXOfEnemyList.Clear();
+
+                        if (firstTimeSearching)
+                        {
+                            // Attack
+                            moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX - 1);
+                            moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY - numberOfRoundsContinuation + 1);
+                        }
+                        else
+                        {
+                            // Player Piece Is One Or More Away From Player So Move Forward
+                            moveToLocationAfterEnemyListX.Add(posToMoveToAfterFindingPlayerX);
+                            moveToLocationAfterEnemyListY.Add(posToMoveToAfterFindingPlayerY);
+                        }
+
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        foundSomething = true;
+                        breakLoop = true;
+
+                        break;
+
+                    }
+
+                    if (allPieces.enemyPieceHere == false)
+                    {
+                        foundSomething = true;
+                        breakLoop = false;
+
+                        didntFindAnytrhingOnce = false;
+                        //Debug.Log("Found Normal Piece");
+
+                        currentXOfEnemyList.Add(posToLookAtX);
+                        currentYOfEnemyList.Add(posToLookAtY - numberOfRoundsContinuation);
+
+                    }
+                }
+                else
+                {
+                    if (!foundSomething)
+                    {
+                        breakLoop = true;
+                    }
+                }
+
+                #endregion
+
+                #region Down End Search
+
+                if (xPos == posToLookAtX && yPos == posToLookAtY - numberOfRoundsContinuation)
+                {
+
+                    if (allPieces.playerPieceHere == true)
+                    {
+                        // Spelare där
+                        if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
+                        {
+
                             foundSomething = true;
-                            breakLoop = false;
+                            breakLoop = true;
+                        }
+                        enemyPawnNotMoveForward = true;
+                        foundSomething = true;
+
+                        moveToForwardPawnListX.Clear();
+                        moveToForwardPawnListY.Clear();
+
+                        numberOfTriesForPawnToGoForward.Clear();
+
+                        break;
+                    }
+
+                    if (allPieces.enemyPieceHere == true)
+                    {
+                        if (!enemymoveEverywhereFirstTurnUp) // Upgraderingen som kollar ett steg upp kör så den inte avbryter för den upptäcker sin dåtida position
+                        {
+                            // Fiende Där
+                            if (firstTimeSearching) // Den är rakt framför mig, alltså sluta sök
+                            {
+                                foundSomething = true;
+                                breakLoop = true;
+                            }
+                            foundSomething = true;
+
+                            break;
 
                         }
+
 
                     }
                     else
                     {
-                        if (!foundSomething && !enemyPawnNotMoveForward)
-                        {
+                        // Empty Board Piece
+                        foundSomething = true;
+                        breakLoop = false;
 
-                            numberOfTriesForPawnToGoForward.Add(420 - enemyPawnHowManyExtraSteeps); // Gör Så Att om den kan gå fram extra steg så tar den prio
-
-                            moveToForwardPawnListX.Add(posToMoveToAfterFindingPlayerX); 
-                            moveToForwardPawnListY.Add(posToMoveToAfterFindingPlayerY - enemyPawnHowManyExtraSteeps); // Lägger till ett extra steg(Den startar på 0)
-
-                        }
                     }
 
-                    #endregion
-
                 }
 
-                foundSomething = false;
-                firstTimeSearching = false;
-                enemymoveEverywhereFirstTurnUp = false;
-                numberOfRoundsContinuation++;
-
-                if(enemyPawnMaxHowManyExtraSteeps > enemyPawnHowManyExtraSteeps)
-                {
-
-                    enemyPawnHowManyExtraSteeps++;
-
-                }
-
-                if (breakLoop || enemyFoundPlayer)
-                {
-                    foundSomething = false;
-                    breakLoop = false;
-
-                    enemyPawnNotMoveForward = false;
-
-                    numberOfRoundsContinuation = 1;
-                    enemyPawnHowManyExtraSteeps = 0;
-
-                    moveToLocationAfterEnemyListX.AddRange(moveToForwardPawnListX);
-                    moveToLocationAfterEnemyListY.AddRange(moveToForwardPawnListY);
-
-                    numberOfTriesToFindPlayer.AddRange(numberOfTriesForPawnToGoForward);
-
-                    numberOfTriesForPawnToGoForward.Clear();
-
-                    moveToForwardPawnListX.Clear();
-                    moveToForwardPawnListY.Clear();
-
-                    break;
-                }
+                #endregion
 
             }
 
-            #endregion
+            foundSomething = false;
+            firstTimeSearching = false;
+            enemymoveEverywhereFirstTurnUp = false;
+            numberOfRoundsContinuation++;
 
-            #endregion
+            if (breakLoop || enemyFoundPlayer)
+            {
+                #region Move extra Steps Upgrade
+
+                if (moveDown)
+                {
+
+                    moveToForwardPawnListX.Add(posToMoveToAfterFindingPlayerX);
+
+                    int withHowManyLessSteps = 0;
+                    bool breakExtraSteeps = false;
+
+                    for (int i = 0; i < enemyPawnMaxHowManyExtraSteeps; i++)
+                    {
+
+                        foreach (GridPiece allPieces2 in gridPieces)
+                        {
+                            int xPos2 = allPieces2.xPos;
+                            int yPos2 = allPieces2.yPos;
+
+                            if (xPos2 == posToLookAtX && yPos2 == posToLookAtY - i - 1) // -1 för annars kollar den på sin egan pos
+                            {
+
+                                if (allPieces2.playerPieceHere || allPieces2.enemyPieceHere)
+                                {
+                                    // Piece here
+                                    breakExtraSteeps = true;
+                                    break;
+
+                                }
+                                if (allPieces2.enemyPieceHere == false && allPieces2.playerPieceHere == false)
+                                {
+    
+                                    withHowManyLessSteps = i;
+
+                                }
+
+
+                            }
+
+                        }
+
+                        if (breakExtraSteeps)
+                        {
+
+                            break;
+                        }
+
+                    }
+
+                    moveToForwardPawnListY.Add(posToMoveToAfterFindingPlayerY - withHowManyLessSteps); // Lägger till ett extra steg(Den startar på 0)
+
+                    numberOfTriesForPawnToGoForward.Add(420 - withHowManyLessSteps); // Gör Så Att om den kan gå fram extra steg så tar den prio
+
+                }
+
+                #endregion
+
+                foundSomething = false;
+                breakLoop = false;
+
+                enemyPawnNotMoveForward = false;
+
+                numberOfRoundsContinuation = 1;
+                enemyPawnHowManyExtraSteeps = 0;
+
+                moveToLocationAfterEnemyListX.AddRange(moveToForwardPawnListX);
+                moveToLocationAfterEnemyListY.AddRange(moveToForwardPawnListY);
+
+                numberOfTriesToFindPlayer.AddRange(numberOfTriesForPawnToGoForward);
+
+                numberOfTriesForPawnToGoForward.Clear();
+
+                moveToForwardPawnListX.Clear();
+                moveToForwardPawnListY.Clear();
+
+                break;
+            }
+
         }
-        else
-        {
-            numberOfTimesLookingForPlayer = 1;
-            numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
-        }
+
+        #endregion
+
+        #endregion
+
+
 
         numberOfTimesLookingForPlayer = 2;
         numberOfTimesLookingForPlayerLeft = numberOfTimesLookingForPlayer;
@@ -7157,13 +7202,22 @@ public class GridController : MonoBehaviour
     public void Revive()
     {
 
-        Time.timeScale = 1;
+        gameManager = FindAnyObjectByType<GameManagerSr>();
 
-        reviveObject.SetActive(false);
+        if(gameManager.money >= 3)
+        {
 
-        reviveHappened = true;
+            Time.timeScale = 1;
 
-        whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().GoBack();
+            reviveObject.SetActive(false);
+
+            reviveHappened = true;
+
+            whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().GoBack();
+
+            gameManager.money -= 3;
+
+        }
 
     }
 
@@ -7173,6 +7227,7 @@ public class GridController : MonoBehaviour
 
     void ReciveUpgrades() // Går till gamemanager och får alla upgraderingar 
     {
+        gameManager = FindAnyObjectByType<GameManagerSr>();
 
         pawnMaxHowManyExtraSteeps = gameManager.howManyExtraSteepsPawn;
         pawnHowManyExtraSteeps = pawnMaxHowManyExtraSteeps;
@@ -7187,23 +7242,14 @@ public class GridController : MonoBehaviour
 
     }
 
-    public void ReciveEnemyUpgrades(int whatUpgradeToTrue)
+    public void ReciveEnemyUpgrades()
     {
 
-        switch (whatUpgradeToTrue)
-        {
-            #region Pawn
+        gameManager = FindObjectOfType<GameManagerSr>();
 
-            case 0:
+        enemyPawnMaxHowManyExtraSteeps = gameManager.enemyPawnHowManyExtraSteeps;
 
-                enemyPawnMaxHowManyExtraSteeps++;
-
-                break;
-
-
-
-                #endregion
-        }
+        enemyPawnMoveAllDirections = gameManager.enemyPawnMoveAllDirections;
 
     }
 

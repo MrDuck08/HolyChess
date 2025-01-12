@@ -213,7 +213,6 @@ public class BoardCreator : MonoBehaviour
 
         gameManagerSr = FindObjectOfType<GameManagerSr>();
 
-        gameManagerSr.howManyPointsForEnemys += 5;
         gameManagerSr.DistributePoints();
 
 

@@ -1,14 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    [Header("How Much In Inventory")]
+
     public int pawnsInInventory = 0;
     public int horseInInvenory = 0;
     public int towersInInventory = 0;
     public int bishopInInventory = 0;
     public int queenInInventory = 0;
+
+    [Header("Place Pieces Visual")]
+
+    [SerializeField] GameObject addPawnButton;
+    [SerializeField] GameObject addTowerButton;
+    [SerializeField] GameObject addBishopButton;
+    [SerializeField] GameObject addQueenButton;
+    [SerializeField] GameObject addHorseButton;
+
+    [Header("Game Has Started")]
 
     public bool gameHasStarted = false;
 
@@ -17,6 +30,15 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(DelayStart());
+
+    }
+
+    IEnumerator DelayStart()
+    {
+
+        yield return new WaitForSeconds(0.1f);
+
         GameManager = FindAnyObjectByType<GameManagerSr>();
 
         pawnsInInventory = GameManager.pawnsInInventory;
@@ -24,6 +46,83 @@ public class Inventory : MonoBehaviour
         bishopInInventory = GameManager.bishopInInventory;
         queenInInventory = GameManager.queenInInventory;
         horseInInvenory = GameManager.horseInInvenory;
+
+    }
+
+    private void Update()
+    {
+
+        #region Place UNit Visuals
+
+        if (addPawnButton == null)
+        {
+
+            return;
+
+        }
+
+        if (!gameHasStarted)
+        {
+
+            if (pawnsInInventory == 0)
+            {
+                addPawnButton.SetActive(false);
+            }
+            else
+            {
+                addPawnButton.SetActive(true);
+            }
+            if (towersInInventory == 0)
+            {
+                addTowerButton.SetActive(false);
+            }
+            else
+            {
+                addTowerButton.SetActive(true);
+            }
+            if (bishopInInventory == 0)
+            {
+                addBishopButton.SetActive(false);
+            }
+            else
+            {
+                addBishopButton.SetActive(true);
+            }
+            if (queenInInventory == 0)
+            {
+                addQueenButton.SetActive(false);
+            }
+            else
+            {
+                addQueenButton.SetActive(true);
+            }
+            if (horseInInvenory == 0)
+            {
+                addHorseButton.SetActive(false);
+            }
+            else
+            {
+                addHorseButton.SetActive(true);
+            }
+
+            addPawnButton.GetComponentInChildren<TextMeshProUGUI>().text = pawnsInInventory.ToString();
+            addTowerButton.GetComponentInChildren<TextMeshProUGUI>().text = towersInInventory.ToString();
+            addBishopButton.GetComponentInChildren<TextMeshProUGUI>().text = bishopInInventory.ToString();
+            addQueenButton.GetComponentInChildren<TextMeshProUGUI>().text = queenInInventory.ToString();
+            addHorseButton.GetComponentInChildren<TextMeshProUGUI>().text = horseInInvenory.ToString();
+
+        }
+        else
+        {
+            addPawnButton.SetActive(false);
+            addTowerButton.SetActive(false);
+            addBishopButton.SetActive(false);
+            addQueenButton.SetActive(false);
+            addHorseButton.SetActive(false);
+        }
+
+        #endregion
+
     }
 
     #region Place Pieces
@@ -83,7 +182,7 @@ public class Inventory : MonoBehaviour
                     allPieces.placingDownAUnitNow = true;
                 }
 
-                horseInInvenory--;
+                towersInInventory--;
             }
         }
     }
@@ -134,6 +233,8 @@ public class Inventory : MonoBehaviour
 
     public void buyWhatUnit(int whatToBuy)
     {
+
+        GameManager = FindAnyObjectByType<GameManagerSr>();
 
         switch (whatToBuy)
         {
@@ -209,6 +310,19 @@ public class Inventory : MonoBehaviour
 
                 break;
         }
+
+    }
+
+    #endregion
+
+    #region Buy Upgrade
+
+    public void BuyUpgrade(string whatUpgrade)
+    {
+
+        GameManager = FindAnyObjectByType<GameManagerSr>();
+
+        GameManager.BuyUpgrade(whatUpgrade);
 
     }
 

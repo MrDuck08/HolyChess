@@ -489,14 +489,21 @@ public class Shops : MonoBehaviour
     public void GuaranteeShop()
     {
 
-        // Cost Money
+        gameManager = FindAnyObjectByType<GameManagerSr>();
 
-        gameManager = FindObjectOfType<GameManagerSr>();
+        if (gameManager.money >= 2)
+        {
 
-        gameManager.guaranteedShop = typeOfShop;
+            gameManager = FindObjectOfType<GameManagerSr>();
 
-        removeShopButton.SetActive(false);
-        keepShopButton.SetActive(false);
+            gameManager.guaranteedShop = typeOfShop;
+
+            removeShopButton.SetActive(false);
+            keepShopButton.SetActive(false);
+
+            gameManager.money -= 2;
+
+        }
 
     }
 

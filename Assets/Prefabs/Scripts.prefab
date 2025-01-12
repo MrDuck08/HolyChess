@@ -44,6 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f2383aca4e62648965ad4237068521, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfEnemys: 0
+  howManyPlayerPieces: 0
+  firstRoundDone: 0
+  reviveHappened: 0
+  midRoundBuffsButtons:
+  - {fileID: 0}
+  - {fileID: 0}
+  buffPos:
+  - {fileID: 0}
+  - {fileID: 0}
+  reviveObject: {fileID: 0}
 --- !u!1 &3362620715603183606
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,10 +99,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ce95b39bd5417468cf2ba5bd8e4504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxYUp: 0
-  maxRandomRange: 5
-  minRandomRange: 4
+  topPosY: 0
+  bottomPosY: 0
+  maxRandomRange: 6
+  minRandomRange: 3
   gridPieceObject: {fileID: 6938364730039044657, guid: c641a7f6d4816074e95acc8cd22c9e99, type: 3}
+--- !u!1 &4287019055846037981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7994805663860965671}
+  - component: {fileID: 3055194433773735138}
+  m_Layer: 0
+  m_Name: ButtonInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7994805663860965671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4287019055846037981}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4467646561737837836}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3055194433773735138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4287019055846037981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 246f675fe3558ea43813083ab46d2367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whereToGoToObject: {fileID: 0}
 --- !u!1 &5836792541911492456
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,11 +193,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95488eae0fb712d44a360a5166688c47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pawnsInInventory: 5
-  horseInInvenory: 5
-  towersInInventory: 5
-  bishopInInventory: 5
-  queenInInventory: 5
+  pawnsInInventory: 2
+  horseInInvenory: 1
+  towersInInventory: 0
+  bishopInInventory: 0
+  queenInInventory: 0
   gameHasStarted: 0
 --- !u!1 &7200521580801354003
 GameObject:
@@ -220,5 +277,6 @@ Transform:
   - {fileID: 402061633134634899}
   - {fileID: 8568321224242909220}
   - {fileID: 6905694750258472156}
+  - {fileID: 7994805663860965671}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
