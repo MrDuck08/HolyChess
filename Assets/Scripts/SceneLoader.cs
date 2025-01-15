@@ -13,8 +13,6 @@ public class SceneLoader : MonoBehaviour
 
     int whatShopToActivate;
 
-    bool animationsAreDone;
-
     private void Start()
     {
         gameManager = FindAnyObjectByType<GameManagerSr>();
@@ -78,8 +76,6 @@ public class SceneLoader : MonoBehaviour
         gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
         pieceVisuals = FindObjectsOfType(typeof(PieceVisual)) as PieceVisual[];
         gridController = FindObjectOfType<GridController>();
-
-        animationsAreDone = true;
 
         foreach(PieceVisual piece in pieceVisuals)
         {

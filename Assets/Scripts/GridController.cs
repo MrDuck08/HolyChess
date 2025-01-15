@@ -332,7 +332,7 @@ public class GridController : MonoBehaviour
                     {
 
                         // maxY Visar en mindre 
-                        if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
+                        if (boardCreator.topPosY - 1 <= currentY + 1 + pawnHowManyExtraSteeps)
                         {
 
                             allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
@@ -428,7 +428,7 @@ public class GridController : MonoBehaviour
                     {
 
                         allPieces.anticipatePlayerAttack = true;
-                        if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
+                        if (boardCreator.topPosY - 1 <= currentY + 1 + pawnHowManyExtraSteeps)
                         {
 
                             allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
@@ -449,7 +449,7 @@ public class GridController : MonoBehaviour
                     allPieces.anticipateMovment = true;
 
                     // maxY Visar en mindre 
-                    if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
+                    if (boardCreator.topPosY - 1 <= currentY + 1 + pawnHowManyExtraSteeps)
                     {
 
                         allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;
@@ -475,7 +475,7 @@ public class GridController : MonoBehaviour
 
                         allPieces.anticipatePlayerAttack = true;
 
-                        if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
+                        if (boardCreator.topPosY - 1 <= currentY + 1 + pawnHowManyExtraSteeps)
                         {
 
                             allPieces.currentPlayerAttackType = AnticipatePlayerAttackType.Queen;
@@ -494,7 +494,7 @@ public class GridController : MonoBehaviour
 
                     allPieces.anticipateMovment = true;
                     // maxY Visar en mindre 
-                    if (boardCreator.topPosY - 1 == currentY + 1 + pawnHowManyExtraSteeps)
+                    if (boardCreator.topPosY - 1 <= currentY + 1 + pawnHowManyExtraSteeps)
                     {
 
                         allPieces.currentPlayerMovmentType = AnticipatePlayerMovmentType.Queen;

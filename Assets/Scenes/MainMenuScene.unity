@@ -219,6 +219,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4613997398344038116, guid: e82ec89253ed7b147ab7cdc104652b96, type: 3}
+      propertyPath: pawnMoveWhereAttack
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613997398344038116, guid: e82ec89253ed7b147ab7cdc104652b96, type: 3}
+      propertyPath: pawmMoveAllDirections
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613997398344038116, guid: e82ec89253ed7b147ab7cdc104652b96, type: 3}
+      propertyPath: howManyExtraSteepsPawn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6480142885641784225, guid: e82ec89253ed7b147ab7cdc104652b96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

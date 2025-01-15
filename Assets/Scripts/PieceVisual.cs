@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -30,6 +29,9 @@ public class PieceVisual : MonoBehaviour
 
     private void Update()
     {
+
+        #region Move
+
         if (startMoving)
         {
 
@@ -117,6 +119,8 @@ public class PieceVisual : MonoBehaviour
             }
 
         }
+
+        #endregion
 
     }
 
@@ -295,7 +299,7 @@ public class PieceVisual : MonoBehaviour
 
     #endregion
 
-    #region Movment
+    #region Move info
 
     public void MovePiece(GameObject objectToGoTo, bool playerMoving, bool isPlayerAttack, GameObject originalGameobject)
     {

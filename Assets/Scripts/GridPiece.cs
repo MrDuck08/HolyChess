@@ -945,6 +945,8 @@ public class GridPiece : MonoBehaviour
 
     #endregion
 
+    #region Check Who Died
+
     public void CheckWhoDied(GridPiece whoCalled)
     {
         if (playerPieceHere)
@@ -974,5 +976,7 @@ public class GridPiece : MonoBehaviour
 
         }
     }
+
+    #endregion
 
 }

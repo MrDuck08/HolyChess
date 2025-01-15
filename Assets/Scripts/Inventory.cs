@@ -52,7 +52,7 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
 
-        #region Place UNit Visuals
+        #region Place Unit Visuals
 
         if (addPawnButton == null)
         {
