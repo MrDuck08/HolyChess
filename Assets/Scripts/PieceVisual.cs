@@ -69,7 +69,7 @@ public class PieceVisual : MonoBehaviour
                     SpawnInfo((int)playerType, transform.position, true);
 
                 }
-                else // Fiende Som Rör På Sig
+                else // Fiende
                 {
 
                     gridController = FindObjectOfType<GridController>();

@@ -168,7 +168,6 @@ public class GridController : MonoBehaviour
     #region Pawn
 
     int enemyPawnHowManyExtraSteeps = 0;
-    int enemyPawnMaxHowManyExtraSteeps = 0;
 
     bool enemyPawnMoveAllDirections = false;
     bool enemyPawnMoveWhereAttack = false;
@@ -6591,51 +6590,39 @@ public class GridController : MonoBehaviour
             currentXOfEnemyList.Clear();
             #endregion
 
-            foreach (GridPiece allPieces in gridPieces)
-            {
-                int xPos = allPieces.xPos;
-                int yPos = allPieces.yPos;
-
-                if (xPos == currentX && yPos == currentY - 1)
-                {
-
-                    FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], true);
-
-                }
-            }
+            FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], true);
 
             #endregion
+
+            #region Upgrades
 
             #region Move all directions
 
             if (enemyPawnMoveAllDirections)
             {
+                FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
 
-                foreach (GridPiece allPieces in gridPieces)
-                {
-                    int xPos = allPieces.xPos;
-                    int yPos = allPieces.yPos;
+                FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
 
-                    if (xPos == currentX + 1 && yPos == currentY)
-                    {
-                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
-
-                    }
-
-                    if (xPos == currentX - 1 && yPos == currentY)
-                    {
-                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos, enemyPawnObjectList[i], false);
-
-                    }
-
-                    if (xPos == currentX && yPos == currentY + 1)
-                    {
-                        enemymoveEverywhereFirstTurnUp = true;
-                        FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i], false);
-                    }
-                }
+                enemymoveEverywhereFirstTurnUp = true;
+                FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyPawnObjectList[i], false);
 
             }
+
+            #endregion
+
+            #region Move Where Attack
+
+            if (enemyPawnMoveWhereAttack)
+            {
+
+                FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i], false);
+
+                FindPlayerPawn(enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyPawnObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyPawnObjectList[i], false);
+
+            }
+
+            #endregion
 
             #endregion
 
@@ -6897,7 +6884,7 @@ public class GridController : MonoBehaviour
             {
                 #region Move extra Steps Upgrade
 
-                if (moveDown)
+                if (moveDown && enemyPawnHowManyExtraSteeps != 0)
                 {
 
                     moveToForwardPawnListX.Add(posToMoveToAfterFindingPlayerX);
@@ -6905,7 +6892,7 @@ public class GridController : MonoBehaviour
                     int withHowManyLessSteps = 0;
                     bool breakExtraSteeps = false;
 
-                    for (int i = 0; i < enemyPawnMaxHowManyExtraSteeps; i++)
+                    for (int i = 0; i < enemyPawnHowManyExtraSteeps; i++)
                     {
 
                         foreach (GridPiece allPieces2 in gridPieces)
@@ -7178,9 +7165,9 @@ public class GridController : MonoBehaviour
 
         reviveObject.SetActive(true);
 
-        whoCalledForRevive = whoCalled;
+        reviveHappened = true;
 
-        Debug.Log("Dead Canvas Aktivate");
+        whoCalledForRevive = whoCalled;
 
     }
 
@@ -7192,6 +7179,8 @@ public class GridController : MonoBehaviour
         whoCalledForRevive.GetComponent<GridPiece>().playerPieceHere = false;
 
         howManyPlayerPieces--;
+
+        reviveHappened = false;
 
         whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().DentRevive();
 
@@ -7210,8 +7199,6 @@ public class GridController : MonoBehaviour
             Time.timeScale = 1;
 
             reviveObject.SetActive(false);
-
-            reviveHappened = true;
 
             whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().GoBack();
 
@@ -7247,9 +7234,9 @@ public class GridController : MonoBehaviour
 
         gameManager = FindObjectOfType<GameManagerSr>();
 
-        enemyPawnMaxHowManyExtraSteeps = gameManager.enemyPawnHowManyExtraSteeps;
-
+        enemyPawnHowManyExtraSteeps = gameManager.enemyPawnHowManyExtraSteeps;
         enemyPawnMoveAllDirections = gameManager.enemyPawnMoveAllDirections;
+        enemyPawnMoveWhereAttack = gameManager.enemyPawnMoveWhereAttack;
 
     }
 

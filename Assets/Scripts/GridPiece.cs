@@ -970,6 +970,13 @@ public class GridPiece : MonoBehaviour
                     controller.AktivateReviveCanvas(whoCalled);
 
                 }
+                else
+                {
+
+                    controller.howManyPlayerPieces--;
+                    playerPieceHere = false;
+
+                }
 
             }
 

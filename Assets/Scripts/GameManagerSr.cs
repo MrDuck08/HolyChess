@@ -122,6 +122,7 @@ public class GameManagerSr : MonoBehaviour
     public int enemyPawnHowManyExtraSteeps = 0; // Tier 1
 
     public bool enemyPawnMoveAllDirections = false; // Tier 2
+    public bool enemyPawnMoveWhereAttack = false;  // Tier 1
 
     #endregion
 
@@ -406,6 +407,16 @@ public class GameManagerSr : MonoBehaviour
 
         numberOfPointsForUnits++; // Så det altid finns minnst en fiende
 
+        #region Bools
+
+        bool pawnBought = false;
+        bool towerBought = false;
+        bool bishopBought = false;
+        bool queenBought = false;
+        bool horseBought = false;
+
+        #endregion
+
         #region Unit Buy
 
         while (true)
@@ -424,6 +435,23 @@ public class GameManagerSr : MonoBehaviour
                         whatTypeOfEnemyWasBought.Add(pawnOrHorse);
                         numberOfPointsForUnits--;
 
+                        switch (pawnOrHorse)
+                        {
+
+                            case 0:
+
+                                pawnBought = true;
+
+                                break;
+
+                            case 1:
+
+                                horseBought = true;
+
+                                break;
+
+                        }
+
                     }
 
                 break;
@@ -439,6 +467,23 @@ public class GameManagerSr : MonoBehaviour
                         whatTypeOfEnemyWasBought.Add(bishopOrTower);
                         numberOfPointsForUnits -= 2;
 
+                        switch (bishopOrTower)
+                        {
+
+                            case 2:
+
+                                towerBought = true;
+
+                                break;
+
+                            case 3:
+
+                                bishopBought = true;
+
+                                break;
+
+                        }
+
                     }
 
                 break;
@@ -452,6 +497,8 @@ public class GameManagerSr : MonoBehaviour
                         howManyEnemiesBought++;
                         whatTypeOfEnemyWasBought.Add(4);
                         numberOfPointsForUnits -= 3;
+
+                        queenBought = true;
 
                     }
 
@@ -470,9 +517,13 @@ public class GameManagerSr : MonoBehaviour
 
         #region Upgrade Buy
 
+
+
         while (true)
         {
+
             int randomWhaUpgradeToBuy = Random.Range(0, 3);
+            int toWhatUnitBuyUpgrade = Random.Range(0, 5);
 
             switch (randomWhaUpgradeToBuy)
             {
@@ -483,9 +534,21 @@ public class GameManagerSr : MonoBehaviour
 
                         //Buy Tier 1 upgrade
 
-                        enemyPawnHowManyExtraSteeps++; // NEED TO CHANGE TO BETTER SYSTEM
+                        switch (toWhatUnitBuyUpgrade)
+                        {
 
-                        howManyPointsToBuyUpgrades -= 0.5f;
+                            case 0: // Pawn
+
+                                enemyPawnHowManyExtraSteeps++;
+
+                                howManyPointsToBuyUpgrades -= 0.5f;
+
+                                break;
+
+                        }
+
+                        break;
+
                     }
 
                 break;
@@ -497,9 +560,49 @@ public class GameManagerSr : MonoBehaviour
 
                         //Buy Tier 2 upgrade
 
-                        enemyPawnMoveAllDirections = true;  // NEED TO CHANGE TO BETTER SYSTEM
+                        switch (toWhatUnitBuyUpgrade)
+                        {
 
-                        howManyPointsToBuyUpgrades -= 1;
+                            case 0: // Pawn
+
+                                int randomPawnUpgrade = Random.Range(0, 2);
+
+                                switch (randomPawnUpgrade) // Random vilken pawn Upgradering
+                                {
+
+                                    case 0:
+
+                                        if (!enemyPawnMoveAllDirections)
+                                        {
+                                            enemyPawnMoveAllDirections = true;
+
+                                            howManyPointsToBuyUpgrades -= 1;
+                                        }
+
+                                        break;
+
+                                    case 1:
+
+                                        if (!enemyPawnMoveWhereAttack)
+                                        {
+
+                                            enemyPawnMoveWhereAttack = true;
+
+                                            howManyPointsToBuyUpgrades -= 1;
+
+                                        }
+
+                                        break;
+
+                                }
+
+
+                                break;
+
+                        }
+
+                        break;
+
                     }
 
                 break;
