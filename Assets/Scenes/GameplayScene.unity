@@ -5177,6 +5177,10 @@ PrefabInstance:
       propertyPath: addBishopButton
       value: 
       objectReference: {fileID: 52472879}
+    - target: {fileID: 9096577581404328533, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
+      propertyPath: towersInInventory
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9113246568715937223, guid: 873d7d89e2f904c44b9659932e80b95d, type: 3}
       propertyPath: m_Name
       value: Scripts

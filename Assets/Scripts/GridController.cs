@@ -146,6 +146,7 @@ public class GridController : MonoBehaviour
     #region Tower
 
     bool towerArtillery = false;
+    bool towerProtector = true;
 
     #endregion
 
@@ -1047,6 +1048,13 @@ public class GridController : MonoBehaviour
                     {
                         breakLoop = true;
 
+                        if (towerProtector)
+                        {
+
+                            allPieces.anticipateProtection = true;
+
+                        }
+
                         break;
                     }
 
@@ -1122,6 +1130,13 @@ public class GridController : MonoBehaviour
                     if (allPieces.playerPieceHere == true)
                     {
                         breakLoop = true;
+
+                        if (towerProtector)
+                        {
+
+                            allPieces.anticipateProtection = true;
+
+                        }
 
                         break;
                     }
@@ -1199,6 +1214,13 @@ public class GridController : MonoBehaviour
                     {
                         breakLoop = true;
 
+                        if (towerProtector)
+                        {
+
+                            allPieces.anticipateProtection = true;
+
+                        }
+
                         break;
                     }
 
@@ -1274,6 +1296,13 @@ public class GridController : MonoBehaviour
                     if(allPieces.playerPieceHere == true)
                     {
                         breakLoop = true;
+
+                        if (towerProtector)
+                        {
+
+                            allPieces.anticipateProtection = true;
+
+                        }
 
                         break;
                     }
@@ -2271,6 +2300,7 @@ public class GridController : MonoBehaviour
         switch (whoCalled)
         {
 
+            #region Horse
 
             case PlayerType.Horse:
 
@@ -2399,6 +2429,14 @@ public class GridController : MonoBehaviour
 
                 break;
 
+            #endregion
+
+        }
+
+        if (towerProtector)
+        {
+
+            objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(moveFromTileObject, true, false, objectToMoveTo);
 
         }
 

@@ -401,11 +401,11 @@ public class GameManagerSr : MonoBehaviour
     public void DistributePoints()
     {
         int numberOfPointsForUnits = Random.Range(0, howManyPointsForEnemys); // Hur mycket poäng till pjäser
-        Debug.Log(numberOfPointsForUnits + " How Many Points");
 
         howManyPointsForEnemys -= numberOfPointsForUnits; // Tar bort antal poäng från pjäser och resten av poängen går till upgraderingar
 
         numberOfPointsForUnits++; // Så det altid finns minnst en fiende
+        Debug.Log(numberOfPointsForUnits + " How Many Points");
 
         #region Bools
 
@@ -614,7 +614,6 @@ public class GameManagerSr : MonoBehaviour
 
                         //Buy Tier 3 upgrade
 
-                        howManyPointsToBuyUpgrades -= 1.5f;
                     }
 
                 break;

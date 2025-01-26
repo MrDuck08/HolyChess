@@ -73,6 +73,7 @@ public class GridPiece : MonoBehaviour
 
     [SerializeField] GameObject pieceVisuals;
     public GameObject currentPieceVisuals;
+    [SerializeField] GameObject soundObject;
  
     [Header("Position")]
 
@@ -111,6 +112,7 @@ public class GridPiece : MonoBehaviour
 
     public AnticipatePlayerMovmentType currentPlayerMovmentType; 
     public bool anticipateMovment;
+    public bool anticipateProtection = false;
 
     [Header("Player Attack")]
 
@@ -303,6 +305,13 @@ public class GridPiece : MonoBehaviour
             gameObject.GetComponent<SpriteRenderer>().color = anticipateMovemtVisualls;
         }
 
+        if (anticipateProtection && !movedOnce)
+        {
+
+            gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+
+        }
+
         if (anticipatePlayerAttack && !movedOnce)
         {
             gameObject.GetComponent<SpriteRenderer>().color = Color.red;
@@ -313,9 +322,9 @@ public class GridPiece : MonoBehaviour
 
         #region Movment + Spawn
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
-
+            
             if (mouseOver)
             {
 
@@ -327,6 +336,23 @@ public class GridPiece : MonoBehaviour
                     // Jag sätter inte att det inte längre är info här för att lura programet att inte direkt aktivera den
                     noLongerShowInfo = true;
                 }
+
+                #region Play Sound
+
+                switch (currentPlayerType)
+                {
+
+                    case PlayerType.Pawn:
+
+                        GameObject sound = Instantiate(soundObject);
+
+                        sound.GetComponent<SoundManager>().PlaySound("Pawn");
+
+                        break;
+
+                }
+
+                #endregion
 
                 if (playerTurn)
                 {
@@ -731,6 +757,29 @@ public class GridPiece : MonoBehaviour
                         #endregion
 
                     }
+
+
+                    #region Protecting
+
+                    if (anticipateProtection)
+                    {
+
+                        controller.movePiece(currentPlayerType, gameObject);
+
+                        anticipateProtection = false;
+
+                        gridPieces = FindObjectsOfType(typeof(GridPiece)) as GridPiece[];
+
+                        foreach (GridPiece allPiece in gridPieces)
+                        {
+                            allPiece.anticipateMovment = false;
+
+                            allPiece.currentPlayerMovmentType = AnticipatePlayerMovmentType.none;
+                        }
+
+                    }
+
+                    #endregion
 
                     if (enemyPieceHere && stunningEnemy)
                     {

@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceVisuals: {fileID: 7761163838643187131, guid: 8ac3d2baf676fda4eaf98c0a16e2f370, type: 3}
   currentPieceVisuals: {fileID: 0}
+  soundObject: {fileID: 3479514867398095661, guid: 51fd1b8e98c956d4a880884b1da3f8f1, type: 3}
   xPos: 0
   yPos: 0
   currentPlayerType: 0
@@ -123,6 +124,7 @@ MonoBehaviour:
   enemyPieceHere: 0
   currentPlayerMovmentType: 0
   anticipateMovment: 0
+  anticipateProtection: 0
   currentPlayerAttackType: 0
   anticipatePlayerAttack: 0
   movedOnce: 0
