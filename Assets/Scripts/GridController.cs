@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -99,6 +100,7 @@ public class GridController : MonoBehaviour
     public bool reviveHappened = false;
 
     GridPiece whoCalledForRevive;
+    PieceVisual enemyWhoCalled;
 
     #region Tower
 
@@ -146,7 +148,7 @@ public class GridController : MonoBehaviour
     #region Tower
 
     bool towerArtillery = false;
-    bool towerProtector = true;
+    bool towerProtector = false;
 
     #endregion
 
@@ -2292,7 +2294,7 @@ public class GridController : MonoBehaviour
 
     #region General Stuff
 
-    public void movePiece(PlayerType whoCalled, GameObject objectToMoveTo)
+    public void movePiece(PlayerType whoCalled, GameObject objectToMoveTo, bool protectingNow)
     {
 
         #region Upgrades
@@ -2310,15 +2312,16 @@ public class GridController : MonoBehaviour
                     xDifference = objectToMoveTo.GetComponent<GridPiece>().xPos - moveFromTileObject.GetComponent<GridPiece>().xPos;
                     yDifference = objectToMoveTo.GetComponent<GridPiece>().yPos - moveFromTileObject.GetComponent<GridPiece>().yPos;
 
-
-                    if(xDifference == 1 ||  yDifference == -1)
+                    int TestInt = 0;
+                    if (xDifference == 1 ||  xDifference == -1) // Dosent WOrk properly
                     {
 
                         #region Up & Down
 
+
                         while (true)
                         {
-
+                            TestInt++;
                             foreach (GridPiece allPieces in gridPieces)
                             {
                                 int xPos = allPieces.xPos;
@@ -2363,6 +2366,8 @@ public class GridController : MonoBehaviour
 
                             }
 
+                            if (TestInt >= 20) { break; }
+
                         }
 
                         #endregion
@@ -2375,7 +2380,7 @@ public class GridController : MonoBehaviour
 
                         while (true)
                         {
-
+                            TestInt++;
                             foreach (GridPiece allPieces in gridPieces)
                             {
                                 int xPos = allPieces.xPos;
@@ -2419,6 +2424,8 @@ public class GridController : MonoBehaviour
 
                             }
 
+                            if (TestInt >= 20) { break; }
+
                         }
 
                         #endregion
@@ -2433,17 +2440,23 @@ public class GridController : MonoBehaviour
 
         }
 
-        if (towerProtector)
+        if (towerProtector && protectingNow)
         {
 
-            objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(moveFromTileObject, true, false, objectToMoveTo);
+            objectToMoveTo.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(moveFromTileObject, true, false, objectToMoveTo, towerProtector);
 
         }
 
         #endregion
 
-        moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = whoCalled; // I movePiece() Säts den falsk efter
-        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, false, moveFromTileObject);
+        if (!towerProtector)
+        {
+
+            moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = whoCalled; // I movePiece() Säts den falsk efter
+
+        }
+
+        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, false, moveFromTileObject, protectingNow);
 
     }
 
@@ -2485,7 +2498,7 @@ public class GridController : MonoBehaviour
         #endregion
 
         moveFromTileObject.GetComponent<GridPiece>().currentPlayerType = whoCalled;
-        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, true, moveFromTileObject);
+        moveFromTileObject.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(objectToMoveTo, true, true, moveFromTileObject, false);
 
     }
 
@@ -2535,7 +2548,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i], 1);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i]);
 
             #region Reset
             currentAmountOfTries = 0;
@@ -2549,7 +2562,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i], 2);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 2, enemyHorseObjectList[i]);
 
             #region Reset
             currentAmountOfTries = 0;
@@ -2563,7 +2576,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i], 3);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i]);
 
             #region Reset
             currentAmountOfTries = 0;
@@ -2577,7 +2590,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i], 4);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i]);
 
             #region Reset
             currentAmountOfTries = 0;
@@ -2591,7 +2604,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i], 5);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 1, enemyHorseObjectList[i]);
 
             #region Reset
             currentAmountOfTries = 0;
@@ -2605,7 +2618,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i], 6);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 2, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos - 1, enemyHorseObjectList[i]);
 
             #region Reset
             currentAmountOfTries = 0;
@@ -2619,7 +2632,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i], 7);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos - 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i]);
 
             #region Reset
             currentAmountOfTries = 0;
@@ -2633,7 +2646,7 @@ public class GridController : MonoBehaviour
             currentYOfEnemyList.Clear();
             currentXOfEnemyList.Clear();
             #endregion
-            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i], 8);
+            FindPlayerHorseLoop(enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i].GetComponent<GridPiece>().xPos + 1, enemyHorseObjectList[i].GetComponent<GridPiece>().yPos + 2, enemyHorseObjectList[i]);
 
             MoveToLocationHorse(enemyHorseObjectList[i]);
 
@@ -2659,7 +2672,7 @@ public class GridController : MonoBehaviour
         #endregion
     }
 
-    public void FindPlayerHorseLoop(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY,   int posToLookAtX, int posToLookAtY, GameObject pieceToMove, int whatPositionNumber)
+    public void FindPlayerHorseLoop(int posToMoveToAfterFindingPlayerX, int posToMoveToAfterFindingPlayerY,   int posToLookAtX, int posToLookAtY, GameObject pieceToMove)
     {
 
         enemyFoundPlayer = false;
@@ -2936,38 +2949,38 @@ public class GridController : MonoBehaviour
             {
                 if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                 {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 1, currentYOfenemyListComplete[i] - 2, pieceToMove, whatPositionNumber);
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 1, currentYOfenemyListComplete[i] - 2, pieceToMove);
                 }
                 if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                 {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 1, currentYOfenemyListComplete[i] - 2, pieceToMove, whatPositionNumber);
-                }
-
-                if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
-                {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 2, currentYOfenemyListComplete[i] - 1, pieceToMove, whatPositionNumber);
-                }
-                if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
-                {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 2, currentYOfenemyListComplete[i] + 1, pieceToMove, whatPositionNumber);
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 1, currentYOfenemyListComplete[i] - 2, pieceToMove);
                 }
 
                 if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                 {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 2, currentYOfenemyListComplete[i] - 1, pieceToMove, whatPositionNumber);
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 2, currentYOfenemyListComplete[i] - 1, pieceToMove);
                 }
                 if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                 {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 2, currentYOfenemyListComplete[i] + 1, pieceToMove, whatPositionNumber);
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 2, currentYOfenemyListComplete[i] + 1, pieceToMove);
                 }
 
                 if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                 {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 1, currentYOfenemyListComplete[i] + 2, pieceToMove, whatPositionNumber);
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 2, currentYOfenemyListComplete[i] - 1, pieceToMove);
                 }
                 if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
                 {
-                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 1, currentYOfenemyListComplete[i] + 2, pieceToMove, whatPositionNumber);
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 2, currentYOfenemyListComplete[i] + 1, pieceToMove);
+                }
+
+                if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                {
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] - 1, currentYOfenemyListComplete[i] + 2, pieceToMove);
+                }
+                if (!enemyFoundPlayer && currentAmountOfTries <= maxNumberOfTries)
+                {
+                    FindPlayerHorseLoop(posToMoveToAfterFindingPlayerX, posToMoveToAfterFindingPlayerY,    currentXOfEnemyListComplete[i] + 1, currentYOfenemyListComplete[i] + 2, pieceToMove);
                 }
 
                 if (currentAmountOfTries >= maxNumberOfTries && !didntFindAnytrhingOnce && !enemyFoundPlayer)
@@ -3062,7 +3075,7 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE Horse");
 
                 pieceToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
-                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove);
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove, false);
 
 
                 currentXWhereTowerIsGoingToGo = 1337;
@@ -4006,7 +4019,7 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE TOWER");
 
                 pieceToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
-                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove);
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove, false);
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
@@ -4949,7 +4962,7 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE Bishop");
 
                 pieceToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
-                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove);
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove, false);
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
@@ -6551,7 +6564,7 @@ public class GridController : MonoBehaviour
                 Debug.Log("MOVE QUEEN");
 
                 pieceToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
-                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove);
+                pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove, false);
 
                 currentXWhereTowerIsGoingToGo = 1337;
                 towerWithTheLeastTries = 1337;
@@ -7101,12 +7114,12 @@ public class GridController : MonoBehaviour
                     //pieceToMoveTo.currentEnemyType = EnemyType.Queen;
                     pieceToMove.GetComponent<GridPiece>().currentEnemyType = EnemyType.Queen;
 
-                    pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove);
+                    pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove, false);
                 }
                 else
                 {
 
-                    pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove);
+                    pieceToMove.GetComponent<GridPiece>().currentPieceVisuals.GetComponent<PieceVisual>().MovePiece(pieceToMoveTo.gameObject, false, false, pieceToMove, false);
                 }
 
                 currentXWhereTowerIsGoingToGo = 1337;
@@ -7196,7 +7209,7 @@ public class GridController : MonoBehaviour
 
     #region Revive
 
-    public void AktivateReviveCanvas(GridPiece whoCalled)
+    public void AktivateReviveCanvas(GridPiece whoCalled, PieceVisual EnemyWhoCalled)
     {
 
         Time.timeScale = 0;
@@ -7206,6 +7219,7 @@ public class GridController : MonoBehaviour
         reviveHappened = true;
 
         whoCalledForRevive = whoCalled;
+        enemyWhoCalled = EnemyWhoCalled;
 
     }
 
@@ -7215,12 +7229,13 @@ public class GridController : MonoBehaviour
         Time.timeScale = 1;
 
         whoCalledForRevive.GetComponent<GridPiece>().playerPieceHere = false;
+        enemyWhoCalled.waitUntilReviveDone = false;
 
         howManyPlayerPieces--;
 
         reviveHappened = false;
 
-        whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().DentRevive();
+        whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().DenyRevive();
 
         reviveObject.SetActive(false);
 
@@ -7239,6 +7254,7 @@ public class GridController : MonoBehaviour
             reviveObject.SetActive(false);
 
             whoCalledForRevive.currentPieceVisuals.GetComponent<PieceVisual>().GoBack();
+            enemyWhoCalled.waitUntilReviveDone = false;
 
             gameManager.money -= 3;
 
@@ -7264,6 +7280,7 @@ public class GridController : MonoBehaviour
         horseAerialStrike = gameManager.horseAerialStrike;
 
         towerArtillery = gameManager.towerArtillery;
+        towerProtector = gameManager.towerProtect;
 
     }
 

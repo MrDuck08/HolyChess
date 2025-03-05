@@ -94,6 +94,7 @@ public class GameManagerSr : MonoBehaviour
     #region Tower
 
     public bool towerArtillery = false;
+    public bool towerProtect = false;
 
     #endregion
 
@@ -379,6 +380,19 @@ public class GameManagerSr : MonoBehaviour
                     towerArtillery = true;
 
                     money -= 2;
+
+                }
+
+                break;
+
+            case "TowerProtect":
+
+                if (money >= 3)
+                {
+
+                    towerProtect = true;
+
+                    money -= 3;
 
                 }
 

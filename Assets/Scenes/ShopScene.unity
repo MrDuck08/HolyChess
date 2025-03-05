@@ -4875,7 +4875,7 @@ GameObject:
   - component: {fileID: 785878238}
   - component: {fileID: 785878241}
   m_Layer: 5
-  m_Name: TowerUpgrades (1)
+  m_Name: TowerProtection
   m_TagString: PlayerTower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4945,7 +4945,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 785878239}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047394805}
+        m_TargetAssemblyTypeName: Inventory, Assembly-CSharp
+        m_MethodName: BuyUpgrade
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: TowerProtect
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &785878239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6198,7 +6210,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Coming Soon
+  m_text: Tower Protection
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6225,8 +6237,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.44
-  m_fontSizeBase: 21.44
+  m_fontSize: 21
+  m_fontSizeBase: 21
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6247,7 +6259,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -12194,7 +12206,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Coming Soon
+  m_text: Can swith place with ally
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

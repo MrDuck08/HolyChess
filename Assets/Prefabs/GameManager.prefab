@@ -66,6 +66,7 @@ MonoBehaviour:
   towerArtillery: 0
   enemyPawnHowManyExtraSteeps: 0
   enemyPawnMoveAllDirections: 0
+  enemyPawnMoveWhereAttack: 0
   howManyPointsForEnemys: 7
   whatRound: 0
   infoObject: {fileID: 0}

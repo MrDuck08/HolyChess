@@ -361,7 +361,7 @@ public class GridPiece : MonoBehaviour
 
                     if (gameHasStarted && playerPieceHere)
                     {
-                        if (!movedOnce) // Kollar om man har rört sig en gång så man inte kan gå 2 gånger i rad
+                        if (!movedOnce && !anticipateProtection) // Kollar om man har rört sig en gång så man inte kan gå 2 gånger i rad
                         {
                             bool animationIsPlaying = false;
 
@@ -637,32 +637,32 @@ public class GridPiece : MonoBehaviour
                             if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Pawn)
                             {
 
-                                controller.movePiece(PlayerType.Pawn, gameObject);
+                                controller.movePiece(PlayerType.Pawn, gameObject, false);
                             }
 
                             if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Horse)
                             {
 
-                                controller.movePiece(PlayerType.Horse, gameObject);
+                                controller.movePiece(PlayerType.Horse, gameObject, false);
                             }
 
 
                             if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Tower)
                             {
 
-                                controller.movePiece(PlayerType.Tower, gameObject);
+                                controller.movePiece(PlayerType.Tower, gameObject, false);
                             }
 
                             if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Bishop)
                             {
 
-                                controller.movePiece(PlayerType.Bishop, gameObject);
+                                controller.movePiece(PlayerType.Bishop, gameObject, false);
                             }
 
                             if (currentPlayerMovmentType == AnticipatePlayerMovmentType.Queen)
                             {
 
-                                controller.movePiece(PlayerType.Queen, gameObject);
+                                controller.movePiece(PlayerType.Queen, gameObject, false);
                             }
 
                             #endregion
@@ -764,7 +764,7 @@ public class GridPiece : MonoBehaviour
                     if (anticipateProtection)
                     {
 
-                        controller.movePiece(currentPlayerType, gameObject);
+                        controller.movePiece(currentPlayerType, gameObject, true);
 
                         anticipateProtection = false;
 
@@ -996,7 +996,7 @@ public class GridPiece : MonoBehaviour
 
     #region Check Who Died
 
-    public void CheckWhoDied(GridPiece whoCalled)
+    public void CheckWhoDied(GridPiece whoCalled, PieceVisual VisuallsWhoCalled)
     {
         if (playerPieceHere)
         {
@@ -1016,7 +1016,8 @@ public class GridPiece : MonoBehaviour
                 if(gameManagerSr.money >= 3)
                 {
 
-                    controller.AktivateReviveCanvas(whoCalled);
+                    VisuallsWhoCalled.waitUntilReviveDone = true;
+                    controller.AktivateReviveCanvas(whoCalled, VisuallsWhoCalled);
 
                 }
                 else

@@ -14,7 +14,9 @@ public class PieceVisual : MonoBehaviour
     bool startMovingBack = false;
     public bool isItPlayer;
     bool isPlayerAttacking;
+    bool swithchingPlace;
     public bool animationIsPlaying = false;
+    public bool waitUntilReviveDone = false;
 
     GameObject objectToMoveTo;
     GameObject objectToMoveFrom;
@@ -41,8 +43,10 @@ public class PieceVisual : MonoBehaviour
             {
 
 
-                if (isItPlayer) // Spelare
+                if (isItPlayer) // Spelare som rör sig
                 {
+
+                    #region Player
 
                     if (isPlayerAttacking)
                     {
@@ -62,19 +66,27 @@ public class PieceVisual : MonoBehaviour
 
                     objectToMoveTo.GetComponent<GridPiece>().movedOnce = true;
 
+                    if (!swithchingPlace) // Om den ska byta plats med någon då ska den inte stänga av någonting där den kom ifrån
+                    {
 
-                    objectToMoveFrom.GetComponent<GridPiece>().playerPieceHere = false;
-                    objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = null;
+                        objectToMoveFrom.GetComponent<GridPiece>().playerPieceHere = false;
+                        objectToMoveFrom.GetComponent<GridPiece>().currentPieceVisuals = null;
+
+                    }
 
                     SpawnInfo((int)playerType, transform.position, true);
 
+                    #endregion
+
                 }
-                else // Fiende
+                else // Fiende som rör sig
                 {
+
+                    #region Enemy
 
                     gridController = FindObjectOfType<GridController>();
 
-                    objectToMoveTo.GetComponent<GridPiece>().CheckWhoDied(objectToMoveFrom.GetComponent<GridPiece>());
+                    objectToMoveTo.GetComponent<GridPiece>().CheckWhoDied(objectToMoveFrom.GetComponent<GridPiece>(), gameObject.GetComponent<PieceVisual>());
 
 
                     if(startMovingBack == true) // Om den rör sig tillbacka ska den här koden köras
@@ -91,11 +103,11 @@ public class PieceVisual : MonoBehaviour
                         animationIsPlaying = false;
                         startMoving = false;
 
-                        return;
+                        return; // Return så den inte "rör" sig till vart den igentligen skulle gå
 
                     }
 
-                    if (gridController.reviveHappened && startMovingBack == false || objectToMoveTo.GetComponent<GridPiece>().playerPieceHere == false) // Om ingen spelare är vart man ska gå körs det här som vanligt men om det finns en spelare där kollas om spelaren har använt sin revive
+                    if (gridController.reviveHappened && startMovingBack == false && waitUntilReviveDone == false || objectToMoveTo.GetComponent<GridPiece>().playerPieceHere == false) // Om ingen spelare är vart man ska gå körs det här som vanligt men om det finns en spelare där kollas om spelaren har använt sin revive
                     {
 
                         objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
@@ -110,11 +122,14 @@ public class PieceVisual : MonoBehaviour
 
                     SpawnInfo((int)enemyType, transform.position, false);
 
+                    #endregion
+
                 }
 
                 startMoving = false;
                 animationIsPlaying = false;
                 startMoving = false;
+
 
             }
 
@@ -301,19 +316,20 @@ public class PieceVisual : MonoBehaviour
 
     #region Move info
 
-    public void MovePiece(GameObject objectToGoTo, bool playerMoving, bool isPlayerAttack, GameObject originalGameobject)
+    public void MovePiece(GameObject objectToGoTo, bool playerMoving, bool isPlayerAttack, GameObject originalGameobject, bool swithingPlace)
     {
 
         objectToMoveTo = objectToGoTo;
         objectToMoveFrom = originalGameobject;
-
+       
         playerType = objectToMoveFrom.GetComponent<GridPiece>().currentPlayerType;
         enemyType = objectToMoveFrom.GetComponent<GridPiece>().currentEnemyType;
 
-        startMoving = true;
-        animationIsPlaying = true;
         isItPlayer = playerMoving;
         isPlayerAttacking = isPlayerAttack;
+        animationIsPlaying = true;
+        startMoving = true;
+        swithchingPlace = swithingPlace;
 
     }
 
@@ -322,15 +338,15 @@ public class PieceVisual : MonoBehaviour
         objectToMoveToBack = objectToMoveTo;
         objectToMoveTo = objectToMoveFrom;
 
+        animationIsPlaying = true;
         startMoving = true;
         startMovingBack = true;
-        animationIsPlaying = true;
 
     }
 
     #endregion
 
-    public void DentRevive()
+    public void DenyRevive()
     {
 
         objectToMoveTo.GetComponent<GridPiece>().enemyPieceHere = true;
